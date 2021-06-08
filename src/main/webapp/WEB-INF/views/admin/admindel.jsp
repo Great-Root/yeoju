@@ -50,7 +50,7 @@
 						</tr>
 					</tbody>
 				</table>
-				 목록으로가져와 삭제하기
+				 <div class="col">목록으로가져와 삭제하기</div>
 			</div>
 	</div>
 	<c:import url="../default/footer.jsp" />

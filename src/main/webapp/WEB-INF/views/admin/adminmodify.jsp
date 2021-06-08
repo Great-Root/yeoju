@@ -50,7 +50,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<form action=""  style="align-content:center;">
+				<form action=""  style="align-content:center;" class="col">
 					아이디<input type="text" name="id" placeholder="값으로 가져올것"><br>
 					비밀번호<input type="password" name="pw" placeholder="input pw"><br>
 					비밀번호 확인<input type="password" name="pwchk" placeholder="input pwchk"><br>

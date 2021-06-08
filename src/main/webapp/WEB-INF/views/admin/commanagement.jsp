@@ -31,11 +31,13 @@
 					<th><a href="statistic">통계</a></th>
 				</tr>
 			</thead>
-		</table><br>Q&A
-		<table >
-		<tr><th><a href="commanagement">Q&A</a></th><th><a href="commanagementann">공지사항</a></th></tr>
 		</table>
 		</div>
+		<div class="row" >
+		<label class="col" >Q&A</label>
+		<table class="col" style="float: left;">
+		<tr><th><a href="commanagement">Q&A</a></th><th><a href="commanagementann">공지사항</a></th></tr>
+		</table></div>
 		<table class="table table-striped col" >
 					<thead>
 						<tr>

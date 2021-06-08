@@ -50,7 +50,8 @@
 						</tr>
 					</tbody>
 				</table>
-				<form action="" style="padding-bottom: 5px;">
+				
+				<form action="" style="padding-bottom: 5px;" class="col">
 					<input type="text" name="id" placeholder="input id"><br>
 					<input type="password" name="pw" placeholder="input pw"><br>
 					<input type="password" name="pwchk" placeholder="input pwchk"><br>
