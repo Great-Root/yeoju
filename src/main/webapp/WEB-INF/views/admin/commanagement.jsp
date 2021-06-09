@@ -41,29 +41,26 @@
 		<table class="table table-striped col" >
 					<thead>
 						<tr>
-							<th>아이디</th>
-							<th>등록일</th>
-							<th>최근 활동일</th>
-							<th>최근 활동</th>
-							<th>상태</th>
+							<th>No.</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+							<th>조회수</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>John</td>
-							<td>Doe</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-						</tr>
-						<tr>
-							<td>Mary</td>
-							<td>Moe</td>
-							<td>mary@example.com</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-							
-						</tr>
+					<!--<c:if test="${adminAnnBoardList.size() == 0 }">
+						<tr> <th colspan="6">저장 데이터 없음</th> </tr>
+					</c:if>
+					<c:forEach var="dto" items="${adminAnnBoardList }">
+					<tr>
+						<td>${dto.writeNo }</td>
+					    <td><a href="${contextPath }/board/contentView?writeNo=${dto.writeNo }">${dto.title }</a></td>
+						<td>${dto.id }</td> 
+						<td>${dto.saveDate }</td> 
+						<td>${dto.hit }</td>
+					</tr>
+					</c:forEach>-->
 						<tr>
 							<td>July</td>
 							<td>Dooley</td>

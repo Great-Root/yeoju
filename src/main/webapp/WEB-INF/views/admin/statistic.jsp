@@ -24,7 +24,7 @@
 		<div class="row" style="padding: 40px;">
 		<table class="table col" >
 			<thead>
-				<tr align="center" >
+				<tr  >
 					<th><a href="adminlist">admin</a></th>
 					<th><a href="memmanagement">회원 관리</a></th>
 					<th><a href="commanagement">커뮤니티 관리</a></th>

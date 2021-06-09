@@ -20,7 +20,6 @@
 <body>
 	<c:import url="../default/header.jsp" />
 	<div class="container">
-		
 		<div class="row" style="padding: 40px;">
 		<table class="table col" >
 			<thead>
@@ -33,9 +32,9 @@
 			</thead>
 		</table>
 		</div>
+		
 		<div class="row" >
-				<table class="table table-striped col" style="margin-right: 40px; padding:5 5 5 5px; width:20%;" >
-					<tbody>
+<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:250px;" >					<tbody>
 						<tr>
 							<th><a href="adminlist">관리자 목록</a></th>
 						</tr>
@@ -50,7 +49,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<table class="table table-striped col" ">
+				<table class="table table-striped col" >
 					<thead>
 						<tr>
 							<th>아이디</th>
@@ -61,15 +60,24 @@
 						</tr>
 					</thead>
 					<tbody>
+				<!--<c:forEach var="dto" items="${adminList}">
+						<tr>	
+							<td>${dto.id }</td> 
+							<td>${dto.regDate }</td>
+							<td>${dto.addr }</td>
+							<td>${dto.addr }</td>
+							<td>${dto.addr }</td>
+						</tr>
+			</c:forEach> -->
 						<tr>
-							<td>John</td>
+							<td>Johnsd</td>
 							<td>Doe</td>
 							<td>john@example.com</td>
 							<td>john@example.com</td>
 							<td>john@example.com</td>
 						</tr>
 						<tr>
-							<td>Mary</td>
+							<td>Marsy</td>
 							<td>Moe</td>
 							<td>mary@example.com</td>
 							<td>john@example.com</td>

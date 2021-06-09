@@ -20,7 +20,6 @@
 <body>
 	<c:import url="../default/header.jsp" />
 	<div class="container">
-		
 		<div class="row" style="padding: 40px;">
 		<table class="table col" >
 			<thead>
@@ -34,7 +33,7 @@
 		</table>
 		</div>
 		<div class="row" >
-				<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:20%;" >
+				<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:200px;" >
 					<tbody>
 						<tr>
 							<th><a href="adminlist">관리자 목록</a></th>
@@ -60,6 +59,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						<!--<c:forEach var="dto" items="${adminPermis}">
+							<tr>	
+								<td>${dto.id }</td> 
+								<td>${dto.mempermis }</td>
+								<td>${dto.compermis }</td>
+								<td>${dto.adpermis }</td>
+							</tr>
+							</c:forEach> -->
 						<tr>
 							<td>John</td>
 							<td>Doe</td>

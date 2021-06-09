@@ -50,7 +50,7 @@
 						</tr>
 					</tbody>
 				</table>
-				 <div class="col">목록으로가져와 삭제하기</div>
+				 <div class="col">	<h6 align="center">계정 삭제</h6></div>
 			</div>
 	</div>
 	<c:import url="../default/footer.jsp" />

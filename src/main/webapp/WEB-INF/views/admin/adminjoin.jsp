@@ -33,8 +33,8 @@
 			</thead>
 		</table>
 		</div>
-		<div class="row" >
-				<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:20%;" >
+		<div class="row"  >
+				<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:250px;" >
 					<tbody>
 						<tr>
 							<th><a href="adminlist">관리자 목록</a></th>
@@ -50,15 +50,16 @@
 						</tr>
 					</tbody>
 				</table>
-				
-				<form action="" style="padding-bottom: 5px;" class="col">
+				<div class="col" align="left">
+				<form action="" style="padding-bottom: 5px;" class="col" >
+					<h6 align="center">계정 생성</h6>
 					<input type="text" name="id" placeholder="input id"><br>
 					<input type="password" name="pw" placeholder="input pw"><br>
 					<input type="password" name="pwchk" placeholder="input pwchk"><br>
 					<input type="text" name="phonenum" placeholder="input phonenum"><br>
 					<input type="submit" value="완료" style="background-color: green; ">&nbsp;&nbsp;&nbsp;
 					<input type="button" onclick="javascript:location.href='admindel'" value="관리자 삭제" style="background-color: red;">
-				</form>
+				</form></div>
 			</div>
 	</div>
 	<c:import url="../default/footer.jsp" />

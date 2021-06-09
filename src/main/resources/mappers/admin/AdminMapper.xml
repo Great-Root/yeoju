@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.root.member.dao.MemberDAO">
+	<!-- <resultMap type="com.yeoju.root.common.dto.AdminDTO" id="AdminMap">
+		<result property="userId" column="user_id"/>
+		<result property="pw" column="pw"/>
+		<result property="tel" column="tel"/>
+		<result property="memPermis" column="memPermis"/>
+		<result property="comPermis" column="comPermis"/>
+		<result property="adPermis" column="adPermis"/>
+		<result property="grade" column="grade"/>
+		<result property="regDate" column="reg_Date"/>
+		<result property="recentDate" column="recent_Date"/>
+		<result property="recentAct" column="recent_Act"/>		
+	</resultMap>
+	<insert id="adminjoin">
+		INSERT INTO adminmember VALUES(#{user_id},#{pw},#{tel})
+	</insert>
+	<select id="AdminList" resultMap="AdminMap">
+		select * from test_mybatis
+	</select> -->
+</mapper>
