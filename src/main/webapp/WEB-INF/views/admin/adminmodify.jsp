@@ -40,9 +40,6 @@
 							<th><a href="adminlist">관리자 목록</a></th>
 						</tr>
 						<tr>
-							<th><a href="permission">권한 설정</a></th>
-						</tr>
-						<tr>
 							<th><a href="adminjoin">관리자 계정 생성/삭제</a></th>
 						</tr>
 						<tr>
@@ -56,7 +53,6 @@
 				<h6 align="center">계정 수정</h6>
 					아이디<input type="text" name="id"  placeholder="값으로 가져올것"><br>
 					비밀번호<input type="password" name="pw" placeholder="영문,숫자,특수문자 포함 6~15자"><br>
-					비밀번호 확인<input type="password" name="pwchk" placeholder="영문,숫자,특수문자 포함 6~15자"><br>
 					전화번호<input type="text" name="phonenum" placeholder="숫자만 입력"><br>
 					<input type="submit" value="계정 수정" >
 					

@@ -2,23 +2,27 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.care.root.member.dao.MemberDAO">
-	<!-- <resultMap type="com.yeoju.root.common.dto.AdminDTO" id="AdminMap">
-		<result property="userId" column="user_id"/>
+
+<mapper namespace="com.yeoju.root.mybatis.admin.AdminMapper">
+ <resultMap type="com.yeoju.root.common.dto.AdminDTO" id="admin">
+		<result property="id" column="user_id"/>
 		<result property="pw" column="pw"/>
 		<result property="tel" column="tel"/>
 		<result property="memPermis" column="memPermis"/>
 		<result property="comPermis" column="comPermis"/>
-		<result property="adPermis" column="adPermis"/>
 		<result property="grade" column="grade"/>
 		<result property="regDate" column="reg_Date"/>
 		<result property="recentDate" column="recent_Date"/>
 		<result property="recentAct" column="recent_Act"/>		
 	</resultMap>
-	<insert id="adminjoin">
-		INSERT INTO adminmember VALUES(#{user_id},#{pw},#{tel})
+	<insert id="adminJoin">
+		INSERT INTO ADMINMEMBER VALUES(#{user_id},#{pw},#{tel})
 	</insert>
-	<select id="AdminList" resultMap="AdminMap">
-		select * from test_mybatis
-	</select> -->
+	<select id="adminList" resultMap="admin">
+		select * from ADMINMEMBER
+	</select>
+	<select id="adminDel" resultMap="admin">
+		select * from ADMINMEMBER
+	</select>
+	   
 </mapper>

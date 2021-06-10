@@ -3,7 +3,7 @@ package com.yeoju.root.common.dto;
 import java.sql.Date;
 
 public class AdminDTO {
-	private String userId;
+	private String id;
 
 	private String pw;
 
@@ -13,8 +13,6 @@ public class AdminDTO {
 	
 	private int comPermis;
 	
-	private int adPermis;
-	
 	private int grade;
 	
 	private Date regDate;
@@ -23,12 +21,12 @@ public class AdminDTO {
 	
 	private int recentAct;
 
-	public String getUserId() {
-		return userId;
+	public String getId() {
+		return id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getPw() {
@@ -63,13 +61,6 @@ public class AdminDTO {
 		this.comPermis = comPermis;
 	}
 
-	public int getAdPermis() {
-		return adPermis;
-	}
-
-	public void setAdPermis(int adPermis) {
-		this.adPermis = adPermis;
-	}
 
 	public int getGrade() {
 		return grade;

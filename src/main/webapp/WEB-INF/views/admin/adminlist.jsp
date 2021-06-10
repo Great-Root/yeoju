@@ -19,6 +19,13 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<div>
+	<table>
+	<tr>
+	<th>관리자 모드</th>
+	<th><a href="/">관리자 모드</a></th>
+	</tr>
+	</table></div>
 	<div class="container">
 		<div class="row" style="padding: 40px;">
 		<table class="table col" >
@@ -39,9 +46,6 @@
 							<th><a href="adminlist">관리자 목록</a></th>
 						</tr>
 						<tr>
-							<th><a href="permission">권한 설정</a></th>
-						</tr>
-						<tr>
 							<th><a href="adminjoin">관리자 계정 생성/삭제</a></th>
 						</tr>
 						<tr>
@@ -60,37 +64,18 @@
 						</tr>
 					</thead>
 					<tbody>
-				<!--<c:forEach var="dto" items="${adminList}">
+				<c:forEach var="dto" items="${adminList}">
 						<tr>	
 							<td>${dto.id }</td> 
 							<td>${dto.regDate }</td>
-							<td>${dto.addr }</td>
-							<td>${dto.addr }</td>
-							<td>${dto.addr }</td>
+							<td>${dto.recentDate }</td>
+							<td>${dto.recentAct }</td>
+							<td><c:if test="${dto.grade ==1}">
+								관리자
+								</c:if>
+							</td>
 						</tr>
-			</c:forEach> -->
-						<tr>
-							<td>Johnsd</td>
-							<td>Doe</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-						</tr>
-						<tr>
-							<td>Marsy</td>
-							<td>Moe</td>
-							<td>mary@example.com</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-							
-						</tr>
-						<tr>
-							<td>July</td>
-							<td>Dooley</td>
-							<td>july@example.com</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-						</tr>
+			</c:forEach> 
 					</tbody>
 				</table>
 			</div>

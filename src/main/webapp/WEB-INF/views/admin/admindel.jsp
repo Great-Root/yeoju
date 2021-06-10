@@ -40,9 +40,6 @@
 							<th><a href="adminlist">관리자 목록</a></th>
 						</tr>
 						<tr>
-							<th><a href="permission">권한 설정</a></th>
-						</tr>
-						<tr>
 							<th><a href="adminjoin">관리자 계정 생성/삭제</a></th>
 						</tr>
 						<tr>
@@ -51,6 +48,21 @@
 					</tbody>
 				</table>
 				 <div class="col">	<h6 align="center">계정 삭제</h6></div>
+						<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+				    	계정 선택
+				  </button>
+				  
+				  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				   	<c:forEach var="dto" items="${admindel}">
+	
+				   		 <li><a class="dropdown-item" href="#">${dto.id }</a></li>
+				 
+				    </c:forEach>
+				    	<li><a class="dropdown-item" href="#">얘</a></li>
+				       <li><a class="dropdown-item" href="#">Another action</a></li>
+				  </ul>
+				</div>
 			</div>
 	</div>
 	<c:import url="../default/footer.jsp" />
