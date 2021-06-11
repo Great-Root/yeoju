@@ -9,8 +9,7 @@
 </head>
 <body>
 	<c:import url="default/header.jsp" />
-	${loginUser } 님 환영합니다
-	<div class="wrap content">
+	<div class="wrap content" style ="background-color: pink;">
 		<table class="mainTable" style="width:450px; margin: 0 auto;">
 			<tr>
 				<td>
@@ -26,6 +25,7 @@
 			</tr>
 		</table>
 	</div>
+	
 	<c:import url="default/footer.jsp" />
 </body>
 </html>
