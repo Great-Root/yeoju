@@ -9,7 +9,7 @@
 </head>
 <body>
 	<c:import url="default/header.jsp" />
-	<div class="wrap content">
+	<div class="wrap content" style ="background-color: pink;">
 		<table class="mainTable" style="width:450px; margin: 0 auto;">
 			<tr>
 				<td>
@@ -25,6 +25,7 @@
 			</tr>
 		</table>
 	</div>
+	
 	<c:import url="default/footer.jsp" />
 </body>
 </html>
