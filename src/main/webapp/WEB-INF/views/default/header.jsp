@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
 <body>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 	<div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -17,14 +18,26 @@
         <span class="fs-4">Simple header</span>
       </a>
 
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-      </ul>
-    </header>
+			<ul class="nav nav-pills">
+				<li class="nav-item"><a href="#" class="nav-link active"
+					aria-current="page">Home</a></li>
+
+				<li class="nav-item">
+					<c:choose>
+						<c:when test="${loginUser == null}">
+							<a href="${contextPath}/member/login" class="nav-link">LOGIN</a>
+						</c:when>
+						<c:otherwise>
+							<a href="${contextPath}/member/logout" class="nav-link">LOGOUT</a>
+						</c:otherwise>
+					</c:choose>
+				</li>
+
+				<li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+				<li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+				<li class="nav-item"><a href="#" class="nav-link">About</a></li>
+			</ul>
+		</header>
   </div>
 </body>
 </html>
