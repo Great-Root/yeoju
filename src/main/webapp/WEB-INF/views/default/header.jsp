@@ -27,15 +27,18 @@
 							</span>
 						</div>
 					</div>
+					<!-- 
 					<div class ="col">
 					<div class="text-end p-3">
 						<button type="button" class="btn btn-outline-success me-2">Login</button>
 						<button type="button" class="btn btn-outline-warning">Sign-up</button>
 					</div>
 					 </div>
+					 -->
 					<!-- 
 					 -->
 					<!-- 
+					  -->
 					<div class="col">
 						<div class="dropdown p-3" style ="float: right;">
 							<button class="btn  dropdown-toggle text-dark" type="button"
@@ -57,7 +60,6 @@
 						</div>
 					</div>
 				</div>
-					  -->
 
 
 
