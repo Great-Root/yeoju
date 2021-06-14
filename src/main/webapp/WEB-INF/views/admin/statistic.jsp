@@ -32,7 +32,7 @@
 		<table class="table col" >
 			<thead>
 				<tr  >
-					<th><a href="adminlist">admin</a></th>
+					<th><a href="adminlist">관리자 메뉴</a></th>
 					<th><a href="memmanagement">회원 관리</a></th>
 					<th><a href="commanagement">커뮤니티 관리</a></th>
 					<th><a href="statistic">통계</a></th>
