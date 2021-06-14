@@ -8,7 +8,7 @@
 <title>여주마켓</title>
 </head>
 <body>
-	<c:import url="default/header.jsp" />
+	<c:import url="./default/header.jsp" />
 	<div class="wrap content">
 		<table class="mainTable" style="width:450px; margin: 0 auto;">
 			<tr>
@@ -25,6 +25,6 @@
 			</tr>
 		</table>
 	</div>
-	<c:import url="default/footer.jsp" />
+	<c:import url="./default/footer.jsp" />
 </body>
 </html>
