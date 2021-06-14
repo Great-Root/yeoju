@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재!! -->
+<mapper namespace="goods">
+
+	<!-- 01.상품 전체 리스트 
+	<select id="listGoods" resultType="com.yeoju.root.common.dto.GoodsDTO">
+		SELECT
+		goods_id AS goodsId,
+		goods_name AS goodsName,
+		goods_info AS goodsInfo,
+		goods_price AS goodsPrice,
+		sold_out AS soldOut,
+		
+		FROM goods ORDER BY goods_id
+	</select>
+	-->
+		
+	<!-- 02.상품 상세보기 -->
+	<select id="detailGoods" resultType="com.yeoju.root.common.dto.GoodsDTO">
+		SELECET
+			goods_id AS goodsId,
+			goods_name AS goodsName,
+			goods_info AS goodsInfo,
+			goods_price AS goodsPrice,
+			sold_out AS soldOut,
+	</select>	
+	
+	<!-- 03.상품 추가하기 -->
+	<insert id="insertGoods">
+		INSERT INTO goods
+		VALUES(
+			goods_seq.NEXTVAL,
+			<if test="">#{goodsName},</if>
+			
+			#{goodsInfo},
+			#{goodsPrice},
+			#{userId},
+			sysdate, <!-- #{RegDate} -->
+			0, <!-- #{soldOut} -->
+			#{howMany},
+			#{img},
+			#{category_code}
+		)
+	</insert>
+	
+	<!-- 04.상품 수정/편집 -->
+	<update id="updateGoods">
+		UPDATE goods 
+  		 SET goods_name=#{goodsName},
+               goods_info=#{goodsInfo},
+               goods_price=#{goodsPrice},
+               reg_date=#{reg_Date},
+               sold_out=#{sold_Out},
+               how_many=#{how_Many},
+               img=#{img},
+               category_cod=#{category_Code}
+       
+       WHERE goods_id =#{goodsId};
+	</update>
+	
+	<!-- 05.상품 레코드 삭제처리 -->
+	<delete id="deleteGoods">
+		DELETE FROM goods
+		WHERE goods_id=#{goodsId}
+	</delete>
+	
+	<!-- 06.삭제를 위한 상품 이미지 파일이름 select -->
+	<select id="fileInfo" resultType="String">
+		SELECT goods AS goodsUrl
+		FROM goods
+		WHERE goods_id=#{goodsId}
+	</select>
+	
+</mapper>
