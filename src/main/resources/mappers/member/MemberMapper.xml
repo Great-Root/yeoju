@@ -2,15 +2,34 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.care.root.member.dao.MemberDAO">
-	<!-- <resultMap type="com.care.root.member.dto.MemberDTO" id="MemberMap">
-		<result property="id" column="id"/>
-		<result property="name" column="name"/>
+<mapper namespace="com.yeoju.root.mybatis.MemberDAO">
+	<resultMap id="member" type="com.yeoju.root.common.dto.MemberDTO">
+		<id property="userId" column="user_id"/>
+		<result property="pw" column="pw"/>
+		<result property="sessionId" column="session_id"/>
+		<result property="limitTime" column="limit_time"/>
 	</resultMap>
-	<insert id="insertMember">
-		INSERT INTO test_mybatis VALUES(#{id},#{name})
+	
+	
+	<select id="user_check" resultMap="member">
+		select * from member where user_id=#{userId}
+	</select>
+	
+	<insert id="register">
+		insert into member(user_id, pw, tel, reg_date) values(#{userId}, #{pw}, #{tel}, sysdate)
 	</insert>
-	<select id="memberView" resultMap="MemberMap">
-		select * from test_mybatis
-	</select> -->
+	
+	<update id="keepLogin">
+		update member set session_id=#{sessionId},
+				limit_time=#{limitDate} where user_id=#{userId}
+	</update>
+	
+	<select id="getUserSessionId" resultMap="member">
+		select * from member where session_id=#{sessionId}
+	</select>
+	
+	<select id="find_id" resultMap="member">
+		select user_id from member where email = #{email}
+	</select>
+		
 </mapper>

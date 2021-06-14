@@ -21,6 +21,41 @@ public class MemberDTO extends MemberDetailDTO{
 
 	// 인증번호
 	private Integer auth;
+	
+	//최근 활동일
+	private Date recentDate;
+	
+	private Date limitTime;
+
+	private String sessionId;
+	
+	
+	
+	
+	
+	public Date getLimitTime() {
+		return limitTime;
+	}
+
+	public void setLimitTime(Date limitTime) {
+		this.limitTime = limitTime;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public Date getRecentDate() {
+		return recentDate;
+	}
+
+	public void setRecentDate(Date recentDate) {
+		this.recentDate = recentDate;
+	}
 
 	public String getUserId() {
 		return userId;
