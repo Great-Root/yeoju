@@ -10,11 +10,13 @@
 <body>
 	<c:import url="default/header.jsp" />
 	<div class="wrap content">
+	<img alt="..." src="/img/download/2">
 		<table class="mainTable" style="width:450px; margin: 0 auto;">
 			<tr>
 				<td>
 					<h3>
 						내 사전에 불가능은 없다.<br> 불가능은 소극적인 자의 환영이며<br> 비겁한 자의 도피처 이다.<br>
+						
 					</h3>
 				</td>
 			</tr>
