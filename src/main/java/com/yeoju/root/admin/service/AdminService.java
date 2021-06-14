@@ -10,5 +10,7 @@ public interface AdminService {
 	public void adminList(Model model);
 	public int adminJoin(AdminDTO dto);
 	public void adminDel(Model model);
+	public int adminDelete(AdminDTO dto);
+	public int adminModify(AdminDTO dto);
 
 }

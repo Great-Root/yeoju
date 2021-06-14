@@ -19,6 +19,13 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<div  align="right"  style=" padding-right: 250px; ">
+	<table  >
+	<tr>
+	<th>관리자 모드</th>
+	<th><a href="/">쇼핑몰로 이동</a></th>
+	</tr>
+	</table></div>
 	<div class="container">
 		
 		<div class="row" style="padding: 40px;">
@@ -40,27 +47,26 @@
 							<th><a href="adminlist">관리자 목록</a></th>
 						</tr>
 						<tr>
-							<th><a href="adminjoin">관리자 계정 생성/삭제</a></th>
+							<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
 						</tr>
 						<tr>
-							<th><a href="adminmodify">관리자 계정 수정</a></th>
+							<th><a href="adminmodify_form">관리자 계정 수정</a></th>
 						</tr>
 					</tbody>
 				</table>
 				 <div class="col">	<h6 align="center">계정 삭제</h6></div>
-						<div class="dropdown">
+						<div class="dropdown ">
 				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 				    	계정 선택
 				  </button>
 				  
 				  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				   	<c:forEach var="dto" items="${admindel}">
+					  <c:forEach var="dto" items="${adminList}">
 	
-				   		 <li><a class="dropdown-item" href="#">${dto.id }</a></li>
+				   		 <li><a class="dropdown-item" href="admindelete" >${dto.id }</a></li>
 				 
-				    </c:forEach>
-				    	<li><a class="dropdown-item" href="#">얘</a></li>
-				       <li><a class="dropdown-item" href="#">Another action</a></li>
+				   	 </c:forEach>
+				    	
 				  </ul>
 				</div>
 			</div>

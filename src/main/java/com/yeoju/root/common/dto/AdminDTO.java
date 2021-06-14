@@ -9,10 +9,6 @@ public class AdminDTO {
 
 	private String tel;
 	
-	private int memPermis;
-	
-	private int comPermis;
-	
 	private int grade;
 	
 	private Date regDate;
@@ -45,21 +41,6 @@ public class AdminDTO {
 		this.tel = tel;
 	}
 
-	public int getMemPermis() {
-		return memPermis;
-	}
-
-	public void setMemPermis(int memPermis) {
-		this.memPermis = memPermis;
-	}
-
-	public int getComPermis() {
-		return comPermis;
-	}
-
-	public void setComPermis(int comPermis) {
-		this.comPermis = comPermis;
-	}
 
 
 	public int getGrade() {

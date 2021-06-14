@@ -19,11 +19,11 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
-	<div>
-	<table>
+	<div  align="right"  style=" padding-right: 250px; ">
+	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="/">관리자 모드</a></th>
+	<th><a href="/">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
@@ -46,10 +46,10 @@
 							<th><a href="adminlist">관리자 목록</a></th>
 						</tr>
 						<tr>
-							<th><a href="adminjoin">관리자 계정 생성/삭제</a></th>
+							<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
 						</tr>
 						<tr>
-							<th><a href="adminmodify">관리자 계정 수정</a></th>
+							<th><a href="adminmodify_form">관리자 계정 수정</a></th>
 						</tr>
 					</tbody>
 				</table>

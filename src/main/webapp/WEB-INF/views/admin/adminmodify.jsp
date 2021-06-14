@@ -19,6 +19,13 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<div  align="right"  style=" padding-right: 250px; ">
+	<table  >
+	<tr>
+	<th>관리자 모드</th>
+	<th><a href="/">쇼핑몰로 이동</a></th>
+	</tr>
+	</table></div>
 	<div class="container">
 		
 		<div class="row" style="padding: 40px;">
@@ -40,20 +47,20 @@
 							<th><a href="adminlist">관리자 목록</a></th>
 						</tr>
 						<tr>
-							<th><a href="adminjoin">관리자 계정 생성/삭제</a></th>
+							<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
 						</tr>
 						<tr>
-							<th><a href="adminmodify">관리자 계정 수정</a></th>
+							<th><a href="adminmodify_form">관리자 계정 수정</a></th>
 						</tr>
 					</tbody>
 				</table>
 				<div class="col" align="right">
 				
-				<form action="">
+				<form action="adminmodify">
 				<h6 align="center">계정 수정</h6>
 					아이디<input type="text" name="id"  placeholder="값으로 가져올것"><br>
-					비밀번호<input type="password" name="pw" placeholder="영문,숫자,특수문자 포함 6~15자"><br>
-					전화번호<input type="text" name="phonenum" placeholder="숫자만 입력"><br>
+				바꿀 비밀번호<input type="password" name="pw" placeholder="영문,숫자,특수문자 포함 6~15자"><br>
+				바꿀 전화번호<input type="text" name="phonenum" placeholder="숫자만 입력"><br>
 					<input type="submit" value="계정 수정" >
 					
 				</form></div>

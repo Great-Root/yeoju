@@ -27,10 +27,9 @@ public class AdminServiceImpl implements AdminService{
 		 
 	}
 	public int adminJoin(AdminDTO dto) {
-		HttpServletRequest request = null;
-		String id =request.getParameter("id");
-		String pw =request.getParameter("pw");
-		String tel =request.getParameter("tel");
+		String id=dto.getId();
+		String pw=dto.getPw();
+		String tel=dto.getTel();
 		dto.setId(id);
 		dto.setPw(pw);
 		dto.setTel(tel);
@@ -41,5 +40,31 @@ public class AdminServiceImpl implements AdminService{
 			return 0;
 		}
 	}
+	public int adminModify(AdminDTO dto) {
+		String id=dto.getId();
+		String pw=dto.getPw();
+		String tel=dto.getTel();
+		dto.setId(id);
+		dto.setPw(pw);
+		dto.setTel(tel);
+		try {
+			return mapper.adminModify(dto);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	@Override
+	public int adminDelete(AdminDTO dto) {
+		String id=dto.getId();
+		dto.setId(id);
+		try {
+			return mapper.adminDelete(dto);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	
 }

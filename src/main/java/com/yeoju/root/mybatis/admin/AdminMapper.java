@@ -9,5 +9,7 @@ public interface AdminMapper {
 
 	public int adminJoin(AdminDTO dto);
 
-	public ArrayList<AdminDTO> admindel();
+	public int adminDelete(AdminDTO dto);
+
+	public int adminModify(AdminDTO dto);
 }

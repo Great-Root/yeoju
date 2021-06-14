@@ -8,21 +8,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="id" column="user_id"/>
 		<result property="pw" column="pw"/>
 		<result property="tel" column="tel"/>
-		<result property="memPermis" column="memPermis"/>
-		<result property="comPermis" column="comPermis"/>
 		<result property="grade" column="grade"/>
 		<result property="regDate" column="reg_Date"/>
 		<result property="recentDate" column="recent_Date"/>
 		<result property="recentAct" column="recent_Act"/>		
+		
 	</resultMap>
 	<insert id="adminJoin">
-		INSERT INTO ADMINMEMBER VALUES(#{user_id},#{pw},#{tel})
+		INSERT INTO ADMINMEMBER VALUES(#{id},#{pw},#{tel},1,null,null,null)
 	</insert>
 	<select id="adminList" resultMap="admin">
 		select * from ADMINMEMBER
 	</select>
-	<select id="adminDel" resultMap="admin">
-		select * from ADMINMEMBER
-	</select>
+	<delete id="adminDelete">
+		delete from ADMINMEMBER where id = #{id}
+	</delete>
+	<update id="adminModify">
+		update ADMINMEMBER set pw=#{pw}, tel=#{tel} where id = #{id}
+	</update>
 	   
 </mapper>

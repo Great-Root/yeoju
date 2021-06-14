@@ -19,6 +19,13 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<div  align="right"  style=" padding-right: 250px; ">
+	<table  >
+	<tr>
+	<th>관리자 모드</th>
+	<th><a href="/">쇼핑몰로 이동</a></th>
+	</tr>
+	</table></div>
 	<div class="container">
 		
 		<div class="row" style="padding: 40px;">
