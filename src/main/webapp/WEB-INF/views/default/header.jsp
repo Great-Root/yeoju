@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@
 					<div class="col">
 						<div
 							class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start p-3">
-							<a href="#" class="nav-link fs-3 text-dark ">여주마켓</a>
+							<a href="${contextPath}/" class="nav-link fs-3 text-dark ">여주마켓</a>
 						</div>
 					</div>
 					<div class="col">
@@ -23,18 +24,23 @@
 							<input type="text" class="form-control"
 								placeholder="검색 키워드를 입력하세요!"> <span
 								class="input-group-btn">
-								<button class="btn btn-secondary btn-info" type="button">찾기</button>
+								<button class="btn btn-secondary btn-info" id="searchBtn" type="button">찾기</button>
 							</span>
 						</div>
 					</div>
 					<!-- 
+					 -->
+					 <c:choose>
+					 <c:when test="${loginUser == null}">
+					 
 					<div class ="col">
 					<div class="text-end p-3">
-						<button type="button" class="btn btn-outline-success me-2">Login</button>
-						<button type="button" class="btn btn-outline-warning">Sign-up</button>
+						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
+						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/registerPage'">Sign-up</button>
 					</div>
 					 </div>
-					 -->
+					 </c:when>
+					  <c:otherwise>
 					<!-- 
 					 -->
 					<!-- 
@@ -47,7 +53,7 @@
 								<div class="col">
 									<img alt="안열림" src="../../resources/css/h1.jpg"
 										class="rounded-circle" width="30px" height="30px" >
-									(Hello ID)
+									${loginUser } 님 
 								</div>
 
 							</button>
@@ -55,13 +61,28 @@
 								<li><a class="dropdown-item" href="#">내상점</a></li>
 								<li><a class="dropdown-item" href="#">거래현황</a></li>
 								<li><a class="dropdown-item" href="#">결제현황</a></li>
-								<li><a class="dropdown-item" href="#">로그아웃</a></li>
+								<!--  
+								-->
+								<li><a class="dropdown-item" href="${contextPath}/member/logout">로그아웃</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
-
-
+					  </c:otherwise>
+					 </c:choose>
+				<!-- 
+				<li>
+                  <c:choose>
+                     <c:when test="${loginUser == null}">
+                        <a href="${contextPath}/member/login">LOGIN</a>
+                     </c:when>
+                     <c:otherwise>
+                        <a href="${contextPath}/member/logout">LOGOUT</a>
+                     </c:otherwise>
+                  </c:choose>
+               </li>
+				 -->
+	
 
 
 			</div>
@@ -100,4 +121,17 @@
 
 
 </body>
+<script>
+
+$("#searchBtn").on("click", function() {
+	if($(".input-group.p-3").find("input.form-control").val().length == 0){
+	        alert("검색어를 입력해주세여!");
+	         $(".btn-secondary").css("background-color","red");
+	           setInterval(borderDel, 3000);
+	}
+	});
+	function borderDel() {
+	     $("#searchBtn").css("background-color","pink");
+	}
+</script>
 </html>
