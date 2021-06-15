@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-<!DOCTYPE html>
+
+<!DOCTYPE html>	
 <html>
 <head>
 <meta charset="UTF-8">
@@ -121,6 +122,7 @@
 
 
 </body>
+<!-- 
 <script>
 
 $("#searchBtn").on("click", function() {
@@ -134,4 +136,5 @@ $("#searchBtn").on("click", function() {
 	     $("#searchBtn").css("background-color","pink");
 	}
 </script>
+ -->
 </html>

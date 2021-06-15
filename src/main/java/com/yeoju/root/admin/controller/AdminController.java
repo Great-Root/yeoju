@@ -1,6 +1,12 @@
 package com.yeoju.root.admin.controller;
 
+import java.sql.Date;
+import java.util.Calendar;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,14 +15,47 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yeoju.root.admin.service.AdminService;
 import com.yeoju.root.common.dto.AdminDTO;
+import com.yeoju.root.member.session_name.MemberSessionName;
 
 @Controller
 @RequestMapping("admin")
-public class AdminController {
+public class AdminController implements MemberSessionName{
 	@Autowired AdminService as;
+	@GetMapping
+	public String adminLogin() {
+		return "admin/adminlogin";
+	}
+	@GetMapping("adminlogin")
+	public String adminlogin() {
+		return "admin/adminlogin";
+	}
+	@PostMapping("admin_check")
+	public String user_check(HttpServletRequest request, RedirectAttributes rs ) {
+		int result = as.admin_check(request);
+		if(result == 0) {
+			rs.addAttribute("id", request.getParameter("id"));
+			return "redirect:/admin/successlogin";
+		}
+		rs.addFlashAttribute("result",result);
+		return "redirect:adminlogin";
+	}
+	
+	@RequestMapping("/successlogin")
+	public String successLogin(@RequestParam String id,
+								HttpSession session
+								) {
+		
+		session.setAttribute(LOGIN, id);
+	
+	
+			
+		return "admin/successlogin";
+	}
+	
 	@GetMapping("adminlist")
 	public String adminlist(Model model) {
 		as.adminList(model);
@@ -53,9 +92,9 @@ public class AdminController {
 	public String adminmodify_form() {
 		return "admin/adminmodify";
 		}
-	@GetMapping("adminmodify")
-	public String adminmodify(AdminDTO dto) {
-		int result = as.adminModify(dto);
+	@PostMapping("adminmodify")
+	public String adminmodify(@RequestParam String id,@RequestParam String pw,@RequestParam(required=false) String tel,AdminDTO dto) {
+	 int result=	as.adminModify(id,pw,tel,dto);
 		if(result==1) {
 			return "redirect:adminlist";
 		}
@@ -72,10 +111,6 @@ public class AdminController {
 	@GetMapping("memmanagement")
 	public String memmanagement() {
 		return "admin/memmanagement";
-		}
-	@GetMapping("statistic")
-	public String statistic() {
-		return "admin/statistic";
 		}
 	
 }

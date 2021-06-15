@@ -55,7 +55,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<!--<c:if test="${adminAnnBoardList.size() == 0 }">
+					<!--<c:if test="${adminQABoardList.size() == 0 }">
 						<tr> <th colspan="6">저장 데이터 없음</th> </tr>
 					</c:if>
 					<c:forEach var="dto" items="${adminAnnBoardList }">

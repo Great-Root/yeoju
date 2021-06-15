@@ -60,6 +60,7 @@
 							<th>최근 활동일</th>
 							<th>최근 활동</th>
 							<th>상태</th>
+							<th>전화번호</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -73,6 +74,7 @@
 								관리자
 								</c:if>
 							</td>
+							<td>${dto.tel }</td>
 						</tr>
 			</c:forEach> 
 					</tbody>

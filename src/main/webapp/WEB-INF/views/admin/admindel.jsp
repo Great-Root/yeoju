@@ -60,12 +60,12 @@
 				  </button>
 				  
 				  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					  <c:forEach var="dto" items="${adminList}">
-	
-				   		 <li><a class="dropdown-item" href="admindelete" >${dto.id }</a></li>
-				 
-				   	 </c:forEach>
-				    	
+					
+				   	  <li><a class="dropdown-item" href="admindelete" >100</a></li>
+				    <li><a class="dropdown-item" href="admindelete" >1200</a></li>
+				    	<li><a class="dropdown-item" href="admindelete" >1300</a></li>
+				    	<li><a class="dropdown-item" href="admindelete" >4100</a></li>
+				    		
 				  </ul>
 				</div>
 			</div>
