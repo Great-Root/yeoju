@@ -13,5 +13,6 @@ public interface AdminService {
 	public int adminDelete(AdminDTO dto);
 	public int adminModify(String id,String pw,String tel,AdminDTO dto);
 	public int admin_check(HttpServletRequest request);
-
-}
+	public void recentAct(String recentAct,String id);
+	
+}	

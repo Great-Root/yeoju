@@ -19,11 +19,18 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<c:choose>
+					
+					  <c:when test="${grade !=1}">
+					 
+						<h1>관리자 전용 페이지 입니다</h1>
+					 </c:when>
+					  <c:otherwise>	
 	<div  align="right"  style=" padding-right: 250px; ">
 	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="/">쇼핑몰로 이동</a></th>
+	<th><a href="logout">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
@@ -49,12 +56,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>John</td>
-							<td>Doe</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-						</tr>
+						<c:forEach var="memdto" items="${memberList}">
+							<tr>	
+								<td>${memdto.userId }</td> 
+								<td>${memdto.tel }</td>
+								<td>${memdto.reg_date }</td>
+								<td>${memdto.recentDate }</td>
+							</tr>
+						</c:forEach> 
 						<tr>
 							<td>Mary</td>
 							<td>Moe</td>
@@ -71,6 +80,7 @@
 					</tbody>
 				</table>
 	</div>
+	</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>

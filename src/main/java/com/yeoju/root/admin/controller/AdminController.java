@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.yeoju.root.member.session_name.MemberSessionName;
 @Controller
 @RequestMapping("admin")
 public class AdminController implements MemberSessionName{
+	String recentAct;
 	@Autowired AdminService as;
 	@GetMapping
 	public String adminLogin() {
@@ -50,11 +52,16 @@ public class AdminController implements MemberSessionName{
 								) {
 		
 		session.setAttribute(LOGIN, id);
-	
+		session.setAttribute(GRADE, "1");
 	
 			
 		return "admin/successlogin";
 	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+			session.invalidate();
+		return "redirect:/";
+	}	
 	
 	@GetMapping("adminlist")
 	public String adminlist(Model model) {
@@ -78,14 +85,13 @@ public class AdminController implements MemberSessionName{
 		as.adminList(model);
 		return "admin/admindel";
 		}
-	@GetMapping("admindelete")
+	@PostMapping("admindelete")
 	public String admindelete(AdminDTO dto) {
-		
 		int result = as.adminDelete(dto);
 		if(result==1) {
 			return "redirect:adminlist";
 		}
-		return "redirect:adminjoin_form";
+		return "redirect:admindel";
 	}
 	
 	@GetMapping("adminmodify_form")
@@ -94,23 +100,29 @@ public class AdminController implements MemberSessionName{
 		}
 	@PostMapping("adminmodify")
 	public String adminmodify(@RequestParam String id,@RequestParam String pw,@RequestParam(required=false) String tel,AdminDTO dto) {
-	 int result=	as.adminModify(id,pw,tel,dto);
+	 int result=as.adminModify(id,pw,tel,dto);
 		if(result==1) {
 			return "redirect:adminlist";
 		}
 		return "redirect:adminmodify_form";
 		}
-	@GetMapping("commanagement")
-	public String commanagement() {
-		return "admin/commanagement";
-		}
+	
 	@GetMapping("commanagementann")
 	public String commanagementann() {
 		return "admin/commanagementann";
 		}
 	@GetMapping("memmanagement")
-	public String memmanagement() {
+	public String memmanagement(@RequestParam(required=false) String id) {
+		recentAct="회원 관리";
+		as.recentAct(recentAct,id);
 		return "admin/memmanagement";
 		}
-	
+
+	@GetMapping("commanagement")
+	public String commanagement(@RequestParam(required=false) String id) {
+		recentAct="커뮤니티 관리";
+		as.recentAct(recentAct,id);
+		return "admin/commanagement";
+		}
+
 }

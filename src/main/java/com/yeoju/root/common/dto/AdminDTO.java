@@ -15,7 +15,7 @@ public class AdminDTO {
 	
 	private Date recentDate;
 	
-	private int recentAct;
+	private String recentAct;
 
 	public String getId() {
 		return id;
@@ -67,11 +67,11 @@ public class AdminDTO {
 		this.recentDate = recentDate;
 	}
 
-	public int getRecentAct() {
+	public String getRecentAct() {
 		return recentAct;
 	}
 
-	public void setRecentAct(int recentAct) {
+	public void setRecentAct(String recentAct) {
 		this.recentAct = recentAct;
 	}
 	

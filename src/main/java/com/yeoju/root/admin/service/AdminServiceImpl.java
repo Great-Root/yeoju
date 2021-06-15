@@ -57,30 +57,11 @@ public class AdminServiceImpl implements AdminService{
 			return 0;
 		}
 	}
-	public int adminModify(String id,String pw,String tel,AdminDTO dto) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("비밀번호 변경 전 : "+pw);
-		pw = encoder.encode(dto.getPw());
-		System.out.println("암호화 후 : "+pw);
-		
-		map.put("pw",pw);
-		map.put("tel",tel);
-		map.put("id", id);
-		try {
-			
-		mapper.adminModify(map);
-		return 1;
-		}catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-		}
-	}
+	
 	
 	@Override
 	public int admin_check(HttpServletRequest request) {
 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
 		AdminDTO dto = mapper.admin_check(request.getParameter("id"));
 		if(dto != null) {
 			if(encoder.matches(request.getParameter("pw"), dto.getPw()) ||
@@ -90,5 +71,29 @@ BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		}
 		return 1;
 	}
-
+	
+	
+	public int adminModify(String id,String pw,String tel,AdminDTO dto) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		Map<String, Object> map = new HashMap<String, Object>();
+		pw = encoder.encode(dto.getPw());
+		map.put("pw",pw);
+		map.put("tel",tel);
+		map.put("id", id);
+		try {
+		mapper.adminModify(map);
+		return 1;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	} 
+	@Override
+	public void recentAct(String recentAct,String id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("recentAct",recentAct);
+		map.put("id", id);
+		mapper.recentAct(map);
+	
+	}
 }

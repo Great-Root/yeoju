@@ -16,7 +16,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<insert id="adminJoin">
 		INSERT INTO ADMINMEMBER(user_id,pw,tel,grade,reg_Date) VALUES(#{id},#{pw},#{tel},1,sysdate)
-		
 	</insert>
 	<select id="admin_check" resultMap="admin">
 		select * from ADMINMEMBER where user_id=#{id}
@@ -29,6 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<update id="adminModify">
 		update ADMINMEMBER set pw=#{pw}, tel=#{tel} where user_id = #{id}
-		
 	</update>
+	<update id="recentAct">
+		update ADMINMEMBER set recent_Act=#{recentAct} where user_id = #{id}
+	</update>
+	
 </mapper>

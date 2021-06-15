@@ -41,6 +41,15 @@
 					</div>
 					 </div>
 					 </c:when>
+					  <c:when test="${grade ==1}">
+					 
+					<div class ="col">
+					<div class="text-end p-3">
+						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
+						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/registerPage'">Sign-up</button>
+					</div>
+					 </div>
+					 </c:when>
 					  <c:otherwise>
 					<!-- 
 					 -->

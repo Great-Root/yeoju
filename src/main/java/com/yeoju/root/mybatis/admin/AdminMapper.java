@@ -16,4 +16,6 @@ public interface AdminMapper {
 	public void adminModify(Map<String, Object> map);
 
 	public AdminDTO admin_check(String parameter);
+	
+	public void recentAct(Map<String, Object> map);
 }
