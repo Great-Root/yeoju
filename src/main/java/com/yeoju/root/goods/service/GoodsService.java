@@ -5,10 +5,10 @@ import java.util.List;
 import com.yeoju.root.common.dto.GoodsDTO;
 
 public interface GoodsService {
-//
-//	//01.상품목록
-//	public List<GoodsDTO> listGoods();
-//	
+
+	//01.상품목록
+	public List<GoodsDTO> listGoods();
+	
 //	//02.상품상세
 //	public GoodsDTO detailGoods(int goodsId);
 //		

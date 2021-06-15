@@ -30,7 +30,7 @@
 	
 	<c:import url="default/footer.jsp" />
 </body>
-<!-- 
+
 <script>
 var pageNo = 1;
 $(document).ready(function(){
@@ -79,5 +79,5 @@ function lodingList(data) {
 	$(".mainTable").append(html);
 }
 </script>
- -->
+
 </html>

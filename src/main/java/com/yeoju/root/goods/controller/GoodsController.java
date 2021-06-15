@@ -1,32 +1,33 @@
-package com.yeoju.root.controller;
+package com.yeoju.root.goods.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.goods.service.GoodsService;
 
 @Controller
-@RequestMapping("/goods/*")
+@RequestMapping("goods")
 public class GoodsController {
-//	@Inject
-//	GoodsService goodsService;
-//	
-//	//1. 상품 전체 목록 - 메인페이지 쪽에서?
-//	@RequestMapping("/list.do")
-//	public ModelAndView list(ModelAndView mav) {
-//		//mav.setViewName("/goods/goodsList");
-//		mav.setViewName("/goodsList");
-//		mav.addObject("list",goodsService.listGoods());
-//		return mav;
-//	}
+	@Autowired
+	GoodsService gs;
+	
+	//1. 상품 전체 목록 - 메인페이지 쪽에서?
+	@ResponseBody
+	@RequestMapping("/list.do")
+	public List<GoodsDTO> list() {
+		return gs.listGoods();
+	}
 //	//2. 상품 상세보기
 //	//@RequestMapping("/detail/{goodsId}")
 //	@RequestMapping("detail/{goodsId}")
@@ -35,13 +36,13 @@ public class GoodsController {
 //		mav.addObject("dto",goodsService.detailGoods(goodsId));
 //		return mav;
 //	}
-//	
-//	//3.상품등록 페이지 매핑
-//	@RequestMapping("write.do")
-//	public String write() { 
-//		return "/goods/goodsWrite()";
-//	}
-//	
+	
+	//3.상품등록 페이지 매핑
+	@RequestMapping("write.do")
+	public String write() { 
+		return "/goods/goodsWrite";
+	}
+	
 //	//4.상품등록 처리 매핑
 //	@RequestMapping("insert.do")
 //	public String insert(GoodsDTO dto) {

@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.mybatis.MemberDAO;
 import com.yeoju.root.mybatis.MyPageDAO;
 
 @Service
 public class MyPageServiceImpl implements MyPageService{
 
 	@Autowired MyPageDAO dao;
+	@Autowired MemberDAO mdao;
 	
 	@Override
 	public ArrayList<GoodsDTO> sellGoods(){
@@ -31,7 +33,7 @@ public class MyPageServiceImpl implements MyPageService{
 
 	@Override
 	public MemberDTO getUserInfo(String userId) {
-		return null;
+		return mdao.getUserInfo(userId);
 	}
 	
 }
