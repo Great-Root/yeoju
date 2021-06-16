@@ -7,9 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yeoju.root.common.dto.GoodsDTO;
 
 public interface GoodsService {
-	
-//	public static final String IMAGE_REPO = "/home/ubuntu/img/";
-	public static final String IMAGE_REPO = "C:\\Users\\USER\\Desktop\\WorkSpace\\springworkspace\\img\\";
+
 
 	//01.상품목록
 	public List<GoodsDTO> listGoods();

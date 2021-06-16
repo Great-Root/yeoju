@@ -6,9 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<c:set var="path" value="<%=request.getContextPath()%>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
+	function setProfile() {
+		
+	}
 	function sellGoods() {
 		$.ajax({
 			url : "mypage/sellGoods",
@@ -70,8 +73,8 @@
 			<div class="col-md-3">
 				<div class="card shadow-sm">
 					<img
-						src="https://www.greatroot.net/img/download?fileName=${userInfo.profileImg}"
-						width="100%" class="card-img-top rounded" alt="...">
+						src="resources/img/default.png"
+						width="100%" class="card-img-top rounded" alt="..." onload="setProfile()">
 					<div class="card-body">
 						<h5 class="card-title">ID : ${userInfo.userId}</h5>
 						<a href="mypage/memberModify?userId=${userInfo.userId}" class="btn btn-primary">회원정보

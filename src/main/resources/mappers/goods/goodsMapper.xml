@@ -19,13 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<!-- 01.상품 리스트 -->
 	<select id="listGoods" resultMap="GoodsMap">
-		SELECT B.* FROM(
+		<!-- SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
 		SELECT * FROM goods
-		<!-- <if test="keyword != ''">
+		<if test="keyword != ''">
 		WHERE goods_name LIKE '%'||#{keyword}||'%'
-		</if> -->
-		ORDER BY goods_id DESC)A)B WHERE rn
+		</if>
+		ORDER BY goods_id DESC)A)B WHERE rn -->
+		select * from goods order by goods_id desc
 	</select>
 	
 		
@@ -46,10 +47,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 04.상품 수정/편집 -->
 	<update id="updateGoods">
-		UPDATE goods 
-  		 SET goods_name=#{goodsName}, goods_info=#{goodsInfo}, goods_price=#{goodsPrice},
-               img=#{img}, category_code=#{categoryCode}
-      	 WHERE goods_id =#{goodsId};
+		UPDATE goods SET goods_name=#{goodsName}, goods_info=#{goodsInfo}, goods_price=#{goodsPrice}, img=#{img}
+      	 WHERE goods_id=#{goodsId}
 	</update>
 	
 	<!-- 05.상품 레코드 삭제처리 -->

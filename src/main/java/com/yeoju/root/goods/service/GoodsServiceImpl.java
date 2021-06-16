@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.url.URL;
 import com.yeoju.root.mybatis.GoodsDAO;
 
 @Service
-public class GoodsServiceImpl implements GoodsService {
+public class GoodsServiceImpl extends URL implements GoodsService {
 	
 	@Autowired
 	GoodsDAO goodsDao;
@@ -59,9 +60,8 @@ public class GoodsServiceImpl implements GoodsService {
 			SimpleDateFormat sim = new SimpleDateFormat("yyyyMMddHHmmss-");
 			Calendar calendar = Calendar.getInstance();
 			String sysFileName = sim.format(calendar.getTime())+file.getOriginalFilename().replaceAll(" ", "").hashCode()+"."+type[1];
-			String dirPath = IMAGE_REPO+userId+"\\";
-			String filePath = dirPath+sysFileName;
-			new File(dirPath).mkdir();
+			// makeImgURL : URL클래스에서 사용자 디렉토리 생성후 URL값 생성
+			String filePath = makeImgURL(userId, sysFileName);
 			File saveFile = new File(filePath);
 			try {
 				file.transferTo(saveFile);

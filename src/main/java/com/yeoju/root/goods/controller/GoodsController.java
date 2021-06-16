@@ -1,29 +1,32 @@
 package com.yeoju.root.goods.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
 
 @Controller
 @RequestMapping("goods")
-public class GoodsController implements MemberSessionName{
+public class GoodsController extends URL implements MemberSessionName{
 	@Autowired
 	GoodsService gs;
 	
@@ -31,6 +34,7 @@ public class GoodsController implements MemberSessionName{
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list() {
+		System.out.println("확인작업");
 		return gs.listGoods();
 	}
 	//2. 상품 상세보기
@@ -92,13 +96,13 @@ public class GoodsController implements MemberSessionName{
 		String url = "";
 		if(!saveImgName.equals("NO")) {
 			GoodsDTO dto = new GoodsDTO();
+			dto.setGoodsId(Integer.parseInt(goodsId));
 			dto.setGoodsName(goodsName);
 			dto.setGoodsPrice(Integer.parseInt(goodsPrice));
 			dto.setGoodsInfo(goodsInfo);
 			dto.setImg(saveImgName);
 			dto.setUserId(userId);
 			gs.updateGoods(dto);
-			System.out.println(dto.toString());
 			url = "redirect:/goods/detail/"+goodsId;
 		}else {
 			url = "redirect:/goods/write.do";
@@ -124,4 +128,15 @@ public class GoodsController implements MemberSessionName{
 //		goodsService.deleteGoods(goodsId);
 //		return "redirect:/goods/list.do";
 //	}
+	//8.상품 이미지 출력
+	@GetMapping("img/{userId}")
+	public void img(@PathVariable String userId,@RequestParam String fileName,
+			HttpServletResponse response) throws Exception {
+	response.addHeader("Content-disposition", "attachment; fileName="+fileName);
+	String path = getImgURL(userId, fileName);
+	File file = new File(path);
+	FileInputStream in = new FileInputStream(file);
+	FileCopyUtils.copy(in, response.getOutputStream());
+	in.close();
+}
 }

@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>여주마켓</title>
+<c:set var="path" value="<%=request.getContextPath()%>"/>
+<c:set var="userId" value=""/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	function listGoods() {
@@ -14,24 +16,24 @@
 			type : "GET",
 			dataType : "json",
 			success : function(list) {
-				html = '<div class="album py-5 bg-light"><div class="container"><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">'
+				html = '<div class ="div-a" ><div class ="div-b"><div class ="div-c">'
 				$.each(list,function(index, item) {
-					html += '<div class="col"><div class="card shadow-sm">'
-					html += '<img src="https://www.greatroot.net/img/download?fileName='+item.img+'" width="100%" class="card-img-top" alt="...">'
-					html += '<div class="card-body">'
-					html += '<h5 class="card-title">'+item.goodsName+'</h5>'
-					html += '<p class="card-text">'+item.goodsPrice+'</p>'
-					html += '<a href="#" class="btn btn-primary">Go somewhere</a></div></div></div>'
+					html += '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
+					html += '<div class ="div-e"><img alt="상품 이미지" src="${path}/goods/img/'+item.userId+'?fileName='+item.img+'" >'
+					html += '<div class ="div-f"></div>'
+					html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
+					html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
+					html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
 				})
 				html += '</div></div></div>'
-				$("#imges").html(html)
+				$("#images").html(html)
 			},
 			error : function() {
 				alert("문제 발생!!!");
 			}
 		})
 	}
-	var pageNo = 1;
+	/* var pageNo = 1;
 	$(document).ready(function(){
 		initPage(pageNo);
 	});
@@ -76,7 +78,7 @@
 				 + '</tr>'
 		}
 		$(".mainTable").append(html);
-	}
+	} */
 </script>
 <style type="text/css">
 
@@ -175,7 +177,7 @@
 
 
 </head>
-<body>
+<body onload="listGoods()">
 	<c:import url="default/header.jsp" />
 	
 	<div class ="div-1">
@@ -209,117 +211,15 @@
 	</div>
 	<section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
 		<h2>오늘의 상품 추천</h2>
-		<div class ="div-a" >
-			<div class ="div-b">
-				<div class ="div-c">
-					<div class ="div-d" >
-						<a class ="a-a" href ="#1">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/css/h1.jpg" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</a>
-					</div>
-					<div class ="div-d" >
-						<a class ="a-a" href ="#2">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/css/hello.gif" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</a>
-					</div>
-					<div class ="div-d" >
-						<a class ="a-a" href ="#3">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/img/카톡프사움짤_13.gif" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</a>
-					</div>
-					<div class ="div-d" >
-						<a class ="a-a" href ="#4">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/img/카톡프사움짤_3.gif" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</a>
-					</div>
-					<div class ="div-d" >
-						<a class ="a-a" href ="#5">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/img/unnamed.gif" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</a>
-					</div>
-					<div class ="div-d" >
-						<a class ="a-a" href ="#5">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/img/unnamed.gif" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</a>
-					</div>
+		<!-- <div class ="div-a" ><div class ="div-b"><div class ="div-c"> -->
+					<span id="images"></span>
+					<!-- <div class ="div-d" ><a class ="a-a" href ="#1">
+					<div class ="div-e"><img alt="상품 이미지" src="../../resources/css/h1.jpg" >
+					<div class ="div-f"></div>
+					<div class ="div-g"><div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터</div>
+					<div class ="div-i"><div class ="div-j">727,000</div>
+					<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>
+					
 					<div class ="div-d" >
 						<a class ="a-a" href ="#5">
 							<div class ="div-e">
@@ -336,10 +236,10 @@
 								</div>
 							</div>
 						</a>
-					</div>
-				</div>
+					</div> -->
+				<!-- </div>
 			</div>
-		</div>
+		</div> -->
 	</section>
 
 	<c:import url="default/footer.jsp" />
