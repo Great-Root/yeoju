@@ -120,9 +120,11 @@
 
 </body>
 <script>
-$("#sellBtn").click(function () {
-	location.href = "goods/write.do"
-})
+$(document).ready(function(){
+	$("#sellBtn").click(function () {
+		location.href = "${contextPath}/goods/write.do"
+	})
+});
 $("#searchBtn").on("click", function() {
 	if($(".input-group.p-3").find("input.form-control").val().length == 0){
 	        alert("검색어를 입력해주세여!");

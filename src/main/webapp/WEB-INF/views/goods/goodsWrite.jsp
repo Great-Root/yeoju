@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>상품 등록</title>
+<c:set var="path" value="<%=request.getContextPath()%>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	$(document).ready(function(){
@@ -53,7 +54,6 @@
 		<h2 class="text-center">상품 등록</h2><br>
 	</div>
 	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
-	<input type="hidden" name="userId" value="">
 	<div class="row">
 		<div class="col">
 			<div class="text-center">
@@ -61,7 +61,7 @@
 			</div>
 				<div class="mb-3">
 				  <label for="formFile" class="form-label">상품 사진 선택</label>
-				  <input class="form-control" type="file" id="img" onchange="readURL(this)">
+				  <input class="form-control" type="file" id="img" name="img" onchange="readURL(this)">
 				</div>
 		</div>
 		<div class="col">

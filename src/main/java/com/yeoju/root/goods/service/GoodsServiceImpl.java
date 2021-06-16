@@ -1,11 +1,13 @@
 package com.yeoju.root.goods.service;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.mybatis.GoodsDAO;
@@ -21,21 +23,21 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<GoodsDTO> listGoods(){
 		return goodsDao.listGoods();
 	}
-//	//02.상품상세
-//	@Override
-//	public GoodsDTO detailGoods(int goodsId) {
-//		return goodsDao.detailGoods(goodsId);
-//	}
-//	//03.상품추가
-//	@Override
-//	public void insertGoods(GoodsDTO dto) {
-//		goodsDao.insertGoods(dto);
-//	}
-//	//04.상품수정
-//	@Override
-//	public void updateGoods(GoodsDTO dto) {
-//		goodsDao.updateGoods(dto);
-//	}
+	//02.상품상세
+		@Override
+	public GoodsDTO detailGoods(int goodsId) {
+		return goodsDao.detailGoods(goodsId);
+	}
+	//03.상품추가
+	@Override
+	public boolean insertGoods(GoodsDTO dto) {
+		return goodsDao.insertGoods(dto) == 1 ? true : false;
+	}
+	//04.상품수정
+	@Override
+	public void updateGoods(GoodsDTO dto) {
+		goodsDao.updateGoods(dto);
+	}
 //	//05.상품삭제	
 //	@Override
 //	public void deleteGoods(int goodsId) {
@@ -48,5 +50,27 @@ public class GoodsServiceImpl implements GoodsService {
 //		return goodsDao.fileInfo(goodsId);
 //	}
 //	
+	@Override
+	public String fileProcess(MultipartFile file,String userId) {
+		String result = "NO";
+		String[] type = file.getContentType().split("/");
+		
+		if(!file.isEmpty() && file.getContentType().contains("image")) {
+			SimpleDateFormat sim = new SimpleDateFormat("yyyyMMddHHmmss-");
+			Calendar calendar = Calendar.getInstance();
+			String sysFileName = sim.format(calendar.getTime())+file.getOriginalFilename().replaceAll(" ", "").hashCode()+"."+type[1];
+			String dirPath = IMAGE_REPO+userId+"\\";
+			String filePath = dirPath+sysFileName;
+			new File(dirPath).mkdir();
+			File saveFile = new File(filePath);
+			try {
+				file.transferTo(saveFile);
+				result = sysFileName;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 }

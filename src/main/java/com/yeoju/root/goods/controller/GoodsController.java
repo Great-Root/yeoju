@@ -4,21 +4,26 @@ import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.goods.service.GoodsService;
+import com.yeoju.root.member.session_name.MemberSessionName;
 
 @Controller
 @RequestMapping("goods")
-public class GoodsController {
+public class GoodsController implements MemberSessionName{
 	@Autowired
 	GoodsService gs;
 	
@@ -28,14 +33,12 @@ public class GoodsController {
 	public List<GoodsDTO> list() {
 		return gs.listGoods();
 	}
-//	//2. 상품 상세보기
-//	//@RequestMapping("/detail/{goodsId}")
-//	@RequestMapping("detail/{goodsId}")
-//	public ModelAndView detail(@PathVariable("goodsId")int goodsId,ModelAndView mav) {
-//		mav.setViewName("/goodsDetail");
-//		mav.addObject("dto",goodsService.detailGoods(goodsId));
-//		return mav;
-//	}
+	//2. 상품 상세보기
+	@RequestMapping("detail/{goodsId}")
+	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
+		model.addAttribute("dto",gs.detailGoods(goodsId));
+		return "goods/goodsDetail";
+	}
 	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
@@ -43,61 +46,65 @@ public class GoodsController {
 		return "/goods/goodsWrite";
 	}
 	
-//	//4.상품등록 처리 매핑
-//	@RequestMapping("insert.do")
-//	public String insert(GoodsDTO dto) {
-//		String filename="";
-//		//첨부파일 (상품사진) 이 있으면 넣기
-//		if(!dto.getImg().isEmpty()) {
-//			filename=dto.getImg();
-//			
-//			String path = "";
-//		try {
-//			new File(path).mkdirs();//디렉토리 생성
-//			//임시디렉토리(서버)에 저장된 파일을 지정된 디렉토리로 전송
-//			dto.getImg().transferTo(new File(path+filename));
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		dto.setGoodsUrl(filename);
-//		GoodsService.insertGoods(dto);
-//	}
-//	return "redirect:/goods/edit.do";			
-//}
-//	
-//	//5. 상품 수정(편집) 페이지 매핑
-//	@RequestMapping("edit/{goodsId}")
-//	public ModelAndView edit(@PathVariable("goodsId")int goodsId, ModelAndView mav) {
-//		mav.setViewName("/goodsEdit");
-//		mav.addObject("dto", goodsService.detailGoods(goodsId));
-//		return mav;
-//	}
-//	
-//	//6.상품 수정(편집) 처리 매핑
-//	@RequestMapping("update.do")
-//	public String update(GoodsDTO dto) {
-//		String filename="";
-//		//첨부파일(상품사진)이 변경되면
-//		if(!dto.getImg().isEmpty()) {
-//			filename=dto.getImg().getOriginalFilename();
-//			//개발디렉토리 - 파일 업로드 경로
-//		String path = "";	
-//		try {
-//			new File(path).mkdirs(); //디렉토리 생성
-//			dto.getImg().transferTo(new File(path+filename));
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		dto.setGoodsUrl(filename);
-//		//첨부파일이 변경되지 않으면
-//		}else {
-//			//기존의 파일명
-//			GoodsDTO dto2 = GoodsService.detailGoods(dto.getGoodsId());
-//			dto.setGoodsUrl(dto2.getGoodsUrl());
-//		}
-//		goodsService.updateGoods(dto);
-//		return "redirect:/goods/list.do";
-//	}
+	//4.상품등록 처리 매핑
+	@RequestMapping("insert.do")
+	public String insert(MultipartHttpServletRequest mul, HttpSession session) {
+		String goodsName = mul.getParameter("goodsName");
+		String goodsPrice = mul.getParameter("goodsPrice");
+		String goodsInfo = mul.getParameter("goodsInfo");
+		String userId = (String) session.getAttribute(LOGIN);
+		MultipartFile file = mul.getFile("img");
+		String saveImgName = gs.fileProcess(file,userId);
+		String url = "";
+		if(!saveImgName.equals("NO")) {
+			GoodsDTO dto = new GoodsDTO();
+			dto.setGoodsName(goodsName);
+			dto.setGoodsPrice(Integer.parseInt(goodsPrice));
+			dto.setGoodsInfo(goodsInfo);
+			dto.setImg(saveImgName);
+			dto.setUserId(userId);
+			gs.insertGoods(dto);
+			System.out.println(dto.toString());
+			url = "redirect:/";
+		}else {
+			url = "redirect:/goods/write.do";
+		}
+		return url;			
+	}
+	
+	//5. 상품 수정(편집) 페이지 매핑
+	@RequestMapping("edit/{goodsId}")
+	public String edit(@PathVariable("goodsId")int goodsId,Model model) {
+		model.addAttribute("dto", gs.detailGoods(goodsId));
+		return "goods/goodsEdit";
+	}
+	
+	//6.상품 수정(편집) 처리 매핑
+	@RequestMapping("update.do")
+	public String update(MultipartHttpServletRequest mul, HttpSession session) {
+		String goodsName = mul.getParameter("goodsName");
+		String goodsPrice = mul.getParameter("goodsPrice");
+		String goodsInfo = mul.getParameter("goodsInfo");
+		String goodsId = mul.getParameter("goodsId");
+		String userId = (String) session.getAttribute(LOGIN);
+		MultipartFile file = mul.getFile("img");
+		String saveImgName = gs.fileProcess(file,userId);
+		String url = "";
+		if(!saveImgName.equals("NO")) {
+			GoodsDTO dto = new GoodsDTO();
+			dto.setGoodsName(goodsName);
+			dto.setGoodsPrice(Integer.parseInt(goodsPrice));
+			dto.setGoodsInfo(goodsInfo);
+			dto.setImg(saveImgName);
+			dto.setUserId(userId);
+			gs.updateGoods(dto);
+			System.out.println(dto.toString());
+			url = "redirect:/goods/detail/"+goodsId;
+		}else {
+			url = "redirect:/goods/write.do";
+		}
+		return url;
+	}
 	
 	//7.상품 삭제 처리 매핑
 //	@RequestMapping("delete.do")
