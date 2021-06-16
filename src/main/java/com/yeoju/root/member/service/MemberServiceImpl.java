@@ -50,7 +50,6 @@ public class MemberServiceImpl implements MemberService {
 		return 1;
 }
 	
-	
 
 	
 	@Override

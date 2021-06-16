@@ -10,7 +10,7 @@ public class GoodsDTO {
 
 	private String goodsInfo;
 
-	private String goodsPrice;
+	private int goodsPrice;
 
 	// 등록한 사람
 	private String userId;
@@ -54,11 +54,11 @@ public class GoodsDTO {
 		this.goodsInfo = goodsInfo;
 	}
 
-	public String getGoodsPrice() {
+	public int getGoodsPrice() {
 		return goodsPrice;
 	}
 
-	public void setGoodsPrice(String goodsPrice) {
+	public void setGoodsPrice(int goodsPrice) {
 		this.goodsPrice = goodsPrice;
 	}
 
@@ -124,4 +124,12 @@ public class GoodsDTO {
 		this.categoryCode = param.getCategoryCode();
 	}
 
+	@Override
+	public String toString() {
+		return "GoodsDTO [goodsId=" + goodsId + ", goodsName=" + goodsName + ", goodsInfo=" + goodsInfo
+				+ ", goodsPrice=" + goodsPrice + ", userId=" + userId + ", regDate=" + regDate + ", soldOut=" + soldOut
+				+ ", howMany=" + howMany + ", img=" + img + ", categoryCode=" + categoryCode + "]";
+	}
+
+	
 }

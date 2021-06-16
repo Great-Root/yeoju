@@ -7,6 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<id property="userId" column="user_id"/>
 		<result property="pw" column="pw"/>
 		<result property="tel" column="tel"/>
+		<result property="profileImg" column="profile_img"/>
+		<result property="regDate" column="reg_date"/>
 		<result property="sessionId" column="session_id"/>
 		<result property="limitTime" column="limit_time"/>
 		<result property="approval_status" column="approval_status"/>
@@ -33,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원가입 insert into member(user_id, pw, email, reg_date,  approval_status, approval_key) values(#{userId}, #{pw}, #{email}, sysdate, 'false', #{approval_key})-->
 	<insert id="join_member" >
 		insert into member(user_id, pw, email, reg_date) values(#{userId}, #{pw}, #{email}, sysdate)
+
 	</insert>
 	
 	<update id="keepLogin">
@@ -58,5 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set pw = #{pw} where user_id = #{userId}
 	</update>	
 	
-	
+	<select id="getUserInfo" resultMap="member">
+		select * from member where user_id=#{userId}
+	</select>
+		
 </mapper>
