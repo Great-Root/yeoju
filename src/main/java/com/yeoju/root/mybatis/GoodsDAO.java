@@ -1,15 +1,16 @@
-package com.care.root.goods.dao;
+package com.yeoju.root.mybatis;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 
 public interface GoodsDAO {
-//	
-//	//01.상품목록
-//	//List<GoodsDTO> listGoods();
-//	public List<GoodsDTO> listGoods();
-//	
+	
+	//01.상품목록
+	public List<GoodsDTO> listGoods();
+	
 //	//02.상품상세
 //	//GoodsDTO detailGoods(int goodsId);
 //	public GoodsDTO detailGoods(int goodsId);

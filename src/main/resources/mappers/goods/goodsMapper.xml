@@ -4,20 +4,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재!! -->
-<mapper namespace="goods">
-
-	<!-- 01.상품 전체 리스트 
-	<select id="listGoods" resultType="com.yeoju.root.common.dto.GoodsDTO">
-		SELECT
-		goods_id AS goodsId,
-		goods_name AS goodsName,
-		goods_info AS goodsInfo,
-		goods_price AS goodsPrice,
-		sold_out AS soldOut,
-		
-		FROM goods ORDER BY goods_id
+<mapper namespace="com.yeoju.root.mybatis.GoodsDAO">
+	<resultMap type="com.yeoju.root.common.dto.GoodsDTO" id="GoodsMap">
+		<id column="goods_id" property="goodsId"/>
+		<result column="goods_name" property="goodsName"/>
+		<result column="goods_info" property="goodsInfo"/>
+		<result column="goods_price" property="goodsPrice"/>
+		<result column="user_id" property="userId"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="sold_out" property="soldOut"/>
+		<result column="how_many" property="howMany"/>
+		<result column="img" property="img"/>
+		<result column="category_code" property="categoryCode"/>
+	</resultMap>
+	<!-- 01.상품 리스트 -->
+	<select id="listGoods" resultMap="GoodsMap">
+		SELECT B.* FROM(
+		SELECT rownum rn, A.* FROM (
+		SELECT * FROM goods
+		<!-- <if test="keyword != ''">
+		WHERE goods_name LIKE '%'||#{keyword}||'%'
+		</if> -->
+		ORDER BY goods_id DESC)A)B WHERE rn
 	</select>
-	-->
+	
 		
 	<!-- 02.상품 상세보기 -->
 	<select id="detailGoods" resultType="com.yeoju.root.common.dto.GoodsDTO">

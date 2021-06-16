@@ -4,22 +4,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.care.root.goods.dao.GoodsDAO;
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.mybatis.GoodsDAO;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
-//	
-//	@Inject
-//	GoodsDAO goodsDao;
-//	
-//	//01.상품목록
-//	@Override
-//	public List<GoodsDTO> listGoods(){
-//		return goodsDao.listGoods();
-//	}
+	
+	@Autowired
+	GoodsDAO goodsDao;
+	
+	//01.상품목록
+	@Override
+	public List<GoodsDTO> listGoods(){
+		return goodsDao.listGoods();
+	}
 //	//02.상품상세
 //	@Override
 //	public GoodsDTO detailGoods(int goodsId) {

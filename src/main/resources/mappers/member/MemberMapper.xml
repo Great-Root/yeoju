@@ -6,6 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="member" type="com.yeoju.root.common.dto.MemberDTO">
 		<id property="userId" column="user_id"/>
 		<result property="pw" column="pw"/>
+		<result property="profileImg" column="profile_img"/>
+		<result property="regDate" column="reg_date"/>
 		<result property="sessionId" column="session_id"/>
 		<result property="limitTime" column="limit_time"/>
 	</resultMap>
@@ -16,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="register">
-		insert into member(user_id, pw, tel, reg_date) values(#{userId}, #{pw}, #{tel}, sysdate)
+		insert into member(user_id, pw, tel, reg_date, profile_img) values(#{userId}, #{pw}, #{tel}, sysdate, 'default.png')
 	</insert>
 	
 	<update id="keepLogin">
@@ -30,6 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="find_id" resultMap="member">
 		select user_id from member where email = #{email}
+	</select>
+	
+	<select id="getUserInfo" resultMap="member">
+		select * from member where user_id=#{userId}
 	</select>
 		
 </mapper>
