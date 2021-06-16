@@ -14,12 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yeoju.root.admin.service.AdminService;
 import com.yeoju.root.common.dto.AdminDTO;
+import com.yeoju.root.member.service.MemberService;
 import com.yeoju.root.member.session_name.MemberSessionName;
 
 @Controller
@@ -27,6 +30,7 @@ import com.yeoju.root.member.session_name.MemberSessionName;
 public class AdminController implements MemberSessionName{
 	String recentAct;
 	@Autowired AdminService as;
+	@Autowired MemberService ms;
 	@GetMapping
 	public String adminLogin() {
 		return "admin/adminlogin";
@@ -112,17 +116,27 @@ public class AdminController implements MemberSessionName{
 		return "admin/commanagementann";
 		}
 	@GetMapping("memmanagement")
-	public String memmanagement(@RequestParam(required=false) String id) {
+	public String memmanagement(HttpSession session,Model model) {
 		recentAct="회원 관리";
+		String id=(String)session.getAttribute(LOGIN);
 		as.recentAct(recentAct,id);
+		ms.memberList(model);
 		return "admin/memmanagement";
 		}
 
 	@GetMapping("commanagement")
-	public String commanagement(@RequestParam(required=false) String id) {
+	public String commanagement(HttpSession session) {
 		recentAct="커뮤니티 관리";
+		String id=(String)session.getAttribute(LOGIN);
 		as.recentAct(recentAct,id);
 		return "admin/commanagement";
 		}
+	@GetMapping("memberdetail")
+	public String memberdetail(@RequestParam String userId,HttpSession session,Model model) {
+		session.setAttribute(MANAGE, userId);
+		ms.memberInfo(model,userId); 
+		ms.detailList(model,userId);
+		return "admin/memberdetail";
+	}
 
 }

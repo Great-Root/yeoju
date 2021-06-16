@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.yeoju.root.common.dto.AdminDTO;
 import com.yeoju.root.common.dto.MemberDTO;
@@ -92,8 +93,11 @@ BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	public void recentAct(String recentAct,String id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("recentAct",recentAct);
-		map.put("id", id);
+		map.put("id",id);
+		try {
 		mapper.recentAct(map);
-	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

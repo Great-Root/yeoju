@@ -1,5 +1,6 @@
 package com.yeoju.root.mybatis;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.yeoju.root.common.dto.MemberDTO;
@@ -10,4 +11,6 @@ public interface MemberDAO {
 	public void keepLogin(Map<String, Object> map);
 	public MemberDTO getUserSessionId(String sessionId);
 	public String find_id(String email) throws Exception;
+	public ArrayList<MemberDTO> memberList();
+	public ArrayList<MemberDTO> memberInfo(String userId);
 }

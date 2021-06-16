@@ -3,6 +3,7 @@ package com.yeoju.root.admin.service;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.yeoju.root.common.dto.AdminDTO;
 

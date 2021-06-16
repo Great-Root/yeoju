@@ -19,23 +19,18 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
-	<c:choose>
-					  <c:when test="${grade !=1}">
-						<h1>관리자 전용 페이지 입니다</h1>
-					 </c:when>
-					  <c:otherwise>	
 	<div  align="right"  style=" padding-right: 250px; ">
 	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="logout">쇼핑몰로 이동</a></th>
+	<th><a href="/">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
 		<div class="row" style="padding: 40px;">
 		<table class="table col" >
 			<thead>
-				<tr align="center" >
+				<tr  >
 					<th><a href="adminlist">관리자 메뉴</a></th>
 					<th><a href="memmanagement">회원 관리</a></th>
 					<th><a href="commanagement">커뮤니티 관리</a></th>
@@ -43,45 +38,30 @@
 			</thead>
 		</table>
 		</div>
-		
-		<div class="row" >
-<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:250px;" >					<tbody>
-						<tr>
-							<th><a href="adminlist">관리자 목록</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminmodify_form">관리자 계정 수정</a></th>
-						</tr>
-					</tbody>
-				</table>
-				<table class="table table-striped col" >
-					<thead>
-						<tr>
-							<th>아이디</th>
-							<th>등록일</th>
-							<th>최근 활동일</th>
-							<th>최근 활동</th>
-							<th>전화번호</th>
-						</tr>
-					</thead>
+		<h1>===${userId }님의 정보===</h1>
+		<table class="table table-striped col" style="width: 80%;">
 					<tbody>
-				<c:forEach var="dto" items="${adminList}">
-						<tr>	
-							<td>${dto.id }</td> 
-							<td>${dto.regDate }</td>
-							<td>${dto.recentDate }</td>
-							<td>${dto.recentAct }</td>
-							<td>${dto.tel }</td>
-						</tr>
-			</c:forEach> 
+							<c:forEach var="detaildto" items="${detailList }">
+								<tr><th>이름</th><td>${detaildto.name }</td></tr>
+								<tr><th>성별</th><td>
+								<c:choose>
+								<c:when test="${detaildto.gender !=0}">
+								남자</c:when>
+								<c:otherwise>
+								여자</c:otherwise></c:choose>
+								</td></tr>
+								<tr><th>생년월일</th><td>${detaildto.birth }</td></tr>
+								<tr><th>도/시</th><td>${detaildto.addr1 }</td> </tr>
+								<tr><th>구/동</th><td>${detaildto.addr2 }</td> </tr>
+								<tr><th>상세주소</th><td>${detaildto.addr3 }</td> </tr>
+							</c:forEach>
+							<c:forEach var="dto" items="${memberInfo}"> 	
+								<tr><th>전화번호</th><td>${dto.tel }</td></tr>
+								<tr><th>이메일</th><td>${dto.email }</td></tr>
+							</c:forEach> 
 					</tbody>
 				</table>
-			</div>
 	</div>
-	</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>

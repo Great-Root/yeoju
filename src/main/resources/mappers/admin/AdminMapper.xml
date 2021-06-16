@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update ADMINMEMBER set pw=#{pw}, tel=#{tel} where user_id = #{id}
 	</update>
 	<update id="recentAct">
-		update ADMINMEMBER set recent_Act=#{recentAct} where user_id = #{id}
+		update ADMINMEMBER set recent_Date=sysdate,recent_Act=#{recentAct} where user_id = #{id}
 	</update>
 	
 </mapper>

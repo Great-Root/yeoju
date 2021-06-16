@@ -2,6 +2,7 @@ package com.yeoju.root.member.service;
 
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,13 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.yeoju.root.common.dto.AdminDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.common.dto.MemberDetailDTO;
 import com.yeoju.root.mybatis.MemberDAO;
+import com.yeoju.root.mybatis.MemberDetailDAO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired MemberDAO dao;
+	@Autowired MemberDetailDAO detaildao;
 	
 	public int user_check(HttpServletRequest request) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -85,6 +91,23 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return userId;
 		}
+	}
+	@Override
+	public void memberList(Model model) {
+		ArrayList<MemberDTO> list = dao.memberList();
+		model.addAttribute("memberList", list);
+		
+	}
+	public void memberInfo(Model model,String userId) {
+		ArrayList<MemberDTO> list = dao.memberInfo(userId);
+		model.addAttribute("memberInfo", list);
+		
+	}
+	@Override
+	public void detailList(Model model, String userId) {
+		ArrayList<MemberDetailDTO> list = detaildao.detailList(userId);
+		model.addAttribute("detailList", list);
+		
 	}
 	
 	

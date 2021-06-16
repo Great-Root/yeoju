@@ -50,33 +50,18 @@
 					<thead>
 						<tr>
 							<th>아이디</th>
-							<th>전화번호</th>
 							<th>가입일</th>
 							<th>마지막 방문일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="memdto" items="${memberList}">
+						<c:forEach var="dto" items="${memberList}">
 							<tr>	
-								<td>${memdto.userId }</td> 
-								<td>${memdto.tel }</td>
-								<td>${memdto.reg_date }</td>
-								<td>${memdto.recentDate }</td>
+								<td><a href="memberdetail?userId=${dto.userId }">${dto.userId }</a></td> 
+								<td>${dto.regDate}</td>
+								<td>${dto.recentDate }</td>
 							</tr>
 						</c:forEach> 
-						<tr>
-							<td>Mary</td>
-							<td>Moe</td>
-							<td>mary@example.com</td>
-							<td>john@example.com</td>
-							
-						</tr>
-						<tr>
-							<td>July</td>
-							<td>Dooley</td>
-							<td>july@example.com</td>
-							<td>john@example.com</td>
-						</tr>
 					</tbody>
 				</table>
 	</div>
