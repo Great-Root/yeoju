@@ -36,7 +36,7 @@
 					<div class ="col">
 					<div class="text-end p-3">
 						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
-						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/registerPage'">Sign-up</button>
+						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
 					</div>
 					 </div>
 					 </c:when>
