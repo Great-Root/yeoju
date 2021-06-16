@@ -7,11 +7,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+
+
+
+</style>
 </head>
 <body>
 	<header class="p-3 bg-white text-dark">
 		<div class="container">
-			<div class="container px-4">
+			<div class="container px-4" style ="width: 1133px; ">
 				<div class="row gx-5">
 					<div class="col">
 						<div
@@ -34,7 +40,7 @@
 					 <c:when test="${loginUser == null}">
 					 
 					<div class ="col">
-					<div class="text-end p-3">
+					<div class="text-end p-3" style="margin-right: 0.5rem;">
 						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
 						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/registerPage'">Sign-up</button>
 					</div>
@@ -93,9 +99,11 @@
 							type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 							aria-expanded="false">카테고리</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">아이템01</a></li>
-							<li><a class="dropdown-item" href="#">아이템02</a></li>
-							<li><a class="dropdown-item" href="#">아이템03</a></li>
+							<li><a class="dropdown-item" href="#">남성의류</a></li>
+							<li><a class="dropdown-item" href="#">여성의류</a></li>
+							<li><a class="dropdown-item" href="#">가구</a></li>
+							<li><a class="dropdown-item" href="#">휴대폰</a></li>
+							<li><a class="dropdown-item" href="#">스포츠</a></li>
 						</ul>
 					</div>
 					<div class="col">
