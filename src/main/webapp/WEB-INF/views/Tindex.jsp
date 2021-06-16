@@ -6,78 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>여주마켓</title>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-	function listGoods() {
-		$.ajax({
-			url : "goods/list.do",
-			type : "GET",
-			dataType : "json",
-			success : function(list) {
-				html = '<div class="album py-5 bg-light"><div class="container"><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">'
-				$.each(list,function(index, item) {
-					html += '<div class="col"><div class="card shadow-sm">'
-					html += '<img src="https://www.greatroot.net/img/download?fileName='+item.img+'" width="100%" class="card-img-top" alt="...">'
-					html += '<div class="card-body">'
-					html += '<h5 class="card-title">'+item.goodsName+'</h5>'
-					html += '<p class="card-text">'+item.goodsPrice+'</p>'
-					html += '<a href="#" class="btn btn-primary">Go somewhere</a></div></div></div>'
-				})
-				html += '</div></div></div>'
-				$("#imges").html(html)
-			},
-			error : function() {
-				alert("문제 발생!!!");
-			}
-		})
-	}
-	var pageNo = 1;
-	$(document).ready(function(){
-		initPage(pageNo);
-	});
-
-	$(function() {
-		
-		$(body).scroll() {
-			pageNo += 1;
-			initPage(pageNo);
-		}
-	});
-		
-	function initPage(pageNo) {
-		
-		var param = {
-			"pageNo" : pageNo
-		};
-		
-		// 데이터를 불러온다.
-		$.ajax({
-			type : "GET",
-			data : param,
-			url : "",
-			success : function(data) {
-				lodingList(data);
-			},
-			error : function(data2) {
-			
-			}
-		});
-	}
-
-	function lodingList(data) {
-		var html = '';
-		for(var i : data) {
-			html = '<tr>'
-				 + '<td>'
-				 +	'<h3>'
-				 +	data.title
-				 +	'</h3>'
-				 + '</td>'
-				 + '</tr>'
-		}
-		$(".mainTable").append(html);
-	}
-</script>
+<script src="http://code.jquery.com/jquery.min.js"></script>
 <style type="text/css">
 
 	.div-a{
@@ -172,8 +101,6 @@
 	width: 1030px;
 	}
 </style>
-
-
 </head>
 <body>
 	<c:import url="default/header.jsp" />
@@ -207,7 +134,8 @@
   </button>
 </div>
 	</div>
-	<section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
+	
+	<section class ="section01" style ="width:1024px; margin:auto; padding : 3.5rem 0px 1.5rem;">
 		<h2>오늘의 상품 추천</h2>
 		<div class ="div-a" >
 			<div class ="div-b">
@@ -302,41 +230,9 @@
 							</div>
 						</a>
 					</div>
-					<div class ="div-d" >
-						<a class ="a-a" href ="#5">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/img/unnamed.gif" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</a>
-					</div>
-					<div class ="div-d" >
-						<a class ="a-a" href ="#5">
-							<div class ="div-e">
-								<img alt="상품 이미지" src="../../resources/img/unnamed.gif" >
-								<div class ="div-f"></div>
-								<div class ="div-g">
-									<div class ="div-h">인텔9세대 i5 슈퍼가성비 게이밍컴퓨터--------------------------------------------------------------------------------------------------------------</div>
-									<div class ="div-i">
-										<div class ="div-j">727,000</div>
-										<div class ="div-k">
-										<span>8분전</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</a>
-					</div>
+					
+					
+					
 				</div>
 			</div>
 		</div>
@@ -344,4 +240,54 @@
 
 	<c:import url="default/footer.jsp" />
 </body>
+<!-- 
+<script>
+var pageNo = 1;
+$(document).ready(function(){
+	initPage(pageNo);
+});
+
+$(function() {
+	
+	$(body).scroll() {
+		pageNo += 1;
+		initPage(pageNo);
+	}
+});
+	
+function initPage(pageNo) {
+	
+	var param = {
+		"pageNo" : pageNo
+	};
+	
+	// 데이터를 불러온다.
+	$.ajax({
+		type : "GET",
+		data : param,
+		url : "",
+		success : function(data) {
+			lodingList(data);
+		},
+		error : function(data2) {
+		
+		}
+	});
+}
+
+function lodingList(data) {
+	var html = '';
+	for(var i : data) {
+		html = '<tr>'
+			 + '<td>'
+			 +	'<h3>'
+			 +	data.title
+			 +	'</h3>'
+			 + '</td>'
+			 + '</tr>'
+	}
+	$(".mainTable").append(html);
+}
+</script>
+ -->
 </html>
