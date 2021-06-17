@@ -110,11 +110,6 @@ public class AdminController implements MemberSessionName{
 		}
 		return "redirect:adminmodify_form";
 		}
-	
-	@GetMapping("commanagementann")
-	public String commanagementann() {
-		return "admin/commanagementann";
-		}
 	@GetMapping("memmanagement")
 	public String memmanagement(HttpSession session,Model model) {
 		recentAct="회원 관리";
@@ -123,14 +118,6 @@ public class AdminController implements MemberSessionName{
 		ms.memberList(model);
 		return "admin/memmanagement";
 		}
-
-	@GetMapping("commanagement")
-	public String commanagement(HttpSession session) {
-		recentAct="커뮤니티 관리";
-		String id=(String)session.getAttribute(LOGIN);
-		as.recentAct(recentAct,id);
-		return "admin/commanagement";
-		}
 	@GetMapping("memberdetail")
 	public String memberdetail(@RequestParam String userId,HttpSession session,Model model) {
 		session.setAttribute(MANAGE, userId);
@@ -138,5 +125,27 @@ public class AdminController implements MemberSessionName{
 		ms.detailList(model,userId);
 		return "admin/memberdetail";
 	}
+	@GetMapping("commanagement")
+	public String commanagement(HttpSession session,Model model) {
+		recentAct="커뮤니티 관리";
+		String id=(String)session.getAttribute(LOGIN);
+		System.out.println(id);
+		as.recentAct(recentAct,id);
+		as.QnABoardList(model);
+		return "admin/commanagement";
+		}
+	@GetMapping("qnaview")
+	public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
+	
+		session.setAttribute("writeNo", writeNo);
+		
+		as.QnABoardView(writeNo,model);
+		return "admin/qnaview";
+	}
+
+	@GetMapping("commanagementann")
+	public String commanagementann() {
+		return "admin/commanagementann";
+		}
 
 }

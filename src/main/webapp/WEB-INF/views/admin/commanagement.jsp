@@ -62,25 +62,18 @@
 						</tr>
 					</thead>
 					<tbody>
-					<!--<c:if test="${adminQABoardList.size() == 0 }">
+				<c:if test="${QnABoardList.size() == 0 }">
 						<tr> <th colspan="6">저장 데이터 없음</th> </tr>
 					</c:if>
-					<c:forEach var="dto" items="${adminAnnBoardList }">
+					<c:forEach var="dto" items="${QnABoardList }">
 					<tr>
 						<td>${dto.writeNo }</td>
-					    <td><a href="${contextPath }/board/contentView?writeNo=${dto.writeNo }">${dto.title }</a></td>
-						<td>${dto.id }</td> 
+					    <td><a href="qnaview?writeNo=${dto.writeNo }">${dto.title }</a></td>
+						<td>${dto.userid }</td> 
 						<td>${dto.saveDate }</td> 
 						<td>${dto.hit }</td>
 					</tr>
-					</c:forEach>-->
-						<tr>
-							<td>July</td>
-							<td>Dooley</td>
-							<td>july@example.com</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-						</tr>
+					</c:forEach>	
 					</tbody>
 				</table>
 	</div>

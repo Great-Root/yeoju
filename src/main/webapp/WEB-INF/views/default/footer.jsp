@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +27,12 @@
 <body>
 
 	<div class="container">
+		<c:choose>
+	 <c:when test="${grade !=1}">
 	<hr>
+	 
   <div class="row">
+  	
     <div class="col-sm-3" style = " text-align: center;  border-right: solid 1px black;">
      	<a href ="#">공지사항</a>
     </div>
@@ -40,7 +45,14 @@
     <div class="col-sm-3"  style = " text-align: center;  ">
       <a href ="#">자주하는 질문</a>
     </div>
+    
   </div>
+ 	</c:when>
+  	<c:otherwise>
+  		관리자는 안볼꺼얌
+  	</c:otherwise>
+ 		 </c:choose>
+  
   <br>
   <hr>
   <br>

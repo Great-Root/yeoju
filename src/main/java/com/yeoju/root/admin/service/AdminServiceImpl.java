@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.yeoju.root.common.dto.AdminDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.common.dto.MemberDetailDTO;
+import com.yeoju.root.common.dto.QnaBoardDTO;
+import com.yeoju.root.mybatis.QnaBoardDAO;
 import com.yeoju.root.mybatis.admin.AdminMapper;
 @Service
 public class AdminServiceImpl implements AdminService{
 	@Autowired AdminMapper mapper;
+	@Autowired QnaBoardDAO dao;
 	@Override
 	public void adminList(Model model) {
 		ArrayList<AdminDTO> list = mapper.adminList();
 		model.addAttribute("adminList", list);
-		 
 	}
 	public void adminDel(Model model) {
 		ArrayList<AdminDTO> list = mapper.adminList();
 		model.addAttribute("adminDel", list);
-		 
 	}
 	public int adminJoin(AdminDTO dto) {
-		
 		String id=dto.getId();
 		String pw=dto.getPw();
 		String tel=dto.getTel();
 		dto.setId(id);
 		dto.setPw(pw);
 		dto.setTel(tel);
-		
 		try {
 			return mapper.adminJoin(dto);
 		}catch (Exception e) {
@@ -58,8 +58,6 @@ public class AdminServiceImpl implements AdminService{
 			return 0;
 		}
 	}
-	
-	
 	@Override
 	public int admin_check(HttpServletRequest request) {
 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -72,8 +70,6 @@ BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		}
 		return 1;
 	}
-	
-	
 	public int adminModify(String id,String pw,String tel,AdminDTO dto) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -99,5 +95,15 @@ BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public void QnABoardList(Model model) {
+		model.addAttribute("QnABoardList",dao.QnABoardList());
+	}
+	@Override
+	public void QnABoardView(int writeNo,Model model) {
+		QnaBoardDTO list = dao.QnABoardView(writeNo);
+		model.addAttribute("personalData", list);
+		//upHit(writeNo);	
 	}
 }
