@@ -61,7 +61,7 @@
 			</div>
 				<div class="mb-3">
 				  <label for="formFile" class="form-label">상품 사진 선택</label>
-				  <input class="form-control" type="file" id="img" name="img" onchange="readURL(this)">
+				  <input class="form-control" type="file" id="img" name="imgFile" onchange="readURL(this)">
 				</div>
 		</div>
 		<div class="col">

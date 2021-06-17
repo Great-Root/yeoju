@@ -24,10 +24,7 @@
 			} else if (goodsInfo == "") {
 				alert("상품 설명을 입력해주세요");
 				goodsInfo.focus();
-			} else if (img == "") {
-				alert("상품 사진을 입력해주세요");
-				img.focus();
-			}
+			} 
 			document.form1.action = "${path}/goods/update.do";
 			document.form1.submit();
 		});
@@ -64,14 +61,15 @@
 	</div>
 	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
 	<input type="hidden" name="goodsId" value="${dto.goodsId}">
+	<input type="hidden" name="imgFileName" value="${dto.imgFileName}">
 	<div class="row">
 		<div class="col">
 			<div class="text-center">
-			  <img src="${path}/goods/img/${dto.userId}?fileName=${dto.img}" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
+			  <img src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
 			</div>
 				<div class="mb-3">
 				  <label for="formFile" class="form-label">상품 사진 선택</label>
-				  <input class="form-control" type="file" id="img" name="img" onchange="readURL(this)">
+				  <input class="form-control" type="file" id="img" name="imgFile" onchange="readURL(this)">
 				</div>
 		</div>
 		<div class="col">

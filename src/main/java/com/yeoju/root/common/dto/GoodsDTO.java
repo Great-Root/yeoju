@@ -2,6 +2,8 @@ package com.yeoju.root.common.dto;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class GoodsDTO {
 
 	private Integer goodsId;
@@ -24,8 +26,11 @@ public class GoodsDTO {
 	// 판매갯수 기본값 : 1
 	private Integer howMany;
 
-	// 이미지 경로(최대 5개))
-	private String img;
+	// 이미지 파일
+	private MultipartFile imgFile;
+	
+	// 이미지 파일 이름
+	private String imgFileName;
 
 	// 카테고리 코드
 	private String categoryCode;
@@ -94,12 +99,20 @@ public class GoodsDTO {
 		this.howMany = howMany;
 	}
 
-	public String getImg() {
-		return img;
+	public MultipartFile getImgFile() {
+		return imgFile;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setImgFile(MultipartFile img) {
+		this.imgFile = img;
+	}
+	
+	public String getImgFileName() {
+		return imgFileName;
+	}
+
+	public void setImgFileName(String imgFileName) {
+		this.imgFileName = imgFileName;
 	}
 
 	public String getCategoryCode() {
@@ -120,7 +133,8 @@ public class GoodsDTO {
 		this.regDate = param.getRegDate();
 		this.soldOut = param.getSoldOut();
 		this.howMany = param.getHowMany();
-		this.img = param.getImg();
+		this.imgFile = param.getImgFile();
+		this.imgFileName = param.getImgFileName();
 		this.categoryCode = param.getCategoryCode();
 	}
 
@@ -128,8 +142,8 @@ public class GoodsDTO {
 	public String toString() {
 		return "GoodsDTO [goodsId=" + goodsId + ", goodsName=" + goodsName + ", goodsInfo=" + goodsInfo
 				+ ", goodsPrice=" + goodsPrice + ", userId=" + userId + ", regDate=" + regDate + ", soldOut=" + soldOut
-				+ ", howMany=" + howMany + ", img=" + img + ", categoryCode=" + categoryCode + "]";
+				+ ", howMany=" + howMany + ", imgFile=" + imgFile + ", imgFileName=" + imgFileName + ", categoryCode="
+				+ categoryCode + "]";
 	}
 
-	
 }

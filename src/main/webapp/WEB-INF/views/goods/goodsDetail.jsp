@@ -37,7 +37,7 @@
 	<div class="row">
 		<div class="col">
 			<div class="text-center">
-			  <img src="${path}/goods/img/${dto.userId}?fileName=${dto.img}" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
+			  <img src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
 			</div>
 		</div>
 		<div class="col">

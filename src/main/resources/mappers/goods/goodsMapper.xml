@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="reg_date" property="regDate"/>
 		<result column="sold_out" property="soldOut"/>
 		<result column="how_many" property="howMany"/>
-		<result column="img" property="img"/>
+		<result column="img" property="imgFileName"/>
 		<result column="category_code" property="categoryCode"/>
 	</resultMap>
 	<!-- 01.상품 리스트 -->
@@ -41,13 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(
 			goods_seq.NEXTVAL, #{goodsName}, #{goodsInfo}, #{goodsPrice},
 			#{userId}, sysdate, <!-- #{RegDate} -->	0, <!-- #{soldOut} -->
-			1, #{img}, '1'
+			1, #{imgFileName}, '1'
 		)
 	</insert>
 	
 	<!-- 04.상품 수정/편집 -->
 	<update id="updateGoods">
-		UPDATE goods SET goods_name=#{goodsName}, goods_info=#{goodsInfo}, goods_price=#{goodsPrice}, img=#{img}
+		UPDATE goods SET goods_name=#{goodsName}, goods_info=#{goodsInfo}, goods_price=#{goodsPrice}, img=#{imgFileName}
       	 WHERE goods_id=#{goodsId}
 	</update>
 	
@@ -58,10 +58,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 06.삭제를 위한 상품 이미지 파일이름 select -->
-	<select id="fileInfo" resultType="String">
-		SELECT goods AS goodsUrl
-		FROM goods
+	<select id="imgFileName" resultType="String">
+		SELECT img FROM goods
 		WHERE goods_id=#{goodsId}
+	</select>
+	<select id="sellGoods" resultMap="GoodsMap">
+		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=0
+	</select>
+	<select id="heartPage" resultMap="GoodsMap">
+		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=1
 	</select>
 	
 </mapper>
