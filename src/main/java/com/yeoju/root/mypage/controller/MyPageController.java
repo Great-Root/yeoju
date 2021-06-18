@@ -13,31 +13,30 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+
+import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mypage.service.MyPageService;
 
 @Controller
 @RequestMapping("mypage")
-public class MyPageController {
+public class MyPageController implements MemberSessionName{
 	
 	@Autowired MyPageService mps;
 
 	@ResponseBody
 	@GetMapping(value="/sellGoods", produces = "application/json; charset=utf-8")
-	public ArrayList<GoodsDTO> sellGoods(){
-		return mps.sellGoods();
+	public ArrayList<GoodsDTO> sellGoods(HttpSession session){
+		return mps.sellGoods((String)session.getAttribute(LOGIN));
 	}
 	@ResponseBody
 	@GetMapping(value="/heartPage", produces = "application/json; charset=utf-8")
-	public ArrayList<GoodsDTO> heartPage(){
-		return mps.heartPage();
+	public ArrayList<GoodsDTO> heartPage(HttpSession session){
+		return mps.heartPage((String)session.getAttribute(LOGIN));
 	}
 	@GetMapping("/memberModify/{userId}")
 	public String memebrModify(@PathVariable String userId, Model model) {
@@ -50,7 +49,7 @@ public class MyPageController {
 		rttr.addFlashAttribute("msg", "회원정보 수정 완료");
 		return "redirect:/";
 	}
-	@GetMapping("/delete")
+	@GetMapping("/delete/{userId}")
 	public String deleteForm() {
 		return "mypage/delete";
 	}

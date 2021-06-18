@@ -18,18 +18,18 @@
 			type : "GET",
 			dataType : "json",
 			success : function(list) {
-				html = '<section class="text-center container"><a class="btn btn-primary text-light" onclick="sellGoods()">판매상품</a>' 
+				html = '<section class="text-center container  mb-2"><a class="btn btn-primary text-light" onclick="sellGoods()">판매상품</a>' 
 				html += '<a class="btn btn-secondary text-light" onclick="heartPage()">찜 상품</a></section>'
-				html += '<div class="album py-5 bg-light"><div class="container"><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">'
-				$.each(list,function(index, item) {
-					html += '<div class="col"><div class="card shadow-sm">'
-					html += '<img src="https://www.greatroot.net/img/download?fileName=default.png" width="100%" class="card-img-top" alt="...">'
-					html += '<div class="card-body">'
-					html += '<h5 class="card-title">Card title</h5>'
-					html += '<p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>'
-					html += '<a href="#" class="btn btn-primary">Go somewhere</a></div></div></div>'
-				})
-				html += '</div></div></div>'
+				html += '<div class ="div-a" ><div class ="div-b"><div class ="div-c">'
+					$.each(list,function(index, item) {
+						html += '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
+						html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" >'
+						html += '<div class ="div-f"></div>'
+						html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
+						html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
+						html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
+					})
+					html += '</div></div></div>'
 				$("#imges").html(html)
 			},
 			error : function() {
@@ -44,19 +44,18 @@
 			type : "GET",
 			dataType : "json",
 			success : function(list) {
-			html = ''
-				html = '<section class="text-center container"><a class="btn btn-secondary text-light" onclick="sellGoods()">판매상품</a>' 
+				html = '<section class="text-center container mb-2"><a class="btn btn-secondary text-light" onclick="sellGoods()">판매상품</a>' 
 				html += '<a class="btn btn-primary text-light" onclick="heartPage()">찜 상품</a></section>'
-				html += '<div class="album py-5 bg-light"><div class="container"><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">'
-				$.each(list,function(index, item) {
-					html += '<div class="col"><div class="card shadow-sm">'
-					html += '<img src="https://www.greatroot.net/img/download?fileName=default2.gif" width="100%" class="card-img-top" alt="...">'
-					html += '<div class="card-body">'
-					html += '<h5 class="card-title">Card title</h5>'
-					html += '<p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>'
-					html += '<a href="#" class="btn btn-primary">Go somewhere</a></div></div></div>'
-				})
-				html += '</div></div></div>'
+				html += '<div class ="div-a" ><div class ="div-b"><div class ="div-c">'
+					$.each(list,function(index, item) {
+						html += '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
+						html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" >'
+						html += '<div class ="div-f"></div>'
+						html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
+						html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
+						html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
+					})
+					html += '</div></div></div>'
 				$("#imges").html(html)
 			},
 			error : function() {
@@ -65,16 +64,18 @@
 		})
 	}
 </script>
+<link rel="stylesheet" type="text/css" href="resources/css/list.css">
+</head>
 <body onload="sellGoods()">
 	<c:import url="../default/header.jsp" />
 	<main
 		class="container d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start p-3">
 		<div class="row g-3">
-			<div class="col-md-3">
-				<div class="card shadow-sm">
+			<div class="col-md-2">
+				<div class="card shadow-sm" style="width: 200px;">
 					<img
 						src="resources/img/default.png"
-						width="100%" class="card-img-top rounded" alt="..." onload="setProfile()">
+						class="card-img-top rounded" alt="..." onload="setProfile()">
 					<div class="card-body">
 						<h5 class="card-title">ID : ${userInfo.userId}</h5>
 						<a href="mypage/memberModify/${userInfo.userId}" class="btn btn-primary">회원정보
@@ -90,8 +91,9 @@
 			</div>
 
 			<div class="col-md-8">
-
+			<section class ="section01" style ="width:1035px; margin:auto; padding : 0px 0px 1.5rem;">
 			<span id="imges"></span>
+			</section>
 			</div>
 		</div>
 	</main>

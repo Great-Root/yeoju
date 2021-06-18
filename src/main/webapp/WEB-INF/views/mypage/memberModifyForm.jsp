@@ -77,7 +77,7 @@ function daumPost(){
 						-->
 						<input type="submit" value="정보수정완료"> 
 						<input type="button" value="로그인" onclick="javascript:window.location='login'">
-						<input type="button" value="회원 탈퇴" onclick="location.href='${contextPath }/mypage/delete'">
+						<input type="button" value="회원 탈퇴" onclick="location.href='${contextPath }/mypage/delete/${userInfo.userId}'">
 					</td>
 				</tr>
 			</table>

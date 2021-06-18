@@ -16,15 +16,14 @@ public interface GoodsService {
 	public GoodsDTO detailGoods(int goodsId);
 		
 	//03.상품수정
-	public void updateGoods(GoodsDTO dto);
+	public boolean updateGoods(GoodsDTO dto);
 		
-//	//04.상품삭제
-//	public void deleteGoods(int goodsId);
-//		
+	//04.상품삭제
+	public void deleteGoods(int goodsId);
+		
 	//05.상품추가
 	public boolean insertGoods(GoodsDTO dto);
-		
+	
 	//06.상품이미지 삭제를 위한 이미지파일 정보
-	public String fileProcess(MultipartFile file, String userId);
-
+	public String imgFileName(int goodsId);
 }

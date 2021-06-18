@@ -1,5 +1,6 @@
 package com.yeoju.root.mybatis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -15,17 +16,24 @@ public interface GoodsDAO {
 	public GoodsDTO detailGoods(int goodsId);
 	
 	//03.상품수정
-	public void updateGoods(GoodsDTO dto);
+	public int updateGoods(GoodsDTO dto);
 	
-//	//04.상품삭제
-//	//void deleteGoods(int goodsId);
-//	public void deleteGoods(int goodsId);
+	//04.상품삭제
+	//void deleteGoods(int goodsId);
+	public void deleteGoods(int goodsId);
 	
 	//05.상품추가
 	public int insertGoods(GoodsDTO dto);
+
+	//06.상품이미지 삭제를 위한 이미지파일 정보
+	public String imgFileName(int goodsId);
 	
-//	//06.상품이미지 삭제를 위한 이미지파일 정보
-//	public String fileInfo(int goodsId);
-//	
+	// 판매중인 상품 가져오기
+	public ArrayList<GoodsDTO> sellGoods(String userId);
+	
+	// 찜한 상품 가져오기
+	public ArrayList<GoodsDTO> heartPage(String userId);
+	
+	
 
 }

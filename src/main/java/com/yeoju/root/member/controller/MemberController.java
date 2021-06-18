@@ -47,7 +47,7 @@ public class MemberController implements MemberSessionName{
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
 	public String memberJoinForm() throws Exception{
-		return "/member/memberJoinForm";
+		return "member/memberJoinForm";
 	}
 	
 
