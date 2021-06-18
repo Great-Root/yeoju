@@ -52,7 +52,7 @@ public class GoodsController extends URL implements MemberSessionName{
 	@RequestMapping("detail/{goodsId}")
 	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
 		model.addAttribute("dto",gs.detailGoods(goodsId));
-		return "goods/goodsDetail";
+		return "goods/TgoodsDetail";
 	}
 	
 	//3.상품등록 페이지 매핑
