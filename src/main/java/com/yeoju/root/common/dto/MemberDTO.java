@@ -132,4 +132,12 @@ public class MemberDTO extends MemberDetailDTO{
         this.userId = param.getUserId();
 	}
 
+	@Override
+	public String toString() {
+		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + ", profileImg="
+				+ profileImg + ", email=" + email + ", auth=" + auth + ", recentDate=" + recentDate + ", limitTime="
+				+ limitTime + ", sessionId=" + sessionId + "]";
+	}
+	
+
 }

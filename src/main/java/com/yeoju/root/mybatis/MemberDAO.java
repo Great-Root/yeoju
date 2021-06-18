@@ -13,4 +13,7 @@ public interface MemberDAO {
 	public String find_id(String email) throws Exception;
 	public ArrayList<MemberDTO> memberList();
 	public ArrayList<MemberDTO> memberInfo(String userId);
+	// 회원정보 가져오기
+	public MemberDTO getUserInfo(String userId);
+
 }

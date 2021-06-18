@@ -46,7 +46,6 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("암호화 후 : "+pw);
 	
 		dto.setPw(pw);
-		
 		dto.setLimitTime(new Date(System.currentTimeMillis()));
 		dto.setSessionId("nan");
 				

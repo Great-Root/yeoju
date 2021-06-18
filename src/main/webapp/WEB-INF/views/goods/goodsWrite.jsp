@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>상품 등록</title><br>
+<title>상품 등록</title>
+<c:set var="path" value="<%=request.getContextPath()%>"/>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	$(document).ready(function(){
 		$("#addBtn").click(function(){
@@ -30,49 +32,56 @@
 			document.form1.submit();
 		});
 	});
+	function readURL(input) {
+		var file = input.files[0]	//파일에 대한 정보
+		if(file != ''){
+			var reader = new FileReader();
+			reader.readAsDataURL(file);	//읽고
+			reader.onload = function (e) {	//로드한 값을 표현한다.
+				$("#preview").attr('src',e.target.result);
+			}
+		}
+		
+	}
 	
 </script>
 </head>
 <body>
 <c:import url="../default/header.jsp"/>
-	<h2>상품 등록</h2><br>
+<main class="container d-flex flex-wrap align-items-center justify-content-center">
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
+	<div class="row">
+		<h2 class="text-center">상품 등록</h2><br>
+	</div>
 	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
-		<table border="1">
-			<tr>
-				<td>상품 사진 선택</td>
-				<td><input type="file" name="img" id="img"></td>
-				<td><input type="file" name="img" id="img"></td>
-				<td><input type="file" name="img" id="img"></td>
-			</tr>
-			<tr>
-				<td>상품 제목</td>
-				<td><input type="text" name="goodsName" id="goodsName"></td>
-			</tr>
-			<tr>
-				<td>상품 설명</td>
-				<td><textarea rows="5" cols="60" name="goodsInfo" id="goodsInfo">상품 설명을 입력해주세요</textarea></td>
-			</tr>
-			<tr>
-				<td>연관태그(선택사항)</td>
-				<td><textarea rows="5" cols="25">#태그 입력</textarea></td>
-			</tr>
-			<tr>
-				<td>상품 가격</td>
-				<td><input type="text" name="goodsPrice" id="goodsPrice"></td>
-			</tr>
-			<tr>
-				<td>기타정보</td>
-				<td><textarea rows="5" cols="60" name="" id="">기타 정보를 입력하세요</textarea></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="button" value="취소" onClick="javascript:history.back(-1)">
-					<input type="button" value="상품 등록 완료" id="addBtn">
-					<input type="button" value="목록" onclick="location.href='${path}/goods/list.do';">
-				</td>
-			</tr>
-		</table>
-	</form>
+	<div class="row">
+		<div class="col">
+			<div class="text-center">
+			  <img src="https://www.greatroot.net/img/download?fileName=default.png" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
+			</div>
+				<div class="mb-3">
+				  <label for="formFile" class="form-label">상품 사진 선택</label>
+				  <input class="form-control" type="file" id="img" name="imgFile" onchange="readURL(this)">
+				</div>
+		</div>
+		<div class="col">
+				<input class="form-control mb-2" type="text" placeholder="상품명"  name="goodsName" id="goodsName" aria-label="상품명 입력칸">
+				<input class="form-control mb-2" type="text" placeholder="상품가격"  name="goodsPrice" id="goodsPrice" aria-label="상품가격">
+				<div class="mb-3">
+				  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="상품 설명을 입력해주세요"  name="goodsInfo" id="goodsInfo"></textarea>
+				</div>
+		</div>
+	</div>
+				<div class="row">
+					<div class="col d-flex justify-content-center">
+						<input type="button" class="btn btn-primary mx-3" value="상품 등록 완료" id="addBtn"> 
+						<input type="button" class="btn btn-secondary mx-3" value="목록" onclick="location.href='${path}/goods/list.do';">
+						<input type="button" class="btn btn-danger mx-3" value="취소" onClick="javascript:history.back(-1)"> 
+					</div>
+				</div>
+			</form>
+	</div>
+	</main>
 <c:import url="../default/footer.jsp"/>
 </body>
 </html>
