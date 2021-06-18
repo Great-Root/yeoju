@@ -2,6 +2,8 @@ package com.yeoju.root.mypage.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
 
@@ -18,5 +20,7 @@ public interface MyPageService {
 	public MemberDTO getUserInfo(String userId);
 	
 	public MemberDTO modify(MemberDTO dto) throws Exception;
+	
+	public boolean delete(MemberDTO dto, HttpServletResponse response) throws Exception;
 	
 }

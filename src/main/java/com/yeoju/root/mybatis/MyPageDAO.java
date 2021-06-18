@@ -18,5 +18,9 @@ public interface MyPageDAO {
 	
 	public int modify(MemberDTO dto) throws Exception;
 	
-
+	public int modifydetail(MemberDTO dto) throws Exception;
+	
+	public int delete(MemberDTO dto) throws Exception;
+	
+	public int deletedetail(MemberDTO dto) throws Exception;
 }

@@ -122,6 +122,7 @@ public class MemberServiceImpl implements MemberService {
 		}else {
 			System.out.println(dto.getUserId());
 			dao.join_member(dto);
+			dao.join_memberdetail(dto);
 			return 1;
 		}
 	}

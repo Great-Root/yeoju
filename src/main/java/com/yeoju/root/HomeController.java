@@ -27,7 +27,7 @@ public class HomeController implements MemberSessionName{
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		return "index";
+		return "Tindex";
 	}
 	
 	@GetMapping("/mypage")

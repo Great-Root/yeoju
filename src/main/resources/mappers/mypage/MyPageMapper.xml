@@ -31,9 +31,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select> -->
 	
 	<!-- 회원정보 수정 -->
-	<update id="umodify">
-		update member set name = #{name}, pw = #{pw}, email = #{email}, 
-			addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}, gender = #{gender }		
-				where user_id = #{userId}
+	<update id="modify">
+		update member set pw = #{pw}, email = #{email} where user_id = #{userId}
 	</update>
+	
+	<update id="modifydetail">
+		update member_detail 
+			set name = #{name}, addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}
+				where user_id = #{userId} 
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="delete">
+		delete from member where user_id = #{userId} and pw = #{pw}
+	</delete>
+	
+	<delete id="deletedetail">
+		delete from memberdetail where user_id = #{userId}
+	</delete>
 </mapper>

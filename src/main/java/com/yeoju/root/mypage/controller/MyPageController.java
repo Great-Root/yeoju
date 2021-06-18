@@ -2,6 +2,7 @@ package com.yeoju.root.mypage.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,17 @@ public class MyPageController {
 	public String modifyMember(@ModelAttribute MemberDTO dto, HttpSession session, RedirectAttributes rttr) throws Exception{
 		session.setAttribute("dto", mps.modify(dto));
 		rttr.addFlashAttribute("msg", "회원정보 수정 완료");
+		return "redirect:/";
+	}
+	@GetMapping("/delete")
+	public String deleteForm() {
+		return "mypage/delete";
+	}
+	@PostMapping("/delete.do")
+	public String delete(@ModelAttribute MemberDTO dto, HttpSession session, HttpServletResponse response) throws Exception{
+		if(mps.delete(dto, response)) {
+			session.invalidate();
+		}
 		return "redirect:/";
 	}
 	

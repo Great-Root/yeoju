@@ -59,7 +59,7 @@ function daumPost(){
 						<!--  주소(시/도)<input type="text"	name="addr1" value="${modifyInfo.addr1}"> <br>
 						주소(동/면)<input	type="text" name="addr2" value="${modifyInfo.addr2}"><br>
 						주소(상세주소)<input type="text" name="addr3" value="${modifyInfo.addr3}"> <br>
-						-->
+						
 						
 						성별
 						<div class="form-check">
@@ -74,8 +74,10 @@ function daumPost(){
 								여 
 								</label>
 						</div> <br>
+						-->
 						<input type="submit" value="정보수정완료"> 
 						<input type="button" value="로그인" onclick="javascript:window.location='login'">
+						<input type="button" value="회원 탈퇴" onclick="location.href='${contextPath }/mypage/delete'">
 					</td>
 				</tr>
 			</table>

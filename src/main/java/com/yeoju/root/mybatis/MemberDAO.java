@@ -8,6 +8,7 @@ public interface MemberDAO {
 	public MemberDTO user_check(String id);
 	public int check_id(String userId) throws Exception;
 	public int join_member(MemberDTO dto) throws Exception;
+	public int join_memberdetail(MemberDTO dto) throws Exception;
 	public void keepLogin(Map<String, Object> map);
 	public MemberDTO getUserSessionId(String sessionId);
 	public String find_id(String email) throws Exception;

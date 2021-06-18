@@ -35,7 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원가입 insert into member(user_id, pw, email, reg_date,  approval_status, approval_key) values(#{userId}, #{pw}, #{email}, sysdate, 'false', #{approval_key})-->
 	<insert id="join_member" >
 		insert into member(user_id, pw, email, reg_date) values(#{userId}, #{pw}, #{email}, sysdate)
-
+	</insert>
+	<insert id="join_memberdetail" >
+		insert into member_detail(user_id) values(#{userId})
 	</insert>
 	
 	<update id="keepLogin">
