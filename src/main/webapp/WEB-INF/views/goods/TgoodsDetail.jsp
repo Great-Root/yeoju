@@ -38,7 +38,7 @@
 	}
 	
 	.goods-back{
-	display: flex;
+	display: block;
     padding: 30px 0px
 	}
 	.goods-1 {
@@ -73,10 +73,11 @@
     width: 100%;
 	}
 	.goods-title {
-	ont-size: 24px;
+	font-size: 24px;
     margin-bottom: 25px;
     font-weight: 600;
     line-height: 1.4;
+    overflow: hidden;
 	}
 	.goods2-3 {
 	    display: flex;
@@ -158,9 +159,8 @@
 	.goods3-1 {
 	position: relative;
 	}
-	
 	.goods3 > * {
-	flex: 1 1 0%;
+ 	flex: 1 1 0%;
     font-weight: 600;
     margin-right: 10px;
     display: flex;
@@ -170,7 +170,8 @@
     font-size: 18px;
     -webkit-box-align: center;
     align-items: center;
-	}
+   }
+	
 	.goods3-2 {
 	width: 100%;
     height: 100%;
@@ -206,17 +207,13 @@
 	margin-right: 6px;
 	}
 	.goods3-4 {
-	background: rgb(255, 164, 37);
-    border: 1px solid rgb(243, 150, 20);
-    color: rgb(255, 255, 255);
+	
 	}
 	.goods3-5{
-	background: rgb(247, 0, 0);
-    border: 1px solid rgb(223, 0, 0);
-    color: rgb(255, 255, 255);
+	
 	}
 	.goods4{
-	    display: flex;
+	    display: block;
 	}
 	.goods4-1{
 	font-size: 18px;
@@ -319,7 +316,7 @@
 	}
 	.goods6-5 {
 	font-size: 13px;
-    color: rgb(204, 204, 204)
+    color: rgb(204, 204, 204);
 	}
 	.goods6-6 {
 	margin-bottom: 20px;
@@ -360,7 +357,7 @@
   
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://media.bunjang.co.kr/product/155870256_1_1623768060_w856.jpg" class="d-block w-100" alt="...">
+      <img src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
       <img src="https://media.bunjang.co.kr/product/155870256_1_1623768060_w856.jpg" class="d-block w-100" alt="...">
@@ -383,10 +380,10 @@
 		<div class ="goods2-1">
 			<div class="nothing01">
 				<div class ="goods2-2">
-					<div class="goods-title">모배 계정판매 판매 ㄱㄱㄱㄱ닉변권 있음ㅋㅋㅋㅋ</div>
+					<div class="goods-title">${dto.goodsName}</div>
 					<div class ="goods2-3">
 						<div class="goods-price">
-						15,000
+						${dto.goodsPrice}
 						<span>원</span>
 						</div>
 					</div>
@@ -448,13 +445,22 @@
 						<span>찜</span>
 						<span>0</span>
 					</button>
+					<!-- 
 					<div class="3-3">
 						<img alt=""  width="14" height="14"
 						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTIuMTA2IDdsMy42NjMgNCA3LjAxNS04IiBvcGFjaXR5PSIuNDA2Ii8+Cjwvc3ZnPgo=">
 					</div>
+					 -->
 				</div>
-				<button class="3-4">연락하기</button>
-				<button class ="3-5">바로구매</button>
+				<button class="3-4" 
+				 style="background: rgb(255, 164, 37);
+   				 border: 1px solid rgb(243, 150, 20);
+    			 color: rgb(255, 255, 255);">연락하기</button>
+				<button class ="3-5"
+				style ="background: rgb(247, 0, 0);
+   				border: 1px solid rgb(223, 0, 0);
+    			color: rgb(255, 255, 255);"
+				>바로구매</button>
 			</div>
 		</div>
 	</div>
