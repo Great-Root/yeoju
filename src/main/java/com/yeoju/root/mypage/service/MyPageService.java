@@ -17,4 +17,6 @@ public interface MyPageService {
 
 	public MemberDTO getUserInfo(String userId);
 	
+	public MemberDTO modify(MemberDTO dto) throws Exception;
+	
 }

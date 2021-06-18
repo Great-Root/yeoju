@@ -139,12 +139,12 @@ public class MemberServiceImpl implements MemberService {
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "hek3199@gmail.com";
-		String fromName = "프로젝트이름 또는 보내는 사람 이름";
+		String fromName = "여주마켓 비밀번호 변경";
 		String subject = "";
 		String msg = "";
 
 		if(div.equals("findpw")) {
-			subject = "베프마켓 임시 비밀번호 입니다.";
+			subject = "여주마켓 임시 비밀번호 입니다.";
 			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
 			msg += "<h3 style='color: blue;'>";
 			msg += dto.getUserId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";

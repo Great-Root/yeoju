@@ -35,5 +35,11 @@ public class MyPageServiceImpl implements MyPageService{
 	public MemberDTO getUserInfo(String userId) {
 		return mdao.getUserInfo(userId);
 	}
+
+	@Override
+	public MemberDTO modify(MemberDTO dto) throws Exception {
+		dao.modify(dto);
+		return mdao.getUserInfo(dto.getUserId());
+	}
 	
 }

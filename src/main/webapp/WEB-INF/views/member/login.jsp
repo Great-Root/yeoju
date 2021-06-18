@@ -36,9 +36,7 @@
 				<input type="password" name="pw" class="form-control" id="exampleInputPassword1">
 			</div>
 
-			<!--<c:if test="${result == 1 }">
-				<div>ID 또는 비밀번호 틀림</div>
-			</c:if>-->
+			
 
 			<div class="mb-3 form-check">
 				<input type="checkbox" class="form-check-input" id="exampleCheck1">

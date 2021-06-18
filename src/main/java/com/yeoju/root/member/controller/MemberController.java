@@ -75,7 +75,7 @@ public class MemberController implements MemberSessionName{
 			Date limitDate = new Date(cal.getTimeInMillis());
 			ms.keepLogin(session.getId(), limitDate, userId);
 		}
-		return "member/successLogin";
+		return "redirect:/";
 	}
 	
 	
