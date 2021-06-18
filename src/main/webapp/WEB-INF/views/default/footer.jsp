@@ -28,8 +28,12 @@
 
 	<div class="container">
 		<c:choose>
-	 <c:when test="${grade !=1}">
-	<hr>
+	 <c:when test="${grade ==1}">
+	관리자는 안볼꺼얌
+ 	</c:when>
+  	<c:otherwise>
+  		
+  		<hr>
 	 
   <div class="row">
   	
@@ -47,9 +51,6 @@
     </div>
     
   </div>
- 	</c:when>
-  	<c:otherwise>
-  		관리자는 안볼꺼얌
   	</c:otherwise>
  		 </c:choose>
   

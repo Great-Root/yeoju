@@ -75,6 +75,7 @@ public class MemberController implements MemberSessionName{
 								HttpSession session,
 								HttpServletResponse response) {
 		session.setAttribute(LOGIN, userId);
+		session.setAttribute(GRADE, "0");
 		System.out.println("id "+userId);
 		if(autoLogin != null) {
 			int limitTime = 60*60*24*90; //90일
