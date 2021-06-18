@@ -7,33 +7,29 @@ import org.springframework.stereotype.Service;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.mybatis.GoodsDAO;
 import com.yeoju.root.mybatis.MemberDAO;
 import com.yeoju.root.mybatis.MyPageDAO;
 
 @Service
 public class MyPageServiceImpl implements MyPageService{
 
-	@Autowired MyPageDAO dao;
 	@Autowired MemberDAO mdao;
+	@Autowired GoodsDAO gdao;
 	
 	@Override
-	public ArrayList<GoodsDTO> sellGoods(){
-		return dao.sellGoods();
+	public ArrayList<GoodsDTO> sellGoods(String userId){
+		return gdao.sellGoods(userId);
 	}
 
 	@Override
-	public void insertGoods(GoodsDTO dto) {
-		dao.insertGoods(dto);
-	}
-
-	@Override
-	public ArrayList<GoodsDTO> heartPage() {
-		return dao.heartPage();
+	public ArrayList<GoodsDTO> heartPage(String userId) {
+		return gdao.heartPage(userId);
 	}
 
 	@Override
 	public MemberDTO getUserInfo(String userId) {
 		return mdao.getUserInfo(userId);
 	}
-	
+
 }

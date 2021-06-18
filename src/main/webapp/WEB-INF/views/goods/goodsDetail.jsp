@@ -37,7 +37,7 @@
 	<div class="row">
 		<div class="col">
 			<div class="text-center">
-			  <img src="https://www.greatroot.net/img/${dto.userId}/download?fileName=${dto.img}" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
+			  <img src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
 			</div>
 		</div>
 		<div class="col">
@@ -51,8 +51,8 @@
 				<div class="row">
 					<div class="col d-flex justify-content-center">
 						<input type="button" class="btn btn-primary mx-3" value="상품 내용 수정" id="modiBtn"> 
+						<input type="button" class="btn btn-secondary mx-3" value="목록" onclick="location.href='${path}/';">
 						<input type="button" class="btn btn-danger mx-3" value="상품 삭제 하기" id="delBtn"> 
-						<input type="button" class="btn btn-secondary mx-3" value="목록" onclick="location.href='${path}/goods/list.do';">
 					</div>
 				</div>
 			</form>

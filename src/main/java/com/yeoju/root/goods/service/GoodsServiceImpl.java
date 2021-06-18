@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.url.URL;
 import com.yeoju.root.mybatis.GoodsDAO;
 
 @Service
-public class GoodsServiceImpl implements GoodsService {
+public class GoodsServiceImpl extends URL implements GoodsService {
 	
 	@Autowired
 	GoodsDAO goodsDao;
@@ -35,42 +36,20 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	//04.상품수정
 	@Override
-	public void updateGoods(GoodsDTO dto) {
-		goodsDao.updateGoods(dto);
+	public boolean updateGoods(GoodsDTO dto) {
+		return goodsDao.updateGoods(dto) == 1 ? true : false;
 	}
-//	//05.상품삭제	
-//	@Override
-//	public void deleteGoods(int goodsId) {
-//		goodsDao.deleteGoods(goodsId);
-//	}
-//
-//	//06.상품이미지 삭제를 위한 이미지파일 정보
-//	@Override
-//	public String fileInfo(int goodsId) {
-//		return goodsDao.fileInfo(goodsId);
-//	}
-//	
+	//05.상품삭제	
 	@Override
-	public String fileProcess(MultipartFile file,String userId) {
-		String result = "NO";
-		String[] type = file.getContentType().split("/");
-		
-		if(!file.isEmpty() && file.getContentType().contains("image")) {
-			SimpleDateFormat sim = new SimpleDateFormat("yyyyMMddHHmmss-");
-			Calendar calendar = Calendar.getInstance();
-			String sysFileName = sim.format(calendar.getTime())+file.getOriginalFilename().replaceAll(" ", "").hashCode()+"."+type[1];
-			String dirPath = IMAGE_REPO+userId+"\\";
-			String filePath = dirPath+sysFileName;
-			new File(dirPath).mkdir();
-			File saveFile = new File(filePath);
-			try {
-				file.transferTo(saveFile);
-				result = sysFileName;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
+	public void deleteGoods(int goodsId) {
+		goodsDao.deleteGoods(goodsId);
 	}
+
+	//06.상품이미지 삭제를 위한 이미지파일 정보
+	@Override
+	public String imgFileName(int goodsId) {
+		return goodsDao.imgFileName(goodsId);
+	}
+	
 
 }
