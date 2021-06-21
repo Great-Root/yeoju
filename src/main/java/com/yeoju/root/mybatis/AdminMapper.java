@@ -1,4 +1,4 @@
-package com.yeoju.root.mybatis.admin;
+package com.yeoju.root.mybatis;
 
 import java.util.ArrayList;
 import java.util.Map;

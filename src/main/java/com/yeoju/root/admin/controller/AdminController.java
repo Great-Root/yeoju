@@ -2,6 +2,8 @@ package com.yeoju.root.admin.controller;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,15 +15,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yeoju.root.admin.service.AdminService;
+import com.yeoju.root.board.service.BoardService;
 import com.yeoju.root.common.dto.AdminDTO;
+import com.yeoju.root.common.dto.QnaBoardRepDTO;
 import com.yeoju.root.member.service.MemberService;
 import com.yeoju.root.member.session_name.MemberSessionName;
 
@@ -31,6 +38,7 @@ public class AdminController implements MemberSessionName{
 	String recentAct;
 	@Autowired AdminService as;
 	@Autowired MemberService ms;
+	@Autowired BoardService bs;
 	@GetMapping
 	public String adminLogin() {
 		return "admin/adminlogin";
@@ -128,18 +136,17 @@ public class AdminController implements MemberSessionName{
 	@GetMapping("commanagement")
 	public String commanagement(HttpSession session,Model model) {
 		recentAct="커뮤니티 관리";
-		String id=(String)session.getAttribute(LOGIN);
-		System.out.println(id);
-		as.recentAct(recentAct,id);
-		as.QnABoardList(model);
+		String adminId=(String)session.getAttribute(LOGIN);
+		as.recentAct(recentAct,adminId);
+		bs.QnABoardList(model);
 		return "admin/commanagement";
 		}
 	@GetMapping("qnaview")
 	public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
 	
 		session.setAttribute("writeNo", writeNo);
-		
-		as.QnABoardView(writeNo,model);
+		bs.upHit(writeNo);
+		bs.QnABoardView(writeNo,model);
 		return "admin/qnaview";
 	}
 
@@ -147,5 +154,20 @@ public class AdminController implements MemberSessionName{
 	public String commanagementann() {
 		return "admin/commanagementann";
 		}
-
+	@PostMapping(value="addReply", produces = "application/json; charset=utf-8")
+	public void addReply(@RequestBody Map<String, Object> map, HttpSession session) {
+		
+		QnaBoardRepDTO dto = new QnaBoardRepDTO();
+		dto.setUserid( (String)session.getAttribute(LOGIN));
+		dto.setWrite_group( Integer.parseInt((String)map.get("write_no")) );
+		dto.setTitle((String)map.get("title"));
+		dto.setContent((String)map.get("content"));
+		
+		bs.addReply(dto);
+	}
+	@GetMapping(value="replyData/{write_group}",produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public List<QnaBoardRepDTO> replyData(@PathVariable int write_group){
+		return bs.getRepList(write_group);
+	}
 }

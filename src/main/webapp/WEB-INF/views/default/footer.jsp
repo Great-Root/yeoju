@@ -41,7 +41,7 @@
      	<a href ="#">공지사항</a>
     </div>
     <div class="col-sm-3"  style = " text-align: center;  border-right: solid 1px black;">
-      <a href ="#"> Q&A</a>
+      <a href ="../member/qnaview"> Q&A</a>
     </div>
     <div class="col-sm-3"  style = " text-align: center; border-right: solid 1px black;">
       <a href ="#">이용약관</a>

@@ -3,14 +3,20 @@ package com.yeoju.root.admin.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -18,12 +24,13 @@ import com.yeoju.root.common.dto.AdminDTO;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.common.dto.MemberDetailDTO;
 import com.yeoju.root.common.dto.QnaBoardDTO;
+import com.yeoju.root.common.dto.QnaBoardRepDTO;
+import com.yeoju.root.mybatis.AdminMapper;
 import com.yeoju.root.mybatis.QnaBoardDAO;
-import com.yeoju.root.mybatis.admin.AdminMapper;
 @Service
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
 	@Autowired AdminMapper mapper;
-	@Autowired QnaBoardDAO dao;
+
 	@Override
 	public void adminList(Model model) {
 		ArrayList<AdminDTO> list = mapper.adminList();
@@ -86,24 +93,15 @@ BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		}
 	} 
 	@Override
-	public void recentAct(String recentAct,String id) {
+	public void recentAct(String recentAct,String adminId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("recentAct",recentAct);
-		map.put("id",id);
+		map.put("id",adminId);
 		try {
 		mapper.recentAct(map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	@Override
-	public void QnABoardList(Model model) {
-		model.addAttribute("QnABoardList",dao.QnABoardList());
-	}
-	@Override
-	public void QnABoardView(int writeNo,Model model) {
-		QnaBoardDTO list = dao.QnABoardView(writeNo);
-		model.addAttribute("personalData", list);
-		//upHit(writeNo);	
-	}
+	
 }

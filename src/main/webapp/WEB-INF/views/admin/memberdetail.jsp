@@ -51,8 +51,8 @@
 								여자</c:otherwise></c:choose>
 								</td></tr>
 								<tr><th>생년월일</th><td>${detaildto.birth }</td></tr>
-								<tr><th>도/시</th><td>${detaildto.addr1 }</td> </tr>
-								<tr><th>구/동</th><td>${detaildto.addr2 }</td> </tr>
+								<tr><th>우편번호</th><td>${detaildto.addr1 }</td> </tr>
+								<tr><th>주소</th><td>${detaildto.addr2 }</td> </tr>
 								<tr><th>상세주소</th><td>${detaildto.addr3 }</td> </tr>
 							</c:forEach>
 							<c:forEach var="dto" items="${memberInfo}"> 	

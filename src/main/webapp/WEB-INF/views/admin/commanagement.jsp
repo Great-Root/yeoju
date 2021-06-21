@@ -19,7 +19,7 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
-	<c:choose>
+	<c:choose> 
 					
 					  <c:when test="${grade !=1}">
 					 
@@ -51,31 +51,7 @@
 		<table class="col" style="float: left;">
 		<tr><th><a href="commanagement">Q&A</a></th><th><a href="commanagementann">공지사항</a></th></tr>
 		</table></div>
-		<table class="table table-striped col" >
-					<thead>
-						<tr>
-							<th>No.</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>작성일</th>
-							<th>조회수</th>
-						</tr>
-					</thead>
-					<tbody>
-				<c:if test="${QnABoardList.size() == 0 }">
-						<tr> <th colspan="6">저장 데이터 없음</th> </tr>
-					</c:if>
-					<c:forEach var="dto" items="${QnABoardList }">
-					<tr>
-						<td>${dto.writeNo }</td>
-					    <td><a href="qnaview?writeNo=${dto.writeNo }">${dto.title }</a></td>
-						<td>${dto.userid }</td> 
-						<td>${dto.saveDate }</td> 
-						<td>${dto.hit }</td>
-					</tr>
-					</c:forEach>	
-					</tbody>
-				</table>
+		<c:import url="../board/qnaboard.jsp"/>
 	</div>
 	</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />

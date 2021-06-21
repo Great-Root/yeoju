@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.yeoju.root.board.service.BoardService;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.member.service.MemberService;
 import com.yeoju.root.member.session_name.MemberSessionName;
@@ -35,7 +36,7 @@ import com.yeoju.root.mybatis.MemberDAO;
 public class MemberController implements MemberSessionName{
 	
 	private static Logger logger = LoggerFactory.getLogger(MemberController.class);
-
+	@Autowired BoardService bs;
 	@Autowired MemberService ms;
 	@GetMapping("/login")
 	public String login() {
@@ -124,5 +125,9 @@ public class MemberController implements MemberSessionName{
 			model.addAttribute("userId", ms.find_id(response, email));
 			return "/member/find_id";
 		}
-	
+		@GetMapping("/qnaview")
+		public String qnaview(Model model) {
+			bs.QnABoardList(model);
+			return "member/qnaview";
+		}
 }
