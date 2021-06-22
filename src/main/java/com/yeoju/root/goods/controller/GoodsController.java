@@ -2,6 +2,7 @@ package com.yeoju.root.goods.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -9,6 +10,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.security.cert.X509Certificate;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -30,18 +33,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.yeoju.root.category.CategoryService;
+import com.yeoju.root.common.dto.CategoryDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
 
+//import net.sf.json.JSONArray;
+
 @Controller
 @RequestMapping("goods")
 public class GoodsController extends URL implements MemberSessionName{
+	
 	@Autowired
 	GoodsService gs;
+	@Autowired
+	CategoryService cs;
 	
-	//1. 상품 전체 목록 - 메인페이지 쪽에서?
+	
+	
+	
+	//1. 상품 전체 목록 
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list() {
@@ -57,8 +71,13 @@ public class GoodsController extends URL implements MemberSessionName{
 	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
-	public String write() { 
-		return "/goods/goodsWrite";
+	public String write(Model model) throws Exception{ 
+		
+	List<CategoryDTO> category = null;
+	category = cs.category();
+	model.addAttribute("category", category);
+	
+	return "/goods/goodsWrite";	
 	}
 	
 	//4.상품등록 처리 매핑
@@ -209,5 +228,6 @@ public class GoodsController extends URL implements MemberSessionName{
 			
 		} 
 	    } }; 
-
+	
+	
 }

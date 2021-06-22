@@ -34,8 +34,7 @@
 							</span>
 						</div>
 					</div>
-					<!-- 
-					 -->
+					
 					 <c:choose>
 					 <c:when test="${loginUser == null}">
 					 
@@ -99,11 +98,9 @@
 							type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 							aria-expanded="false">카테고리</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">남성의류</a></li>
-							<li><a class="dropdown-item" href="#">여성의류</a></li>
-							<li><a class="dropdown-item" href="#">가구</a></li>
-							<li><a class="dropdown-item" href="#">휴대폰</a></li>
-							<li><a class="dropdown-item" href="#">스포츠</a></li>
+							<c:forEach var="cate" items="${category}">
+							<li><a class="dropdown-item" href="${cate.code}">${cate.name}</a></li>
+							</c:forEach>
 						</ul>
 					</div>
 					<div class="col">

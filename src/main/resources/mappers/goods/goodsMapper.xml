@@ -69,4 +69,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=1
 	</select>
 	
+	
+	
 </mapper>

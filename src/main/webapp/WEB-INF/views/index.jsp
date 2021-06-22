@@ -33,6 +33,8 @@
 			}
 		})
 	}
+	
+
 	/* var pageNo = 1;
 	$(document).ready(function(){
 		initPage(pageNo);
@@ -119,5 +121,7 @@
 </div>
 </div>
 	<c:import url="default/footer.jsp" />
+	
+
 </body>
 </html>
