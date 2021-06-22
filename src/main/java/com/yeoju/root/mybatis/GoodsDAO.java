@@ -10,7 +10,7 @@ import com.yeoju.root.common.dto.GoodsDTO;
 public interface GoodsDAO {
 	
 	//01.상품목록
-	public List<GoodsDTO> listGoods();
+	public List<GoodsDTO> listGoods(int pageNo);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);

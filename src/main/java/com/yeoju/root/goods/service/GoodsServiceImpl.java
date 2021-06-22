@@ -21,8 +21,8 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	
 	//01.상품목록
 	@Override
-	public List<GoodsDTO> listGoods(){
-		return goodsDao.listGoods();
+	public List<GoodsDTO> listGoods(int pageNo){
+		return goodsDao.listGoods(pageNo);
 	}
 	//02.상품상세
 		@Override

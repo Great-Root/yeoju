@@ -2,6 +2,7 @@ package com.yeoju.root.goods.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -12,6 +13,7 @@ import javax.security.cert.X509Certificate;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -44,9 +46,8 @@ public class GoodsController extends URL implements MemberSessionName{
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
-	public List<GoodsDTO> list() {
-		System.out.println("확인작업");
-		return gs.listGoods();
+	public List<GoodsDTO> list(@RequestParam int pageNo) {
+		return gs.listGoods(pageNo);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
@@ -63,11 +64,13 @@ public class GoodsController extends URL implements MemberSessionName{
 	
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
+	@ResponseBody
 	public String insert(GoodsDTO dto, HttpSession session) {
 
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
+		System.out.println(uploadFile.getOriginalFilename());
 		if (!uploadFile.isEmpty()) {
 			try {
 				// SSL인증서 오류 처리
@@ -86,9 +89,13 @@ public class GoodsController extends URL implements MemberSessionName{
 				RestTemplate restTemplate = new RestTemplate();
 				ResponseEntity<String> response = restTemplate
 						.postForEntity(serverUrl, requestEntity, String.class);
-				dto.setImgFileName(response.getBody()); 
-				dto.setUserId((String) session.getAttribute(LOGIN));
-				url = gs.insertGoods(dto) ? "redirect:/" : "redirect:/goods/write.do";
+				String result = response.getBody();
+				if(!result.equals("Failed to save")) {
+					dto.setImgFileName(result); 
+					dto.setUserId((String) session.getAttribute(LOGIN));
+					url = gs.insertGoods(dto) ? "/" : "";
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

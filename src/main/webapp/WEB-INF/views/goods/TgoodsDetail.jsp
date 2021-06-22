@@ -360,10 +360,10 @@
       <img src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="https://media.bunjang.co.kr/product/155870256_1_1623768060_w856.jpg" class="d-block w-100" alt="...">
+      <img src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="https://media.bunjang.co.kr/product/155870256_1_1623768060_w856.jpg" class="d-block w-100" alt="...">
+      <img src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}" class="d-block w-100" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
