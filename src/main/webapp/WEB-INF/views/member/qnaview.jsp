@@ -64,9 +64,11 @@
 			<div id="reply"></div>
 			<c:choose>
 			<c:when test="${personalData.userid==loginUser}">
-			<input type="button" class="b btn btn-outline-secondary" onclick="location.href='${contextPath }/member/qnaBoardView'" value="삭제하기" >
+			<form action="${contextPath }/member/QnABoardDelete" method="post">
+			 <input type="hidden" name="writeNo" value="${personalData.writeNo}"> 
+			<input type="submit" value="삭제하기" class="b btn btn-outline-secondary col"></form>
 			</c:when></c:choose>
-			<input type="button" class="b btn btn-outline-success" onclick="location.href='${contextPath }/member/qnaBoardView'" value="리스트로 돌아가기">
+			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath }/member/qnaBoardView'" value="리스트로 돌아가기">
 		</td>
 	</tr>
 		</table>
