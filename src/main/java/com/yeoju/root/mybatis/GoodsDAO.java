@@ -31,10 +31,12 @@ public interface GoodsDAO {
 	public String imgFileName(int goodsId);
 	
 	// 판매중인 상품 가져오기
-	public ArrayList<GoodsDTO> sellGoods(String userId);
+	public ArrayList<GoodsDTO> sellGoods(	@Param("userId") String userId, 
+											@Param("pageNo") int pageNo		);
 	
 	// 찜한 상품 가져오기
-	public ArrayList<GoodsDTO> heartPage(String userId);
+	public ArrayList<GoodsDTO> heartPage(	@Param("userId") String userId, 
+											@Param("pageNo") int pageNo		);
 	
 	// 로그인 사용자가 해당상품을 찜했는지 여부확인
 	public int heartCnt(HeartDTO dto);

@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
 		SELECT * FROM goods
-		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pagNo}*5
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
 	
 		
@@ -59,11 +59,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE goods_id=#{goodsId}
 	</select>
 	<select id="sellGoods" resultMap="GoodsMap">
+		SELECT B.* FROM(
+		SELECT rownum rn, A.* FROM (
 		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=0
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
 	<select id="heartPage" resultMap="GoodsMap">
-		SELECT * FROM (SELECT goods_id FROM heart WHERE user_id=#{userId}) a INNER JOIN goods b
-		ON a.goods_id = b.goods_id
+		SELECT * FROM(
+		SELECT B.* FROM(
+		SELECT rownum rn, A.* FROM (
+		SELECT goods_id FROM heart WHERE user_id=#{userId}
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5) a 
+		INNER JOIN goods b
+		ON a.goods_id = b.goods_id 
 	</select>
 	
 	<!-- 로그인 사용자의 해당상품 찜 여부확인 -->

@@ -10,9 +10,9 @@ import com.yeoju.root.common.dto.MemberDTO;
 public interface MyPageService {
 
 	//판매중인 상품 리스트 가져오기
-	public ArrayList<GoodsDTO> sellGoods(String userId);
+	public ArrayList<GoodsDTO> sellGoods(String userId, int pageNo);
 	
-	public ArrayList<GoodsDTO> heartPage(String userId);
+	public ArrayList<GoodsDTO> heartPage(String userId, int pageNo);
 
 	public MemberDTO getUserInfo(String userId);
 	

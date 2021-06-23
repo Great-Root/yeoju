@@ -33,6 +33,7 @@
           type : "GET",
           dataType : "json",
           data : param,
+          async : false,
           success : function(list) {
             lodingList(list);
           },
@@ -52,7 +53,7 @@
             html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
             html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
          })
-   	  if(list.length === 0){
+   	  if(list.length < 5){
    		  msg = '<hr>더이상 상품이 없습니다'
    		  $("#msg").html(msg)
    	  }
