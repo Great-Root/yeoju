@@ -2,10 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="${pageContext.request.contextPath}/resources/css/member/login.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -67,34 +64,29 @@
 <title>회원가입 폼</title>
 </head>
 <body>
-	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>회원가입</h3>
-			</div>
+	<div class="login-page">
+		<div class="form">
+				<img src="../../resources/img/test.png" width="110px" height="140px">
+				<h1 style="color: green; font-size: 30px;">Join</h1>
 			<div>
 				<form id="joinForm" action="${contextPath }/member/join_member.do" method="post">
 					<p>
-						<label>아이디</label> 
-						<input class="w3-input" type="text" id="userId" name="userId" required> 
-						<span id="id_check" class="w3-text-red"></span>
+						<input type="text" id="userId" name="userId" placeholder="ID" required> 
+						<span id="id_check"></span>
 					</p>
 					<p>
-						<label>비밀번호</label> 
-						<input class="w3-input" id="pw" name="pw" type="password" required>
+						<input id="pw" name="pw" type="password" placeholder="password" required>
 					</p>
 					<p>
-						<label>비밀번호 확인</label> 
-						<input class="w3-input" id="pw2" type="password" required>
+						<input id="pw2" type="password" placeholder="password check" required>
 					</p>
 					<p>
-						<label>이메일</label>
-						<input type="text" id="email" name="email" class="w3-input" required>
-						<span id="email_check" class="w3-text-red"></span>
+						<input type="text" id="email" name="email" placeholder="email" required>
+						<span id="email_check"></span>
 					</p>
-					<p class="w3-center">
-						<button type="submit" id="joinBtn" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">가입</button>
-						<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">취소</button>
+					<p>
+						<button type="submit" id="joinBtn">가입</button>
+						<button type="button" onclick="history.go(-1);" >취소</button>
 					</p>
 				</form>
 			</div>

@@ -50,8 +50,9 @@ public class MyPageController implements MemberSessionName{
 		return "redirect:/";
 	}
 	@GetMapping("/delete/{userId}")
-	public String deleteForm() {
-		return "mypage/delete";
+	public String delete(@PathVariable String userId, Model model) {
+		model.addAttribute("deleteInfo", mps.getUserInfo(userId));
+		return "mypage/deleteForm";
 	}
 	@PostMapping("/delete.do")
 	public String delete(@ModelAttribute MemberDTO dto, HttpSession session, HttpServletResponse response) throws Exception{
