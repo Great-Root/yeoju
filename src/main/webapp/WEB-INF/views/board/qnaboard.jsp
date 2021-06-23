@@ -30,18 +30,18 @@
 						<td>${dto.saveDate }</td> 
 						<td>${dto.hit }</td>
 					</tr>
+					</c:forEach>	
 					<c:choose>
 					<c:when test="${grade != 1 }">
 					<tr>
 						<td colspan="6" align="right">
-							<a href="${contextPath }/board/writeForm">글작성</a>
+							<a href="${contextPath }/member/writeForm">글작성</a>
 						</td>
 					</tr>
 					</c:when>
 				
 					<c:otherwise>
 					</c:otherwise></c:choose>
-					</c:forEach>	
 					</tbody>
 				</table>
 </body>

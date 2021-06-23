@@ -22,7 +22,7 @@
 		<result property="write_date" column="write_date"/>
 	</resultMap>	
 	<select id="QnABoardList" resultMap="board">
-		select * from qna_board
+		select * from qna_board order by write_no desc
 	</select>
 	<select id="QnABoardView" resultMap="board">
 		select * from qna_board where write_no=#{writeNo}
@@ -30,6 +30,14 @@
 	<update id="upHit">
 		update qna_board set hit=hit+1 where write_no = #{writeNo}
 	</update>
+	<insert id="writeSave">
+		insert into qna_board(write_no,userid,title,content,savedate)
+			values(qna_board_seq.nextval,#{userid},#{title},#{content},sysdate)
+	</insert>
+	<delete id="QnABoardDelete">
+		delete from qna_board where write_no=#{writeNo}
+	</delete>
+	
 	<insert id="addReply">
 		insert into reply(userid,title,content,write_group)
 			values(#{userid},#{title},#{content},#{write_group})
