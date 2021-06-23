@@ -47,6 +47,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<delete id="deletedetail">
-		delete from memberdetail where user_id = #{userId}
+		delete from member_detail where user_id = #{userId}
 	</delete>
 </mapper>

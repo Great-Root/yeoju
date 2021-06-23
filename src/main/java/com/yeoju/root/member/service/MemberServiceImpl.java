@@ -23,7 +23,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired MemberDAO dao;
 	
 	public int user_check(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
