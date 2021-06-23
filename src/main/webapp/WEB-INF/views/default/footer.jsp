@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,13 +27,21 @@
 <body>
 
 	<div class="container">
-	<hr>
+		<c:choose>
+	 <c:when test="${grade ==1}">
+	관리자는 안볼꺼얌
+ 	</c:when>
+  	<c:otherwise>
+  		
+  		<hr>
+	 
   <div class="row">
+  	
     <div class="col-sm-3" style = " text-align: center;  border-right: solid 1px black;">
      	<a href ="#">공지사항</a>
     </div>
     <div class="col-sm-3"  style = " text-align: center;  border-right: solid 1px black;">
-      <a href ="#"> Q&A</a>
+      <a href ="../member/qnaBoardView"> Q&A</a>
     </div>
     <div class="col-sm-3"  style = " text-align: center; border-right: solid 1px black;">
       <a href ="#">이용약관</a>
@@ -40,7 +49,11 @@
     <div class="col-sm-3"  style = " text-align: center;  ">
       <a href ="#">자주하는 질문</a>
     </div>
+    
   </div>
+  	</c:otherwise>
+ 		 </c:choose>
+  
   <br>
   <hr>
   <br>

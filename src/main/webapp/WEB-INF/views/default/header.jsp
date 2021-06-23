@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-<!DOCTYPE html>
+
+<!DOCTYPE html>	
 <html>
 <head>
 <meta charset="UTF-8">
@@ -43,6 +44,15 @@
 					<div class="text-end p-3" style="margin-right: 0.5rem;">
 						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
 						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
+					</div>
+					 </div>
+					 </c:when>
+					  <c:when test="${grade ==1}">
+					 
+					<div class ="col">
+					<div class="text-end p-3">
+						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
+						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/registerPage'">Sign-up</button>
 					</div>
 					 </div>
 					 </c:when>
@@ -127,6 +137,7 @@
 
 
 </body>
+<!-- 
 <script>
 $(document).ready(function(){
 	$("#sellBtn").click(function () {
@@ -144,4 +155,5 @@ $("#searchBtn").on("click", function() {
 	     $("#searchBtn").css("background-color","pink");
 	}
 </script>
+ -->
 </html>

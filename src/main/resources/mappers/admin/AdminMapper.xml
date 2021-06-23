@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yeoju.root.mybatis.admin.AdminMapper">
+<mapper namespace="com.yeoju.root.mybatis.AdminMapper">
  <resultMap type="com.yeoju.root.common.dto.AdminDTO" id="admin">
 		<result property="id" column="user_id"/>
 		<result property="pw" column="pw"/>
@@ -15,16 +15,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</resultMap>
 	<insert id="adminJoin">
-		INSERT INTO ADMINMEMBER VALUES(#{id},#{pw},#{tel},1,null,null,null)
+		INSERT INTO ADMINMEMBER(user_id,pw,tel,grade,reg_Date) VALUES(#{id},#{pw},#{tel},1,sysdate)
 	</insert>
+	<select id="admin_check" resultMap="admin">
+		select * from ADMINMEMBER where user_id=#{id}
+	</select>
 	<select id="adminList" resultMap="admin">
 		select * from ADMINMEMBER
 	</select>
 	<delete id="adminDelete">
-		delete from ADMINMEMBER where id = #{id}
+		delete from ADMINMEMBER where user_id = #{id}
 	</delete>
 	<update id="adminModify">
-		update ADMINMEMBER set pw=#{pw}, tel=#{tel} where id = #{id}
+		update ADMINMEMBER set pw=#{pw}, tel=#{tel} where user_id = #{id}
 	</update>
-	   
+	<update id="recentAct">
+		update ADMINMEMBER set recent_Date=sysdate,recent_Act=#{recentAct} where user_id = #{id}
+	</update>
+	
 </mapper>

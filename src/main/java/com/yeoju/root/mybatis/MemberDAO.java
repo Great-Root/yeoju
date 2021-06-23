@@ -1,5 +1,6 @@
 package com.yeoju.root.mybatis;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.yeoju.root.common.dto.MemberDTO;
@@ -19,6 +20,8 @@ public interface MemberDAO {
 	public int recent_date(String userId) throws Exception;
 	public int updatePw(MemberDTO dto) throws Exception;
 
+	public ArrayList<MemberDTO> memberList();
+	public ArrayList<MemberDTO> memberInfo(String userId);
 	// 회원정보 가져오기
 	public MemberDTO getUserInfo(String userId);
 

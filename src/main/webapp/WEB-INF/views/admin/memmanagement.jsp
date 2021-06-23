@@ -19,11 +19,18 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<c:choose>
+					
+					  <c:when test="${grade !=1}">
+					 
+						<h1>관리자 전용 페이지 입니다</h1>
+					 </c:when>
+					  <c:otherwise>	
 	<div  align="right"  style=" padding-right: 250px; ">
 	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="/">쇼핑몰로 이동</a></th>
+	<th><a href="logout">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
@@ -43,34 +50,22 @@
 					<thead>
 						<tr>
 							<th>아이디</th>
-							<th>전화번호</th>
 							<th>가입일</th>
 							<th>마지막 방문일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>John</td>
-							<td>Doe</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-						</tr>
-						<tr>
-							<td>Mary</td>
-							<td>Moe</td>
-							<td>mary@example.com</td>
-							<td>john@example.com</td>
-							
-						</tr>
-						<tr>
-							<td>July</td>
-							<td>Dooley</td>
-							<td>july@example.com</td>
-							<td>john@example.com</td>
-						</tr>
+						<c:forEach var="dto" items="${memberList}">
+							<tr>	
+								<td><a href="memberdetail?userId=${dto.userId }">${dto.userId }</a></td> 
+								<td>${dto.regDate}</td>
+								<td>${dto.recentDate }</td>
+							</tr>
+						</c:forEach> 
 					</tbody>
 				</table>
 	</div>
+	</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>

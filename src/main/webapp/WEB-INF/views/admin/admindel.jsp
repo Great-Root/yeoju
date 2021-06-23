@@ -19,11 +19,18 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+		 <c:choose>
+					
+					  <c:when test="${grade !=1}">
+					 
+						<h1>관리자 전용 페이지 입니다</h1>
+					 </c:when>
+					  <c:otherwise>
 	<div  align="right"  style=" padding-right: 250px; ">
 	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="/">쇼핑몰로 이동</a></th>
+	<th><a href="logout">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
@@ -53,23 +60,20 @@
 						</tr>
 					</tbody>
 				</table>
-				 <div class="col">	<h6 align="center">계정 삭제</h6></div>
-						<div class="dropdown ">
-				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-				    	계정 선택
-				  </button>
-				  
-				  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					  <c:forEach var="dto" items="${adminList}">
-	
-				   		 <li><a class="dropdown-item" href="admindelete" >${dto.id }</a></li>
 				 
-				   	 </c:forEach>
-				    	
-				  </ul>
-				</div>
+				 	<div class="col" align="right">
+				 	<form action="admindelete" method="post" >
+				<h6 align="center">계정 삭제</h6>
+					
+					아이디<input type="text" name="id"   value="${loginUser }" ><br>
+					<label>*주의*<br>삭제 클릭시 로그인된 관리자 삭제 </label><br>
+					<input type="submit" value="계정 삭제" >
+					
+				</form></div>
+				 
+					
 			</div>
-	</div>
+			</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>
