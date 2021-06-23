@@ -146,13 +146,6 @@
 	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
 	<div class="row">
 		<div class="col">
-			<!-- <div class="text-center">
-			  <img src="https://www.greatroot.net/img/download?fileName=default.png" class="img-thumbnail img-fluid rounded" id="preview" width="500" alt="...">
-			</div>
-				<div class="mb-3">
-				  <label for="formFile" class="form-label">상품 사진 선택</label>
-				  <input class="form-control" type="file" id="img" name="imgFile" onchange="readURL(this)">
-				</div> -->
     <label class="label" data-toggle="tooltip" title="클릭해서 이미지를 등록">
       <img class="img-thumbnail" id="avatar" src="https://www.greatroot.net/img/download?fileName=default.png" alt="avatar" width="640" height="640">
       <input type="file" class="sr-only" id="input" name="imgFile" accept="image/*">

@@ -2,19 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-<style type="text/css">
-
-
-
-</style>
-</head>
-<body>
 	<header class="p-3 bg-white text-dark">
 		<div class="container">
 			<div class="container px-4" style ="width: 1133px; ">
@@ -34,23 +21,15 @@
 							</span>
 						</div>
 					</div>
-					<!-- 
-					 -->
-					 <c:choose>
-					 <c:when test="${loginUser == null}">
-					 
+					 <c:if test="${loginUser == null}">
 					<div class ="col">
 					<div class="text-end p-3" style="margin-right: 0.5rem;">
 						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
 						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
 					</div>
 					 </div>
-					 </c:when>
-					  <c:otherwise>
-					<!-- 
-					 -->
-					<!-- 
-					  -->
+					 </c:if>
+					 <c:if test="${loginUser != null}">
 					<div class="col">
 						<div class="dropdown p-3" style ="float: right;">
 							<button class="btn  dropdown-toggle text-dark" type="button"
@@ -67,30 +46,12 @@
 								<li><a class="dropdown-item" href="${contextPath}/mypage">내상점</a></li>
 								<li><a class="dropdown-item" href="#">거래현황</a></li>
 								<li><a class="dropdown-item" href="#">결제현황</a></li>
-								<!--  
-								-->
 								<li><a class="dropdown-item" href="${contextPath}/member/logout">로그아웃</a></li>
 							</ul>
 						</div>
 					</div>
+					  </c:if>
 				</div>
-					  </c:otherwise>
-					 </c:choose>
-				<!-- 
-				<li>
-                  <c:choose>
-                     <c:when test="${loginUser == null}">
-                        <a href="${contextPath}/member/login">LOGIN</a>
-                     </c:when>
-                     <c:otherwise>
-                        <a href="${contextPath}/member/logout">LOGOUT</a>
-                     </c:otherwise>
-                  </c:choose>
-               </li>
-				 -->
-	
-
-
 			</div>
 			<div class="container px-4">
 				<div class="dropdown row gx-5">
@@ -126,7 +87,6 @@
 	</header>
 
 
-</body>
 <script>
 $(document).ready(function(){
 	$("#sellBtn").click(function () {
@@ -144,4 +104,3 @@ $("#searchBtn").on("click", function() {
 	     $("#searchBtn").css("background-color","pink");
 	}
 </script>
-</html>

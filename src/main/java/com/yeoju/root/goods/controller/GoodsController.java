@@ -33,6 +33,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.dto.HeartDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
@@ -193,6 +194,31 @@ public class GoodsController extends URL implements MemberSessionName{
 	FileCopyUtils.copy(in, response.getOutputStream());
 	in.close();
 	}
+	
+	//9.상품 찜버튼 클릭시
+	@GetMapping("heart.do")
+	@ResponseBody
+	public boolean heart(int goodsId,HttpSession session) {
+		String loginUser = (String)session.getAttribute(LOGIN);
+		return loginUser == null ? false : gs.heart(new HeartDTO(loginUser, goodsId));
+	}
+	
+	// 해당 상품 찜갯수 확인
+	@GetMapping("heartNum.do/{goodsId}")
+	@ResponseBody
+	public int heartNum(@PathVariable int goodsId) {
+		return gs.heartTotalCnt(goodsId);
+	}
+	
+	// 상품 찜 활성화 확인
+	@GetMapping("isheart.do/{goodsId}")
+	@ResponseBody
+	public boolean isheartNum(@PathVariable int goodsId, HttpSession session) {
+		String loginUser = (String)session.getAttribute(LOGIN);
+		return loginUser == null ? false : gs.isheart(new HeartDTO(loginUser, goodsId));
+	}
+	
+	
 	TrustManager[] dummyTrustManager = new TrustManager[] { new X509TrustManager() { 
 	     public java.security.cert.X509Certificate[] getAcceptedIssuers() { 
 	     return null; 

@@ -1,11 +1,13 @@
 package com.yeoju.root.mybatis;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.dto.HeartDTO;
 
 public interface GoodsDAO {
 	
@@ -33,6 +35,18 @@ public interface GoodsDAO {
 	
 	// 찜한 상품 가져오기
 	public ArrayList<GoodsDTO> heartPage(String userId);
+	
+	// 로그인 사용자가 해당상품을 찜했는지 여부확인
+	public int heartCnt(HeartDTO dto);
+	
+	// 해당 상품의 찜 전체 갯수
+	public int heartTotalCnt(int goodsId);
+
+	// 찜등록
+	public void insertHeart(HeartDTO dto);
+
+	// 찜삭제
+	public void deleteHeart(HeartDTO dto);
 	
 	
 

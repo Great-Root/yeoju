@@ -3,6 +3,7 @@ package com.yeoju.root.goods.service;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.dto.HeartDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.mybatis.GoodsDAO;
 
@@ -51,5 +53,29 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 		return goodsDao.imgFileName(goodsId);
 	}
 	
-
+	// 찜버튼 클릭
+	@Override
+	public boolean heart(HeartDTO dto) {
+		boolean result;
+		if(isheart(dto)){
+			goodsDao.deleteHeart(dto);
+			result = false;
+		}else {
+			goodsDao.insertHeart(dto);
+			result = true;
+		}
+		return result;
+	}
+	
+	// 해당상품 찜 총 갯수 구하기
+	@Override
+	public int heartTotalCnt(int goodsId) {
+		return goodsDao.heartTotalCnt(goodsId);
+	}
+	
+	// 찜버튼 활성화여부
+	@Override
+	public boolean isheart(HeartDTO dto) {
+		return goodsDao.heartCnt(dto) == 0 ? false : true;
+	}
 }

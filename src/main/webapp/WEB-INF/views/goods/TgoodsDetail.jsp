@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 상세 페이지</title>
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 <script>
+
 	$(document).ready(function(){
 		var goodsId = $("#goodsId").val()
 		$("#modiBtn").click(function(){
@@ -21,10 +21,57 @@
 				document.form1.submit();
 			}
 		});
-		$("#listBtn").click(function(){
-			location.href = "${path}/goods/list.do";	
+		$heartBtn = $("#heartBtn");
+		$heartBtn.click(function () {
+			$.ajax('${path}/goods/heart.do?goodsId=${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (result) {
+	            	btnClass(result);
+					heartNum();
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
 		});
 	});
+		function heartNum() {
+			$.ajax('${path}/goods/heartNum.do/${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (heartNum) {
+	            	  $("#heartNum").html(heartNum)
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
+		}
+		function isheart() {
+			$.ajax('${path}/goods/isheart.do/${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (result) {
+					btnClass(result);
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
+		}
+		function btnClass(result) {
+      	  if(result){
+    		  $heartBtn.addClass('bg-danger');
+    	  }else{
+    		  $heartBtn.removeClass('bg-danger');
+    	  }
+		}
+		function initHeart() {
+			isheart();
+			heartNum();
+		}
+	window.onload = function() { 
+		initHeart();
+	};
+
 </script>
 <style type="text/css">
 	.goods-width1st {
@@ -414,53 +461,49 @@
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										상품상태
+										판매자
 									</div>
-									<div class ="goods2-9">중고</div>
+									<div class ="goods2-9">${dto.userId}</div>
 								</div>
 							</div>
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										배송비
+										등록날짜
 									</div>
-									<div class ="goods2-9">배송비 별도</div>
+									<div class ="goods2-9">${dto.regDate}</div>
 								</div>
 							</div>
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										교환여부
+										카테고리
 									</div>
-									<div class ="goods2-9">교환불가능</div>
+									<div class ="goods2-9">${dto.categoryCode}</div>
 								</div>
 							</div>
 				</div>
 			</div>
 			<div class="goods3">
 				<div class ="goods3-1">
-					<button class ="goods3-2">
+					<button class ="goods3-2" id="heartBtn">
 						<img alt="찜하트" width="16" height="16"
 						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcuMDA1IDEuMDQ1aC4yMzNjLjI4LjIyOC41MzcuNDkuNzYyLjc3Ny4yMjUtLjI4OC40ODEtLjU0OS43NjItLjc3N2guMjMzYTYuMTYgNi4xNiAwIDAgMC0uMDktLjExM0M5LjY4NC4zNDQgMTAuNjI4IDAgMTEuNiAwIDE0LjA2NCAwIDE2IDIuMTEgMTYgNC43OTZjMCAzLjI5Ni0yLjcyIDUuOTgxLTYuODQgMTAuMDYyTDggMTZsLTEuMTYtMS4xNTFDMi43MiAxMC43NzcgMCA4LjA5MiAwIDQuNzk2IDAgMi4xMSAxLjkzNiAwIDQuNCAwYy45NzIgMCAxLjkxNi4zNDQgMi42OTUuOTMyYTYuMTYgNi4xNiAwIDAgMC0uMDkuMTEzeiIvPgo8L3N2Zz4K">
 						<span>찜</span>
-						<span>0</span>
+						<span id="heartNum">0</span>
 					</button>
-					<!-- 
-					<div class="3-3">
-						<img alt=""  width="14" height="14"
-						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTIuMTA2IDdsMy42NjMgNCA3LjAxNS04IiBvcGFjaXR5PSIuNDA2Ii8+Cjwvc3ZnPgo=">
-					</div>
-					 -->
 				</div>
+				<c:if test="${loginUser == dto.userId}">
 				<button class="3-4" 
 				 style="background: rgb(255, 164, 37);
    				 border: 1px solid rgb(243, 150, 20);
-    			 color: rgb(255, 255, 255);">연락하기</button>
+    			 color: rgb(255, 255, 255);">수정하기</button>
 				<button class ="3-5"
 				style ="background: rgb(247, 0, 0);
    				border: 1px solid rgb(223, 0, 0);
     			color: rgb(255, 255, 255);"
-				>바로구매</button>
+				>판매완료</button>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -470,7 +513,7 @@
 		<div class ="goods4-1">상품정보</div>
 		<div class="nothing03">
 			<div class="goods4-2">
-				<div class="goods4-3">잘돌아가요.</div>
+				<div class="goods4-3">${dto.goodsInfo}</div>
 			</div>
 		</div>
 		
@@ -525,35 +568,3 @@
 <c:import url="../default/footer.jsp"/>
 </body>
 </html>
-<!-- 
-	<div class ="goods-width1st">
-	<div class="goods-width2nd">
-	<div class ="goods-back">
-	<div class ="goods-1">
-		<div class ="goods1-1">
-			<div class ="goods2">
-				<div class ="goods2-1">
-					<img alt="제품사진" src="https://media.bunjang.co.kr/product/155870256_1_1623768060_w856.jpg" class ="goodsImage1">
-					<img alt="제품사진" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxDK8gBwlcneHAMl-NZ0pgCg1lOQYtHwPfzA&usqp=CAU" class ="goodsImage2">
-				</div>
-				<div class ="1"></div>
-				<button class ="buttonNext" direction ="next">
-					<img alt="next" width="12" height="22" 
-					src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAAAXNSR0IArs4c6QAAAQVJREFUWAntl9EJg0AQRMV/7SGFaDE2kSaSbkwn6SIV+HV5Q7IgeiCRXcFwC8PJobPrzK3nVVV0pJSu4BKWB3LFC3QhSSAelYGYwOCeBNIa3IHFjYs6ItEAsd5C8QBNRJIeYvmheAJ/80X6JWcIMh/iFkgmRTF/e60gUzF/Wya7A7mWna+vQOl8E2g9Is//dv4x5q9FdZiZd77/+v0UmBzqzFNQ/XxnHPN37ZhVNwPt5xZ+JsPYgJgNCuJlo/U7BMg/AnkHYn4SIJ6bKXnafBk/zkJUzFxrhiznNVPdaHHezvQ7+aDFoWb6HECoWp0ZY6ZWPOQxn1lrJxIoQo+xsQdxe5Oo8Q2tG8U3KxMfPwAAAABJRU5ErkJggg==">
-					옆으로 씨발년아
-				</button>
-				<button>
-					<img alt="" width="16" height="16"
-					src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAqBJREFUWAntlk9LFlEUxp0yyFRERKjADxC5CIncpIuWQUHt2pQfIFolEi3cuPMD1DcIWkRBS/FdFNIiWvUF7I9F0R/KQjKdfo+eA/O+c2fmzuvYygeeuddzn/PcM3+85016SpCm6RDLF+FleBqehAPwI3wHW/BJkiQvGZsDGw/AefgTxuAFouluKkg6kzCaIPYYjmXWPjDX3equ1+FxeApOwV7ouM/kFk9k0wO1Rja/BH9BxzKTKZgrVMbEh+Es/AodLSb9tTY2swkSffMN5jOxJmhH4BJ0PGISLDroiVjv/I1la/Pa75OcXvjQPDTMBTcLBRHPK8MwE9LExMjvg6/M5wfjaGUeoiHoX/tyZUKFAK9J6FiskO98SNdczXi+MiFCgM9T81ytlCN8YOI1xvgPp8QZnxvmqeFMibTnEIs64YQW/7/p7nTP1+yrdP+gqQrQ8SrokGkKaxhtm9mJMlMVoLNd0AnXCHiSWxhtmJn7B71VgBqLoOO1EfDeBzE6ZmbuH/RWAf7odbY3hazX+zJTFaAmI+jMH96d7vmq9i38hc92ZkUXNj0LHbNFutg4RkfhWzNcispDrH4uqKuNRCUViMi/IyPDlQJZexjxtGcwqqtle3y7uOQv8/ljXisl0vwSSfcsUYO6Wl9eVRxBr5v4AoV1OF6sDqyQcAS2oENdbTIgbQuh0TvXY/c732b+HdYrQK4k9UP9mMhCjeU6HIOHTTfI/BxcgP7BMU1/62L4xNhVEQmJc1D9vBNbBPxXU+faCoFxeDez0F0RdpejGC3C1Yxh53STgD7aq8px8Hd0EVHtF0O1VHU1NRad7TpedcI959z/xpiDiiC4YAufGS+gfZ0T7megzpPYtzoOivBHe/AkCp7ETY//19Fex21t+g8EN1dBluPf8gAAAABJRU5ErkJggg==">
-					"확대"
-				</button>
-			</div>
-		</div>
-		<div class ="goods1-2">
-		뭐보냐
-		</div>
-	</div>
-	</div>
-	</div>
-	</div>
- -->

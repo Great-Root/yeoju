@@ -13,6 +13,7 @@
    var pageNo = 1;
    $(document).ready(function(){
       initPage(pageNo);
+      initPage(++pageNo);
       $(window).scroll(function() {
     	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
         	  pageNo += 1;
