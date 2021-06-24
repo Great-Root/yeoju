@@ -52,44 +52,7 @@
 		<table class="col" style="float: left;">
 		<tr><th><a href="commanagement">Q&A</a></th><th><a href="commanagementann">공지사항</a></th></tr>
 		</table></div>
-		<table class="table table-striped col" >
-					<thead>
-						<tr>
-							<th>No.</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>작성일</th>
-							<th>조회수</th>
-						</tr>
-						
-					</thead>
-					<tbody>
-					<!--<c:if test="${adminAnnBoardList.size() == 0 }">
-						<tr> <th colspan="6">저장 데이터 없음</th> </tr>
-					</c:if>
-					<c:forEach var="dto" items="${adminAnnBoardList }">
-					<tr>
-						<td>${dto.writeNo }</td>
-					    <td><a href="${contextPath }/board/contentView?writeNo=${dto.writeNo }">${dto.title }</a></td>
-						<td>${dto.id }</td> 
-						<td>${dto.saveDate }</td> 
-						<td>${dto.hit }</td>
-					</tr>
-					</c:forEach>-->
-						<tr>
-							<td>1</td>
-							<td>이누공</td>
-							<td>아이디가져오기</td>
-							<td>sysdate</td>
-							<td>hit가져오는법연습해야징</td>
-						</tr>
-						<tr align="right">
-							<th colspan="5" >
-								<input type="submit" onclick="" value="공지 작성">
-							</th>
-						</tr>
-					</tbody>
-				</table>
+		<c:import url="../board/annboard.jsp" />
 	</div>
 	</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
