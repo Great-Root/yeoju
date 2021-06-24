@@ -27,5 +27,8 @@ public interface GoodsService {
 	public String imgFileName(int goodsId);
 
 	//07.상품 게시글 전체 목록 => 검색옵션, 키워드 추가
-	//public List<GoodsDTO> listAll(String searchOption, String keyword) throws Exception;
+	public List<GoodsDTO> listAll(String searchOption, String keyword) throws Exception;
+	
+	//08.게시글 갯수 
+	int countArticle(String searchOption, String keyword) throws Exception;
 }

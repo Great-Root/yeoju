@@ -49,13 +49,16 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public String imgFileName(int goodsId) {
 		return goodsDao.imgFileName(goodsId);
 	}
-	//07.상품검색
-//	public List<GoodsDTO> listGoods(String searchOption, String keyword){
-//		return goodsDao.listGoods(0);
-//	}
-//	public int countArticle(String searchOption, String keyword) {
-//		return goodsDao.searchGoods(0);
-//	}
-
+	
+	//07.게시글 전체 목록 호출
+	@Override
+	public List<GoodsDTO> listAll(String searchOption, String keyword) throws Exception{
+		return goodsDao.listAll(searchOption, keyword);
+	}
+	//08.게시글 갯수 
+	@Override
+	public int countArticle(String searchOption, String keyword) throws Exception {
+		return goodsDao.countArticle(searchOption, keyword);
+	}
 	
 }
