@@ -11,21 +11,24 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
    var pageNo = 1;
+   
    $(document).ready(function(){
-      initPage(pageNo);
-      initPage(++pageNo);
+      initPage(pageNo,keyword);
+      initPage(++pageNo,keyword);
       $(window).scroll(function() {
           if($(window).scrollTop() + $(window).height() == $(document).height()) {
              pageNo += 1;
-              initPage(pageNo);
+              initPage(pageNo,keyword);
           }
        });
    });
+   
       
-   function initPage(pageNo) {
-      
+   function initPage(pageNo,keyword) {
+      console.log(keyword);
       var param = {
-         "pageNo" : pageNo
+         "pageNo" : pageNo,
+         "keyword" : keyword
       };
       // 데이터를 불러온다.
       $.ajax({

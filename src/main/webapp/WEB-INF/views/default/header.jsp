@@ -21,9 +21,8 @@
 					</div>
 					<div class="col">
 						<div class="input-group p-3">
-							<input type="text" class="form-control"
-								placeholder="검색 키워드를 입력하세요!"> <span
-								class="input-group-btn">
+							<input type="text" class="form-control" id="keyword"	placeholder="검색 키워드를 입력하세요!"> 
+							<span class="input-group-btn">
 								<button class="btn btn-secondary btn-info" id="searchBtn" type="button">찾기</button>
 							</span>
 						</div>
@@ -95,20 +94,25 @@
 	</header>
 </body>
 <script>
+var keyword = '';
 $(document).ready(function(){
 	$("#sellBtn").click(function () {
 		location.href = "${contextPath}/goods/write.do"
 	})
-});
-$("#searchBtn").on("click", function() {
-	if($(".input-group.p-3").find("input.form-control").val().length == 0){
-	        alert("검색어를 입력해주세여!");
-	         $(".btn-secondary").css("background-color","red");
-	           setInterval(borderDel, 3000);
-	}
+	$("#searchBtn").on("click", function() {
+		if($(".input-group.p-3").find("input.form-control").val().length == 0){
+		        alert("검색어를 입력해주세여!");
+		         $(".btn-secondary").css("background-color","red");
+		           setInterval(borderDel, 3000);
+		           keyword = $("#keyword").val();
+				console.log(keyword+'searchBtn')
+		          initPage( 1, keyword);
+		}
 	});
 	function borderDel() {
 	     $("#searchBtn").css("background-color","pink");
+	     
 	}
+});
 </script>
 </html>

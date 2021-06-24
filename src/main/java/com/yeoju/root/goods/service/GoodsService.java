@@ -11,7 +11,7 @@ import com.yeoju.root.common.dto.HeartDTO;
 public interface GoodsService {
 	
 	//01.상품목록
-	public List<GoodsDTO> listGoods(int pageNo);
+	public List<GoodsDTO> listGoods(int pageNo, String searchOption, String keyword) throws Exception;
 
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -36,6 +36,10 @@ public interface GoodsService {
 	public int heartTotalCnt(int goodsId);
 
 	public boolean isheart(HeartDTO dto);
+	
+	//07.레코드 갯수 - 필요없음
+	//public int countArticle(String searchOption, String keyword);
 
+	
 	
 }

@@ -2,7 +2,9 @@ package com.yeoju.root.goods.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -58,27 +60,33 @@ public class GoodsController extends URL implements MemberSessionName{
 	//1. 상품 전체 목록 
 	@ResponseBody
 	@RequestMapping("/list.do")
-	public List<GoodsDTO> list(@RequestParam int pageNo) {
-		return gs.listGoods(pageNo);
-		
+	public List<GoodsDTO> list(
+			@RequestParam int pageNo
+			,
+			@RequestParam String keyword
+			) {
+		System.out.println("pageNo : "+pageNo);
+		System.out.println("keyword : "+keyword);
+		return null;
 	}
-//	public ModelAndView list(@RequestParam(defaultValue="goodsName") String searchOption,
-//						@RequestParam(defaultValue="")String keyword)throws Exception{
-//		List<GoodsDTO> list = gs.listGoods(searchOption,keyword);
-//		//갯수
-//		int count = gs.countArticle(searchOption,keyword);
-//		//뷰
+//	public ModelAndView list(@RequestParam(defaultValue="title")String searchOption,
+//						@RequestParam(defaultValue="")String keyword,
+//						@RequestParam(defaultValue="")int pageNo) throws Exception{
+//		List<GoodsDTO> list = gs.listGoods(pageNo,searchOption,keyword);
+//
+//		//ModelAndView mav = new ModelAndView();
 //		ModelAndView mav = new ModelAndView();
-//		//데이터 맵에 저장
-//		Map<String, Object> map=new HashMap<String,Object >();
+//		//데이터를 맵에 저장
+//		Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("list", list); //list
-//		map.put("count", count); //레코드 갯수
+//		map.put("pageNo", pageNo);
 //		map.put("searchOption", searchOption); //검색옵션
 //		map.put("keyword", keyword); //검색키워드
 //		mav.addObject("map",map);
-//		mav.setViewName("/index");
-//		return mav;
-//		}
+//		mav.setViewName("index"); //뷰를 index.jsp로 설정
+//		return mav; //index.jsp로 List가 전달?
+//	
+//	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
 	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
