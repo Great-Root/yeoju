@@ -1,6 +1,7 @@
 package com.yeoju.root.common.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +35,17 @@ public class GoodsDTO {
 
 	// 카테고리 코드
 	private String categoryCode;
+	
+	//댓글 리스트
+	private List<GoodsCommentsDTO> goodsCommentsList;
+	
+	public List<GoodsCommentsDTO> getGoodsCommentsList() {
+		return goodsCommentsList;
+	}
+
+	public void setGoodsCommentsList(List<GoodsCommentsDTO> goodsCommentsList) {
+		this.goodsCommentsList = goodsCommentsList;
+	}
 
 	public Integer getGoodsId() {
 		return goodsId;
@@ -136,14 +148,15 @@ public class GoodsDTO {
 		this.imgFile = param.getImgFile();
 		this.imgFileName = param.getImgFileName();
 		this.categoryCode = param.getCategoryCode();
+		this.goodsCommentsList = param.getGoodsCommentsList();
 	}
 
 	@Override
 	public String toString() {
 		return "GoodsDTO [goodsId=" + goodsId + ", goodsName=" + goodsName + ", goodsInfo=" + goodsInfo
 				+ ", goodsPrice=" + goodsPrice + ", userId=" + userId + ", regDate=" + regDate + ", soldOut=" + soldOut
-				+ ", howMany=" + howMany + ", imgFile=" + imgFile + ", imgFileName=" + imgFileName + ", categoryCode="
-				+ categoryCode + "]";
+				+ ", howMany=" + howMany + ", imgFile=" + imgFile + ", imgFileName=" + imgFileName
+				+ ", categoryCode=" + categoryCode + ", goodsCommentsList=" + goodsCommentsList+ "]";
 	}
 
 }

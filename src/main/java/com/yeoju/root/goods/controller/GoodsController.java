@@ -2,6 +2,7 @@ package com.yeoju.root.goods.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -27,9 +28,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
@@ -175,6 +178,9 @@ public class GoodsController extends URL implements MemberSessionName{
 		}
 		return "redirect:/";
 	}
+
+	
+	
 	//8.상품 이미지 출력
 	@GetMapping("img/{userId}")
 	public void img(@PathVariable String userId,@RequestParam String fileName,
@@ -210,4 +216,5 @@ public class GoodsController extends URL implements MemberSessionName{
 		} 
 	    } }; 
 
+	
 }

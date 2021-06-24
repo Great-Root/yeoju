@@ -1,0 +1,56 @@
+package com.yeoju.root.common.comments.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.yeoju.root.common.comments.service.CommentsService;
+import com.yeoju.root.common.comments.service.CommentsServiceImpl;
+import com.yeoju.root.common.dto.GoodsCommentsDTO;
+import com.yeoju.root.goods.service.GoodsService;
+
+@RestController
+@RequestMapping("comments")
+public class CommentsController {
+
+	@Autowired
+	CommentsService cs;
+	
+	@Autowired
+	GoodsService gs;
+	
+	// 댓글 입력
+	
+	@GetMapping(value ="insertComment",produces="application/json; charset = utf-8")
+	public int insertComment(GoodsCommentsDTO dto) {
+		
+		return cs.insertComments(dto);
+	}
+	//1. 댓글 리스트 
+		@GetMapping("/commentslist")
+		public List<GoodsCommentsDTO> commentsList() {
+			System.out.println("확인작업");
+			int goodsId = 112;
+			List<GoodsCommentsDTO> dto = new ArrayList<GoodsCommentsDTO>();
+			try {
+				dto = gs.redaReply(goodsId);
+			} catch(Exception e) {
+				e.getMessage();
+			}
+			
+			return dto;
+		}
+	// 댓글 수정
+		
+	// 댓글 삭제 
+	@GetMapping(value ="deleteComment",produces="application/json; charset = utf-8")
+	public void deleteComment(@RequestParam int commentId) {
+		cs.deleteComments(commentId);
+	}
+}
