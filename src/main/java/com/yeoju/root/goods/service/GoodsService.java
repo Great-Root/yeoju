@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
 
@@ -27,6 +28,9 @@ public interface GoodsService {
 	
 	//06.상품이미지 삭제를 위한 이미지파일 정보
 	public String imgFileName(int goodsId);
+	
+	//댓글 조회
+	public List<GoodsCommentsDTO> redaReply(int goods_id);
 
 	public boolean heart(HeartDTO dto);
 

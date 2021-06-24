@@ -1,18 +1,16 @@
 package com.yeoju.root.goods.service;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
 import com.yeoju.root.common.url.URL;
+import com.yeoju.root.mybatis.CommentsDAO;
 import com.yeoju.root.mybatis.GoodsDAO;
 
 @Service
@@ -21,15 +19,28 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	@Autowired
 	GoodsDAO goodsDao;
 	
+	@Autowired
+	CommentsDAO commentsDAO;
+	
 	//01.상품목록
 	@Override
 	public List<GoodsDTO> listGoods(int pageNo){
 		return goodsDao.listGoods(pageNo);
 	}
 	//02.상품상세
+	//제품 상세 페이지에 댓글 기능이 들어가기 때문에 retrunDTO라는 변수에 GoodsDTO,CommentDTO를 넣어버림
 		@Override
 	public GoodsDTO detailGoods(int goodsId) {
-		return goodsDao.detailGoods(goodsId);
+		GoodsDTO returnDTO = new GoodsDTO();
+		List<GoodsCommentsDTO> commentsDTO = new ArrayList<GoodsCommentsDTO>();
+		
+		returnDTO = goodsDao.detailGoods(goodsId);
+		commentsDTO = commentsDAO.redaReply(goodsId);
+		
+		returnDTO.setGoodsCommentsList(commentsDTO);
+//		System.out.println(commentsDTO.toString());
+//		System.out.println(returnDTO.toString());
+		return returnDTO;
 	}
 	//03.상품추가
 	@Override
@@ -52,6 +63,13 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public String imgFileName(int goodsId) {
 		return goodsDao.imgFileName(goodsId);
 	}
+
+	//댓글 조회
+	@Override
+	public List<GoodsCommentsDTO> redaReply(int goods_id){
+		return commentsDAO.redaReply(goods_id);
+		
+	};
 	
 	// 찜버튼 클릭
 	@Override

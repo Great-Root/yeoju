@@ -152,7 +152,6 @@ public class AdminController implements MemberSessionName{
 
 	@GetMapping("commanagementann")
 	public String commanagementann(Model model) {
-		bs.AnnBoardList(model);
 		return "admin/commanagementann";
 		}
 	@PostMapping(value="addReply", produces = "application/json; charset=utf-8")

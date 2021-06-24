@@ -63,6 +63,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/list.css">
 
 </head>
+
 <body>
    <c:import url="default/header.jsp" />
    <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
