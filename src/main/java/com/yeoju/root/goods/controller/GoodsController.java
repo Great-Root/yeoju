@@ -2,10 +2,7 @@ package com.yeoju.root.goods.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -33,14 +30,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.yeoju.root.category.CategoryService;
 import com.yeoju.root.common.dto.CategoryDTO;
+import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.dto.HeartDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
@@ -61,7 +60,6 @@ public class GoodsController extends URL implements MemberSessionName{
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list(@RequestParam int pageNo) {
 		return gs.listGoods(pageNo);
-		
 		
 	}
 //	public ModelAndView list(@RequestParam(defaultValue="goodsName") String searchOption,
@@ -213,6 +211,9 @@ public class GoodsController extends URL implements MemberSessionName{
 		}
 		return "redirect:/";
 	}
+
+	
+	
 	//8.상품 이미지 출력
 	@GetMapping("img/{userId}")
 	public void img(@PathVariable String userId,@RequestParam String fileName,
@@ -224,6 +225,31 @@ public class GoodsController extends URL implements MemberSessionName{
 	FileCopyUtils.copy(in, response.getOutputStream());
 	in.close();
 	}
+	
+	//9.상품 찜버튼 클릭시
+	@GetMapping("heart.do")
+	@ResponseBody
+	public boolean heart(int goodsId,HttpSession session) {
+		String loginUser = (String)session.getAttribute(LOGIN);
+		return loginUser == null ? false : gs.heart(new HeartDTO(loginUser, goodsId));
+	}
+	
+	// 해당 상품 찜갯수 확인
+	@GetMapping("heartNum.do/{goodsId}")
+	@ResponseBody
+	public int heartNum(@PathVariable int goodsId) {
+		return gs.heartTotalCnt(goodsId);
+	}
+	
+	// 상품 찜 활성화 확인
+	@GetMapping("isheart.do/{goodsId}")
+	@ResponseBody
+	public boolean isheartNum(@PathVariable int goodsId, HttpSession session) {
+		String loginUser = (String)session.getAttribute(LOGIN);
+		return loginUser == null ? false : gs.isheart(new HeartDTO(loginUser, goodsId));
+	}
+	
+	
 	TrustManager[] dummyTrustManager = new TrustManager[] { new X509TrustManager() { 
 	     public java.security.cert.X509Certificate[] getAcceptedIssuers() { 
 	     return null; 
@@ -249,6 +275,4 @@ public class GoodsController extends URL implements MemberSessionName{
 	    } }; 
 	
 
-	
-	
 }

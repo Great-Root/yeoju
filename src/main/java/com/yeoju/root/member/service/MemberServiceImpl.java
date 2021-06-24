@@ -3,27 +3,39 @@ package com.yeoju.root.member.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ui.Model;
 
+import com.yeoju.root.common.dto.AdminDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.common.dto.ProfileDTO;
+import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mybatis.MemberDAO;
+import com.yeoju.root.mybatis.ProfileDAO;
+import com.yeoju.root.common.dto.MemberDetailDTO;
+import com.yeoju.root.mybatis.MemberDAO;
+import com.yeoju.root.mybatis.MemberDetailDAO;
 
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService, MemberSessionName {
 	@Autowired MemberDAO dao;
+	@Autowired ProfileDAO pDAO;
+	@Autowired MemberDetailDAO detaildao;
 	
 	public int user_check(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
@@ -96,6 +108,23 @@ public class MemberServiceImpl implements MemberService {
 		PrintWriter out = response.getWriter();
 		out.println(dao.check_email(email));
 		out.close();
+	}
+	@Override
+	public void memberList(Model model) {
+		ArrayList<MemberDTO> list = dao.memberList();
+		model.addAttribute("memberList", list);
+		
+	}
+	public void memberInfo(Model model,String userId) {
+		ArrayList<MemberDTO> list = dao.memberInfo(userId);
+		model.addAttribute("memberInfo", list);
+		
+	}
+	@Override
+	public void detailList(Model model, String userId) {
+		ArrayList<MemberDetailDTO> list = detaildao.detailList(userId);
+		model.addAttribute("detailList", list);
+		
 	}
 	
 	
@@ -212,7 +241,21 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-
+	@Override
+	public void setProfileImg(MultipartFile file, String userId) {
+		try {
+			ProfileDTO dto = new ProfileDTO();
+			dto.setUserId(userId);
+			dto.setImgName(file.getOriginalFilename());
+			dto.setImgSize(file.getSize());
+			dto.setImgType(file.getContentType());
+			dto.setImgData(file.getBytes());
+			System.out.println(dto);
+			pDAO.insertProfileImg(dto);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 

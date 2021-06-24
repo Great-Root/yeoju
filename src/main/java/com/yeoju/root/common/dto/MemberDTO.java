@@ -1,7 +1,6 @@
 package com.yeoju.root.common.dto;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 public class MemberDTO extends MemberDetailDTO{
 
@@ -13,9 +12,6 @@ public class MemberDTO extends MemberDetailDTO{
 
 	// sysdate
 	private Date regDate;
-
-	// 이미지 경로
-	private String profileImg;
 
 	// 이메일 주소
 	private String email;
@@ -29,29 +25,6 @@ public class MemberDTO extends MemberDetailDTO{
 	private Date limitTime;
 
 	private String sessionId;
-	
-	//이메일 인증 여부
-	private String approval_status;
-	
-	//이메일 발송 key
-	private String approval_key;
-
-	
-	public String getApproval_status() {
-		return approval_status;
-	}
-
-	public void setApproval_status(String approval_status) {
-		this.approval_status = approval_status;
-	}
-
-	public String getApproval_key() {
-		return approval_key;
-	}
-
-	public void setApproval_key(String approval_key) {
-		this.approval_key = approval_key;
-	}
 
 	public Date getLimitTime() {
 		return limitTime;
@@ -109,14 +82,6 @@ public class MemberDTO extends MemberDetailDTO{
 		this.regDate = regDate;
 	}
 
-	public String getProfileImg() {
-		return profileImg;
-	}
-
-	public void setProfileImg(String profileImg) {
-		this.profileImg = profileImg;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -139,7 +104,6 @@ public class MemberDTO extends MemberDetailDTO{
 		this.pw = param.getPw();
 		this.tel = param.getTel();
 		this.regDate = param.getRegDate();
-		this.profileImg = param.getProfileImg();
 		this.email = param.getEmail();
 		this.auth = param.getAuth();
 		//Member Detail DTO
@@ -154,10 +118,9 @@ public class MemberDTO extends MemberDetailDTO{
 
 	@Override
 	public String toString() {
-		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + ", profileImg="
-				+ profileImg + ", email=" + email + ", auth=" + auth + ", recentDate=" + recentDate + ", limitTime="
-				+ limitTime + ", sessionId=" + sessionId + "]";
+		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + ", email="
+				+ email + ", auth=" + auth + ", recentDate=" + recentDate + ", limitTime=" + limitTime + ", sessionId="
+				+ sessionId + "]";
 	}
-	
 
 }

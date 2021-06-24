@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.dto.HeartDTO;
 
 public interface GoodsService {
 	
@@ -26,9 +28,14 @@ public interface GoodsService {
 	//06.상품이미지 삭제를 위한 이미지파일 정보
 	public String imgFileName(int goodsId);
 
-	//07.상품 게시글 전체 목록 => 검색옵션, 키워드 추가
-	public List<GoodsDTO> listAll(String searchOption, String keyword) throws Exception;
+	//댓글 조회
+	public List<GoodsCommentsDTO> redaReply(int goods_id);
+
+	public boolean heart(HeartDTO dto);
+
+	public int heartTotalCnt(int goodsId);
+
+	public boolean isheart(HeartDTO dto);
+
 	
-	//08.게시글 갯수 
-	int countArticle(String searchOption, String keyword) throws Exception;
 }

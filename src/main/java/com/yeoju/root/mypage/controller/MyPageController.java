@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,13 +31,15 @@ public class MyPageController implements MemberSessionName{
 
 	@ResponseBody
 	@GetMapping(value="/sellGoods", produces = "application/json; charset=utf-8")
-	public ArrayList<GoodsDTO> sellGoods(HttpSession session){
-		return mps.sellGoods((String)session.getAttribute(LOGIN));
+	public ArrayList<GoodsDTO> sellGoods(@RequestParam int pageNo, HttpSession session){
+		System.out.println(pageNo);
+		return mps.sellGoods((String)session.getAttribute(LOGIN),pageNo);
 	}
 	@ResponseBody
 	@GetMapping(value="/heartPage", produces = "application/json; charset=utf-8")
-	public ArrayList<GoodsDTO> heartPage(HttpSession session){
-		return mps.heartPage((String)session.getAttribute(LOGIN));
+	public ArrayList<GoodsDTO> heartPage(@RequestParam int pageNo, HttpSession session){
+		System.out.println(pageNo);
+		return mps.heartPage((String)session.getAttribute(LOGIN),pageNo);
 	}
 	@GetMapping("/memberModify/{userId}")
 	public String memebrModify(@PathVariable String userId, Model model) {
@@ -50,8 +53,9 @@ public class MyPageController implements MemberSessionName{
 		return "redirect:/";
 	}
 	@GetMapping("/delete/{userId}")
-	public String deleteForm() {
-		return "mypage/delete";
+	public String delete(@PathVariable String userId, Model model) {
+		model.addAttribute("deleteInfo", mps.getUserInfo(userId));
+		return "mypage/deleteForm";
 	}
 	@PostMapping("/delete.do")
 	public String delete(@ModelAttribute MemberDTO dto, HttpSession session, HttpServletResponse response) throws Exception{

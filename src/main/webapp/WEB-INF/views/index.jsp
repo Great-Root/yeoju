@@ -10,44 +10,16 @@
 <c:set var="userId" value=""/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-	function listGoods() {
-		$.ajax({
-			url : "goods/list.do",
-			type : "GET",
-			dataType : "json",
-			success : function(list) {
-				html = '<div class ="div-a" ><div class ="div-b"><div class ="div-c">'
-				$.each(list,function(index, item) {
-					html += '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
-					html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" >'
-					html += '<div class ="div-f"></div>'
-					html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
-					html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
-					html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
-				})
-				html += '</div></div></div>'
-				$("#images").html(html)
-			},
-			error : function() {
-				alert("문제 발생!!!");
-			}
-		})
-	}
-	
-
-	/* var pageNo = 1;
-	$(document).ready(function(){
-		initPage(pageNo);
-	});*/
    var pageNo = 1;
    $(document).ready(function(){
       initPage(pageNo);
+      initPage(++pageNo);
       $(window).scroll(function() {
-    	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        	  pageNo += 1;
+          if($(window).scrollTop() + $(window).height() == $(document).height()) {
+             pageNo += 1;
               initPage(pageNo);
-    	   }
-    	});
+          }
+       });
    });
       
    function initPage(pageNo) {
@@ -61,6 +33,7 @@
           type : "GET",
           dataType : "json",
           data : param,
+          async : false,
           success : function(list) {
             lodingList(list);
           },
@@ -71,7 +44,7 @@
    }
 
    function lodingList(list) {
-   	  var html = ''
+        var html = ''
          $.each(list,function(index, item) {
             html += '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
             html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" >'
@@ -80,11 +53,11 @@
             html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
             html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
          })
-   	  if(list.length === 0){
-   		  msg = '<hr>더이상 상품이 없습니다'
-   		  $("#msg").html(msg)
-   	  }
-     	 $("#images").append(html);
+        if(list.length < 5){
+           msg = '<hr>더이상 상품이 없습니다'
+           $("#msg").html(msg)
+        }
+         $("#images").append(html);
    }
 </script>
 <link rel="stylesheet" type="text/css" href="resources/css/list.css">
@@ -127,7 +100,6 @@
   </button>
 </div>
 </div>
-	<c:import url="default/footer.jsp" />
-	
+   <c:import url="default/footer.jsp" />
 </body>
 </html>

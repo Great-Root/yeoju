@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 상세 페이지</title>
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 <script>
+
 	$(document).ready(function(){
 		var goodsId = $("#goodsId").val()
 		$("#modiBtn").click(function(){
@@ -21,12 +21,64 @@
 				document.form1.submit();
 			}
 		});
-		$("#listBtn").click(function(){
-			location.href = "${path}/goods/list.do";	
+		$heartBtn = $("#heartBtn");
+		$heartBtn.click(function () {
+			$.ajax('${path}/goods/heart.do?goodsId=${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (result) {
+	            	btnClass(result);
+					heartNum();
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
 		});
 	});
+		function heartNum() {
+			$.ajax('${path}/goods/heartNum.do/${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (heartNum) {
+	            	  $("#heartNum").html(heartNum)
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
+		}
+		function isheart() {
+			$.ajax('${path}/goods/isheart.do/${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (result) {
+					btnClass(result);
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
+		}
+		function btnClass(result) {
+      	  if(result){
+    		  $heartBtn.addClass('bg-danger');
+    	  }else{
+    		  $heartBtn.removeClass('bg-danger');
+    	  }
+		}
+		function initHeart() {
+			isheart();
+			heartNum();
+		}
+	window.onload = function() { 
+		initHeart();
+	};
+
 </script>
 <style type="text/css">
+ .carousel-inner> .carousel-item> img {
+  width : 640px;
+  height : 430px;
+}
+
 	.goods-width1st {
 	 display: flex;
     -webkit-box-pack: center;
@@ -263,7 +315,7 @@
     outline: 0px;
     border: 0px;
 	}
-	goods5-4 {
+	.goods5-4 {
 	display: flex;
     width: 100%;
     height: 50px;
@@ -274,12 +326,12 @@
     padding: 0px 10px;
 }
 	}
-	goods5-5 {
+	.goods5-5 {
 	margin-left: 10px;
     font-size: 12px;
     color: rgb(136, 136, 136);
 	}
-	goods5-6 {
+	.goods5-6 {
 	border: 1px solid rgb(238, 238, 238);
     height: 32px;
     display: flex;
@@ -302,7 +354,7 @@
 	}
 	.goods6-3 {
 	    width: 100%;
-    border-bottom: 1px solid rgb(238, 238, 238);
+    border-bottom: 0px solid rgb(238, 238, 238);
 	}
 	.goods6-4 {
 	    display: flex;
@@ -337,10 +389,26 @@
     position: relative;
     cursor: pointer;
 	}
+	.goods6-8 img {
+	margin-right: 4px;
+	}
+	.goods6-8::after {
+	content: "";
+    width: 1px;
+    height: 13px;
+    position: absolute;
+    border-right: 1px solid rgb(238, 238, 238);
+    top: 1px;
+    right: -14px;
+	}
+	.goods7 {
+	display: flex;
+    margin-bottom: 20px;
+	}
 </style>
 </head>
 <body>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <c:import url="../default/header.jsp"/>
 	<div class ="goods-width1st">
 	<div class ="goods-width2nd">
@@ -414,53 +482,49 @@
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										상품상태
+										판매자
 									</div>
-									<div class ="goods2-9">중고</div>
+									<div class ="goods2-9">${dto.userId}</div>
 								</div>
 							</div>
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										배송비
+										등록날짜
 									</div>
-									<div class ="goods2-9">배송비 별도</div>
+									<div class ="goods2-9">${dto.regDate}</div>
 								</div>
 							</div>
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										교환여부
+										카테고리
 									</div>
-									<div class ="goods2-9">교환불가능</div>
+									<div class ="goods2-9">${dto.categoryCode}</div>
 								</div>
 							</div>
 				</div>
 			</div>
 			<div class="goods3">
 				<div class ="goods3-1">
-					<button class ="goods3-2">
+					<button class ="goods3-2" id="heartBtn">
 						<img alt="찜하트" width="16" height="16"
 						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcuMDA1IDEuMDQ1aC4yMzNjLjI4LjIyOC41MzcuNDkuNzYyLjc3Ny4yMjUtLjI4OC40ODEtLjU0OS43NjItLjc3N2guMjMzYTYuMTYgNi4xNiAwIDAgMC0uMDktLjExM0M5LjY4NC4zNDQgMTAuNjI4IDAgMTEuNiAwIDE0LjA2NCAwIDE2IDIuMTEgMTYgNC43OTZjMCAzLjI5Ni0yLjcyIDUuOTgxLTYuODQgMTAuMDYyTDggMTZsLTEuMTYtMS4xNTFDMi43MiAxMC43NzcgMCA4LjA5MiAwIDQuNzk2IDAgMi4xMSAxLjkzNiAwIDQuNCAwYy45NzIgMCAxLjkxNi4zNDQgMi42OTUuOTMyYTYuMTYgNi4xNiAwIDAgMC0uMDkuMTEzeiIvPgo8L3N2Zz4K">
 						<span>찜</span>
-						<span>0</span>
+						<span id="heartNum">0</span>
 					</button>
-					<!-- 
-					<div class="3-3">
-						<img alt=""  width="14" height="14"
-						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTIuMTA2IDdsMy42NjMgNCA3LjAxNS04IiBvcGFjaXR5PSIuNDA2Ii8+Cjwvc3ZnPgo=">
-					</div>
-					 -->
 				</div>
+				<c:if test="${loginUser == dto.userId}">
 				<button class="3-4" 
 				 style="background: rgb(255, 164, 37);
    				 border: 1px solid rgb(243, 150, 20);
-    			 color: rgb(255, 255, 255);">연락하기</button>
+    			 color: rgb(255, 255, 255);">수정하기</button>
 				<button class ="3-5"
 				style ="background: rgb(247, 0, 0);
    				border: 1px solid rgb(223, 0, 0);
     			color: rgb(255, 255, 255);"
-				>바로구매</button>
+				>판매완료</button>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -470,22 +534,22 @@
 		<div class ="goods4-1">상품정보</div>
 		<div class="nothing03">
 			<div class="goods4-2">
-				<div class="goods4-3">잘돌아가요.</div>
+				<div class="goods4-3">${dto.goodsInfo}</div>
 			</div>
 		</div>
 		
 		<div class ="goods5">
 			<div class ="goods5-1">
 				상품문의
-				<span style ="color: rgb(247, 47, 51);">0</span>
+				<span style ="color: rgb(247, 47, 51);" class="procCnt">0</span>
 			</div>
 			<div class="goods5-2">
 				<div class ="goods5-3">
-					<textarea rows="" cols="" placeholder ="상품 문의 입력" class="goods-text"></textarea>
+				<textarea rows="" cols="" placeholder ="상품 문의 입력" class="goods-text"></textarea>
 				</div>
 				<div class="goods5-4">
 					<div class="goods5-5">
-					0 / 100
+					<em class="charCnt">0</em> / 100
 					</div>
 					<button class ="goods5-6">
 						<img alt=""  width="15" height="16"
@@ -497,62 +561,101 @@
 			</div>
 		</div>
 		<div class ="goods6">
-			<div class ="goods6-1">
+			<c:forEach var="comments" items="${dto.goodsCommentsList}">
+			<div class ="goods6-1" commentId = "${comments.commentId}">
 				<a class ="goods6-2" href="#">
 					<img alt="프로필 사진" width="48" height="48" style ="border-radius: 50%;  border-style: none;"
 					src="https://i.pinimg.com/736x/cc/bb/a8/ccbba8a07844293be3ab6a55453ec6bc.jpg">
 				</a>
 				<div class ="goods6-3">
 					<div class ="goods6-4">
-						<div class ="goods6-5">아이디</div>
-						<div class ="goods6-6">1주전</div>
+						<div class ="goods6-5">${comments.userId}</div>
+						<div class ="goods6-6">${comments.regDate}</div>
 					</div>
-					<div class="goods6-7"> 네고 좀 해주시죠??ㅎㅎ</div>
+					<div class="goods6-7">${comments.content}</div>
+					<div class = "goods7">
 					<div class ="goods6-8">
 						<img alt="댓글달기 버튼" width="17" height="14"
 						src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAAAXNSR0IArs4c6QAABIFJREFUSA2tl0lok0EUx5M0tVYpsVvqRhQFe6gH0VKkWrFKl1TrQaSggsvR/eAKoiJCbxZRwV0Ul4N6UbCLbU314EatC0b0oJY0Rg1aEcS0DWn9vfRLnH79EmPNwMt787b5z8z7ZiZmUwLN5XJZ+/r6ivr7+xfhPn9gYGAi3G42m7OQf8D99L9Aj5Cb8XtQVVXVSz/hZo7n2dTUZA+FQptJvpEBs+P5qjb8f9I/Q0wdgLyqLZZsCERWoLe3dx+JdkGjteB++EvonnAG+2qxWL4ij2YF8vCbhG4BfCG6DMhEPwg7YbPZ9hQXFwdEF6sNA9LS0jIjGAxeJeEcCSKZDzoJnaqoqJAtiNtkEj09PdU4ySTmijOxr1NSUlaXl5c/jxU8BEhjY2MBwS4ol2CZTa3D4agtKCjoi5Ugnp6tdbJaZ8k3kXyyXeVOp/OhUUwUiKwEBXkfpzzIQ2A1QbIV/9WYXBZgLpJkKTmlsBdVVlZ26JNaRAFiC9txCTEPx3epqaklyQAhuRm02263LyfvTcaxAep6e3v7GLGpLQwE1NtwKsLwi710lpWVeVSn/5ULCwuDbHENYJ6Qa5rf7z+gz2l2u92jPB6PDyDZfAVbmMFxvVNDQ0O7XpdIn1UtVP2kBlmRDgBZIAdjfYrYrV6vt0pAYPDyVZyIGFSOPfwFqbqRyAzsZlJyvmwifiVUF8ljBWGN1rkAmFDEoHK2a8jMVNu/yoA4R4wAWQX9AUJnBiStaZAN/2Wlng7XjkzDSfuMVekkeiagmLt5QDJZIYcIKDuFG7VEa0RfE0a5NN07xpva1tYmR8Vn0VlRjBUhPT1djmvDhk9SakRJ7hOZa0Tur0EgLE0XA+VzmE1A+UEc9C2ZNaLlFgCmtLQ0ubHDTVZEzox8inYa3BBIMmtkcFjTdHigtLQ0ugtSI61QGbRMk2FDW6I1MjTKZDKqGXLlyw6wE7dVfwFyBarFuIrDbafRBYctmTWyTgNwXeNhZpWHCyhvM1h1V1fXbrSHVAeRk1Ujra2tUyjQrayGj1P8hjpO+PYFyFSAuDFYGXQONfFKdUqGTH6zTJhcTkCs4ZSVSzbawpcee9mJZi80iqJtqK+vl2JKagPEURI6WY1bTPSyPnkYiCjZoiM41YF8MryNC2q23nmkfUAcJnYz9Dg3N3cl+cOnqZovCkSUrMx2nI4KGOgRYPbxdkhVA0YikytF4sh9kyfBL6Mc0ReaamRrVtA/DWVCH6FjGRkZp0tKSr4jx23Nzc22zMzMoDqg9m9AHtzZgFrC6t/RJzEEIk5U+CRO2/2IawlOg4dIJJffXegt5EffjW6sDEBf3hqLkYvQf6MgD+bk5JyTRxE2E5Obi60RWzrdDYA5L/pIiwkk4sCrfHwgENhIkqXoZpHorzGRWGK68b8GKBf0DKCy5TegLHxO8oTcHlm5hJNKckDlcA7MQ5wM2UkoS93DID/gPj79Fwz2Htt6+E643K4xG0DfQKv5lDv+CUjMjAYG7f/NYgDK6302fDp8HFy2WQpXVusj/AMT2PEbeA0W2gj2azwAAAAASUVORK5CYII=">
+						댓글달기
 					</div>
 					<div class ="goods6-8">
 						<img alt="댓글삭제 버튼" width="14" height="14"
-						src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAgtJREFUSA3tVrtOAkEUdQnKkvADFGtpIR01DYXyMLGwVisLjFEbE42FhYWJiY0YEwsqtLYwkZcFf2C3FJZuwQdIAvgAz8EdGHZZwpJIInGS3blzzzn3zty5m6wyM8Iol8tqs9lca7Vaq6CHFUUJUtZut6uYnj0ez4PP57uPRqMN+ocNZRhILJ/Pr2M6Q3BtGBebMIAfJxKJu6E8JxCn8tbr9SvgKXIQsIIpg7kUCARe6avVavPYyDLMLcyL9GHc+P3+XZz282fZ//b2L3srkQwJPuA9iMfj17C/eoyOpeOtI1m6UCjswL6AnYKW4DZf1jGwpCwjhLdMhvtZicViT1bhoHWxWFzCPT9COwvtxqDy2hKyQRqNxgtEGkT7EKVFcF3X5wzDOAW2SR/wrKZpJ6FQ6F1wsNk94JfADFVVF6yN5BFEMbMbzWQVllH4OTMZTnAIPMiHNn0yxyx9hTEYS8Zo2xKarU+MDdJ3ZwjSORlBMaw+U5MhLsUSdHtCIGGiEJa6LJeGpO3EkuW2E4Lc+ahF68tkYFl5TXuQT2hFLFljS4gSBUiIRCJvMpE2GwRde45AVT606bPyhFbEknHH71AmCdvsxiOs+Yw1bCccK4oL0X9CF8UajTr9JXX8LHK5XHu0IrljTbyk7rb3F9nKb92VUzEmfofdLk0mk7bfDaddjuMXlZz4Caf/Dr8BRaXTUmgtW58AAAAASUVORK5CYII=">
+						src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">
+						댓글 삭제
+					</div>
 					</div>
 				</div>
 			</div>
+			</c:forEach>
 		</div>
 	</div>
 </div>
 </div>
 <c:import url="../default/footer.jsp"/>
 </body>
+<script>
+$(function() {
+	$(".goods-text").keyup(function() {
+	    if($(".goods-text").val().length > 100) {
+	        alert("100자 초과 되었습니다.");
+	        $(".goods-text").val($(".goods-text").val().substr(0,100));
+	    } else {
+	        $(".charCnt").text($(".goods-text").val().length);
+	    }
+	});
+	
+	$(".goods6-8").on("click", function() {
+		$.ajax({
+			url : "/comments/commentslist",
+			type : "GET",
+			data : {
+				goodsId : ${dto.goodsId}
+			},
+			success : function(data) {
+				alert(data);
+			}, error : function(data2) {
+				alert(data2);
+			}
+		});	
+	});
+	
+	$(".goods5-6").on("click", function(){
+		var param = {
+			"goodsId" : ${dto.goodsId},
+			"userId"  : '${loginUser}',
+			"content" : $(".goods-text").val()
+		};
+		console.log(param);
+		$.ajax({
+			url : "/comments/insertComment",
+			type : "GET",
+			data : param,
+			success : function(data){
+				alert("댓글 작성 성공");
+				//append 소스
+				var html = "";
+				$(".goods6").append(html);
+			},error : function(e){
+				alert("댓글 작성 실패")
+			}
+		});
+	});
+	
+	$(".goods6-8").on("click", function(){
+		$.ajax({
+			url : "/comments/deleteComment",
+			type : "GET",
+			data : "json",
+			success : function(){
+				alert("댓글 삭제 성공")
+			},error : function(){
+				alert("댓글 삭제 실패")
+			}
+		});
+	});
+})
+
+
+</script>
 </html>
-<!-- 
-	<div class ="goods-width1st">
-	<div class="goods-width2nd">
-	<div class ="goods-back">
-	<div class ="goods-1">
-		<div class ="goods1-1">
-			<div class ="goods2">
-				<div class ="goods2-1">
-					<img alt="제품사진" src="https://media.bunjang.co.kr/product/155870256_1_1623768060_w856.jpg" class ="goodsImage1">
-					<img alt="제품사진" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxDK8gBwlcneHAMl-NZ0pgCg1lOQYtHwPfzA&usqp=CAU" class ="goodsImage2">
-				</div>
-				<div class ="1"></div>
-				<button class ="buttonNext" direction ="next">
-					<img alt="next" width="12" height="22" 
-					src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAAAXNSR0IArs4c6QAAAQVJREFUWAntl9EJg0AQRMV/7SGFaDE2kSaSbkwn6SIV+HV5Q7IgeiCRXcFwC8PJobPrzK3nVVV0pJSu4BKWB3LFC3QhSSAelYGYwOCeBNIa3IHFjYs6ItEAsd5C8QBNRJIeYvmheAJ/80X6JWcIMh/iFkgmRTF/e60gUzF/Wya7A7mWna+vQOl8E2g9Is//dv4x5q9FdZiZd77/+v0UmBzqzFNQ/XxnHPN37ZhVNwPt5xZ+JsPYgJgNCuJlo/U7BMg/AnkHYn4SIJ6bKXnafBk/zkJUzFxrhiznNVPdaHHezvQ7+aDFoWb6HECoWp0ZY6ZWPOQxn1lrJxIoQo+xsQdxe5Oo8Q2tG8U3KxMfPwAAAABJRU5ErkJggg==">
-				</button>
-				<button>
-					<img alt="" width="16" height="16"
-					src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAqBJREFUWAntlk9LFlEUxp0yyFRERKjADxC5CIncpIuWQUHt2pQfIFolEi3cuPMD1DcIWkRBS/FdFNIiWvUF7I9F0R/KQjKdfo+eA/O+c2fmzuvYygeeuddzn/PcM3+85016SpCm6RDLF+FleBqehAPwI3wHW/BJkiQvGZsDGw/AefgTxuAFouluKkg6kzCaIPYYjmXWPjDX3equ1+FxeApOwV7ouM/kFk9k0wO1Rja/BH9BxzKTKZgrVMbEh+Es/AodLSb9tTY2swkSffMN5jOxJmhH4BJ0PGISLDroiVjv/I1la/Pa75OcXvjQPDTMBTcLBRHPK8MwE9LExMjvg6/M5wfjaGUeoiHoX/tyZUKFAK9J6FiskO98SNdczXi+MiFCgM9T81ytlCN8YOI1xvgPp8QZnxvmqeFMibTnEIs64YQW/7/p7nTP1+yrdP+gqQrQ8SrokGkKaxhtm9mJMlMVoLNd0AnXCHiSWxhtmJn7B71VgBqLoOO1EfDeBzE6ZmbuH/RWAf7odbY3hazX+zJTFaAmI+jMH96d7vmq9i38hc92ZkUXNj0LHbNFutg4RkfhWzNcispDrH4uqKuNRCUViMi/IyPDlQJZexjxtGcwqqtle3y7uOQv8/ljXisl0vwSSfcsUYO6Wl9eVRxBr5v4AoV1OF6sDqyQcAS2oENdbTIgbQuh0TvXY/c732b+HdYrQK4k9UP9mMhCjeU6HIOHTTfI/BxcgP7BMU1/62L4xNhVEQmJc1D9vBNbBPxXU+faCoFxeDez0F0RdpejGC3C1Yxh53STgD7aq8px8Hd0EVHtF0O1VHU1NRad7TpedcI959z/xpiDiiC4YAufGS+gfZ0T7megzpPYtzoOivBHe/AkCp7ETY//19Fex21t+g8EN1dBluPf8gAAAABJRU5ErkJggg==">
-					"확대"
-				</button>
-			</div>
-		</div>
-		<div class ="goods1-2">
-		뭐보냐
-		</div>
-	</div>
-	</div>
-	</div>
-	</div>
- -->

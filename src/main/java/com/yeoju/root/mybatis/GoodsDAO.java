@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.dto.HeartDTO;
 
 public interface GoodsDAO {
 	
@@ -28,19 +29,26 @@ public interface GoodsDAO {
 	public String imgFileName(int goodsId);
 	
 	// 판매중인 상품 가져오기
-	public ArrayList<GoodsDTO> sellGoods(String userId);
+	public ArrayList<GoodsDTO> sellGoods(	@Param("userId") String userId, 
+											@Param("pageNo") int pageNo		);
 	
 	// 찜한 상품 가져오기
 	public ArrayList<GoodsDTO> heartPage(String userId);
 
-
-	//07.전체목록 01.써도되는지?
-	public List<GoodsDTO> listAll(String searchOption, String keyword) throws Exception;
-
-	//08.게시글 갯수
-	public int countArticle(String searchOption, String keyword) throws Exception;
-
+	public ArrayList<GoodsDTO> heartPage(	@Param("userId") String userId, 
+											@Param("pageNo") int pageNo		);
 	
+	// 로그인 사용자가 해당상품을 찜했는지 여부확인
+	public int heartCnt(HeartDTO dto);
+	
+	// 해당 상품의 찜 전체 갯수
+	public int heartTotalCnt(int goodsId);
+
+	// 찜등록
+	public void insertHeart(HeartDTO dto);
+
+	// 찜삭제
+	public void deleteHeart(HeartDTO dto);
 	
 
 }

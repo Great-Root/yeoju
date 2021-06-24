@@ -32,12 +32,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 회원정보 수정 -->
 	<update id="modify">
-		update member set pw = #{pw}, email = #{email} where user_id = #{userId}
+		update member set pw = #{pw}, email = #{email}, tel = #{tel} where user_id = #{userId}
 	</update>
 	
 	<update id="modifydetail">
 		update member_detail 
-			set name = #{name}, addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}
+			set name = #{name}, birth = #{birth}, gender = #{gender}, addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}
 				where user_id = #{userId} 
 	</update>
 	
@@ -47,6 +47,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<delete id="deletedetail">
-		delete from memberdetail where user_id = #{userId}
+		delete from member_detail where user_id = #{userId}
 	</delete>
 </mapper>
