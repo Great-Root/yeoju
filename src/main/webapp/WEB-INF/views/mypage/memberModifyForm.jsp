@@ -61,7 +61,11 @@ $(function(){
 						이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="name" size="40" value="${modifyInfo.name}"> <br> 
 						비밀번호&nbsp;<input type="password" id="pw" name="pw" size="40" placeholder="8자리 이상 입력해주세요"><br> 
 						Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="email" size="40" id="email" name="email" value="${modifyInfo.email}"> <br>
-						
+						생년월일&nbsp;<input type="text" id="birth" name="birth" size="40" placeholder="ex)19960621"><br> 
+						전화번호&nbsp;<input type="text" id="tel" name="tel" size="40" placeholder="'-'없이 번호만 입력해주세요"><br> 
+						성별 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="gender" name="gender" value="남">남 
+						<input type="checkbox" id="gender" name="gender" value="여">여<br>
 						우편번호&nbsp;<input id="addr1" name="addr1" readonly="readonly">
 						<input type="button" onclick="daumPost()" value="우편번호 검색"><br>
 						주소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="addr2" name="addr2" size="40px" readonly="readonly"><br>
