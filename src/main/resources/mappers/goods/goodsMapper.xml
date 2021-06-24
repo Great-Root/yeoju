@@ -21,9 +21,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listGoods" resultMap="GoodsMap">
 		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
-		SELECT * FROM goods
+		SELECT * FROM goods WHERE goods_name LIKE '%'||#{keyword}||'%'
 		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
+	
+	<sql id="search">
+		<!-- 동적 SQL 구문 -->
+		<if test="searchOption == 'goodsName'">
+		WHERE goods_name LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'writer'">
+		WHERE writer LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'content'">
+		WHERE content LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'titleContent'">
+		WHERE title LIKE '%'||#{keyword}||'%'
+		OR content LIKE '%'||#{keyword}||'%'
+		</if>
+	</sql>
 	
 		
 	<!-- 02.상품 상세보기 -->

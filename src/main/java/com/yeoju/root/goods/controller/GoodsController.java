@@ -50,8 +50,12 @@ public class GoodsController extends URL implements MemberSessionName{
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
-	public List<GoodsDTO> list(@RequestParam int pageNo) {
-		return gs.listGoods(pageNo);
+	public List<GoodsDTO> list(
+			@RequestParam int pageNo,
+			@RequestParam String keyword) {
+		System.out.println("pageNo : "+pageNo);
+		System.out.println("keyword : "+keyword);
+		return gs.listGoods(pageNo, keyword);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")

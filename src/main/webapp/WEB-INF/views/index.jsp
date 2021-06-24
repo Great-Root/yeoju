@@ -25,7 +25,8 @@
    function initPage(pageNo) {
       
       var param = {
-         "pageNo" : pageNo
+         "pageNo" : pageNo,
+         "keyword" : '${keyword}'
       };
       // 데이터를 불러온다.
       $.ajax({
