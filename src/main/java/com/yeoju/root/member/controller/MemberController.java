@@ -42,16 +42,12 @@ public class MemberController implements MemberSessionName{
 	public String login() {
 		return "member/login";
 	}
-	
 
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
 	public String memberJoinForm() throws Exception{
 		return "member/memberJoinForm";
 	}
-	
-
-	
 	
 	@RequestMapping("/successLogin")
 	public String successLogin(@RequestParam String userId,
@@ -146,8 +142,11 @@ public class MemberController implements MemberSessionName{
 		
 		// 회원 가입
 		@RequestMapping(value = "/join_member.do", method = RequestMethod.POST)
-		public String join_member(@ModelAttribute MemberDTO dto, RedirectAttributes rttr, HttpServletResponse response) throws Exception{
-			rttr.addFlashAttribute("result", ms.join_member(dto, response));
+		@ResponseBody
+		public String join_member(@ModelAttribute MemberDTO dto, RedirectAttributes rttr, HttpServletResponse response, HttpSession session) throws Exception{
+			System.out.println(dto.toString());
+			ms.setProfileImg(dto.getProfileImg(),dto.getUserId());
+//			rttr.addFlashAttribute("result", ms.join_member(dto, response));
 			return "/member/login";
 		}
 

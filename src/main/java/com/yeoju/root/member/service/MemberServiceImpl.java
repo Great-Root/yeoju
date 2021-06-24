@@ -9,19 +9,24 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.common.dto.ProfileDTO;
+import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mybatis.MemberDAO;
+import com.yeoju.root.mybatis.ProfileDAO;
 
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService, MemberSessionName {
 	@Autowired MemberDAO dao;
-	
+	@Autowired ProfileDAO pDAO;
 	public int user_check(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		response.setContentType("text/html;charset=utf-8");
@@ -212,7 +217,21 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-
+	@Override
+	public void setProfileImg(MultipartFile file, String userId) {
+		try {
+			ProfileDTO dto = new ProfileDTO();
+			dto.setUserId(userId);
+			dto.setImgName(file.getOriginalFilename());
+			dto.setImgSize(file.getSize());
+			dto.setImgType(file.getContentType());
+			dto.setImgData(file.getBytes());
+			System.out.println(dto);
+			pDAO.insertProfileImg(dto);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 

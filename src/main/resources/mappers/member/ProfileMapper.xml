@@ -2,36 +2,35 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yeoju.root.mybatis.MemberDAO">
-	<resultMap id="member" type="com.yeoju.root.common.dto.MemberDTO">
+<mapper namespace="com.yeoju.root.mybatis.ProfileDAO">
+	<resultMap id="ProfileMap" type="com.yeoju.root.common.dto.ProfileDTO">
 		<id property="userId" column="user_id"/>
-		<result property="pw" column="pw"/>
-		<result property="tel" column="tel"/>
-		<result property="regDate" column="reg_date"/>
-		<result property="sessionId" column="session_id"/>
-		<result property="limitTime" column="limit_time"/>
-		<result property="approval_status" column="approval_status"/>
-		<result property="approval_key" column="approval_key"/>
-		<result property="recentDate" column="recent_date"/>
+		<result property="imgName" column="img_name"/>
+		<result property="imgSize" column="img_size"/>
+		<result property="imgType" column="img_type"/>
+		<result property="imgData" column="img_data"/>
 	</resultMap>
 	
+	<insert id="insertProfileImg">
+		INSERT INTO profile_img(user_id, img_name, img_size, img_type, img_data) 
+		VALUES(#{userId}, #{imgName}, #{imgSize}, #{imgType}, #{imgData})
+	</insert>
 	
-	
-	<select id="user_check" resultMap="member">
+	<!-- <select id="user_check" resultMap="member">
 		select * from member where user_id=#{userId}
 	</select>
 	
-	<!-- 아이디 중복 검사  -->
+	아이디 중복 검사 
 	<select id="check_id" parameterType="String" resultType="int" >
 		select count(*) from member where user_id = #{userId}
 	</select>
 	
-	<!-- 이메일 중복 검사 -->
+	이메일 중복 검사
 	<select id="check_email" parameterType="String" resultType="int">
 		select count(*) from member where email = #{email}
 	</select>
 	
-	<!-- 회원가입 insert into member(user_id, pw, email, reg_date,  approval_status, approval_key) values(#{userId}, #{pw}, #{email}, sysdate, 'false', #{approval_key})-->
+	회원가입 insert into member(user_id, pw, email, reg_date,  approval_status, approval_key) values(#{userId}, #{pw}, #{email}, sysdate, 'false', #{approval_key})
 	<insert id="join_member" >
 		insert into member(user_id, pw, email, reg_date) values(#{userId}, #{pw}, #{email}, sysdate)
 	</insert>
@@ -52,19 +51,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select user_id from member where email = #{email}
 	</select>
 	
-	<!-- 로그인 접속일자 수정 -->
+	로그인 접속일자 수정
 	<update id="recent_date" parameterType="String">
 		update member set recent_date = sysdate where user_id = #{userId}
 	</update>
 
-	<!-- 비밀번호 변경 -->
+	비밀번호 변경
 	<update id="updatePw" >
 		update member set pw = #{pw} where user_id = #{userId}
 	</update>	
 	
 	<select id="getUserInfo" resultMap="member">
 		select * from member where user_id=#{userId}
-	</select>
+	</select> -->
 	
 	
 </mapper>
