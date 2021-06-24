@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보수정</title>
+<link href="${pageContext.request.contextPath}/resources/css/member/modify.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -30,54 +31,50 @@ function daumPost(){
             $("[name=addr3]").focus()
         }
     }).open();
-    
-    
-    
 }
+
+$(function(){
+	$("#modifyForm").submit(function(){
+		if($("#pw").val().length < 8) {
+			alert("비밀번호는 8자 이상으로 설정해야 합니다.");
+			$("#pw").val("").focus();
+			return false;
+		}else if($.trim($("#pw").val()) !== $("#pw").val() || $.trim($("#email").val()) !== $("#email").val()){
+			alert("공백은 입력이 불가능합니다.");
+			return false;
+		}
+	})
+})
 </script>
 
 </head>
 <body>
 <c:import url="../default/header.jsp" />
-   <div style="width:700px; margin: 0 auto;">
-      <form action="${contextPath }/mypage/modify" method="post">
+  <div class="form">
+      <form id="modifyForm" action="${contextPath }/mypage/modify" method="post">
 			<table>
 				<tr>
-					<h1 style="color: green; font-size: 30px;">회원정보 수정</h1>
+					<h1 style="color: green; font-size: 30px; text-align: center;">회원정보 수정</h1>
 				</tr>
 				<tr>
-					<td>아이디&nbsp;&nbsp;&nbsp;<input size="30" type="text"	name="userId" value="${modifyInfo.userId}" readonly="readonly"><br>
-						이름<input type="text" name="name" value="${modifyInfo.name}"> <br> 
-						비밀번호<input size="30" type="password" name="pw" placeholder="8자리 이상 입력해주세요"><br> 
-						Email<input type="email" name="email" value="${modifyInfo.email}"> <br>
-						
-						우편번호<input id="addr1" name="addr1" readonly="readonly">
+					<td>아이디&nbsp;&nbsp;&nbsp;&nbsp;<input size="40" type="text"	name="userId" value="${modifyInfo.userId}" readonly="readonly"><br>
+						이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="name" size="40" value="${modifyInfo.name}"> <br> 
+						비밀번호&nbsp;<input type="password" id="pw" name="pw" size="40" placeholder="8자리 이상 입력해주세요"><br> 
+						Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="email" size="40" id="email" name="email" value="${modifyInfo.email}"> <br>
+						생년월일&nbsp;<input type="text" id="birth" name="birth" size="40" placeholder="ex)19960621"><br> 
+						전화번호&nbsp;<input type="text" id="tel" name="tel" size="40" placeholder="'-'없이 번호만 입력해주세요"><br> 
+						성별 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="gender" name="gender" value="남">남 
+						<input type="checkbox" id="gender" name="gender" value="여">여<br>
+						우편번호&nbsp;<input id="addr1" name="addr1" readonly="readonly">
 						<input type="button" onclick="daumPost()" value="우편번호 검색"><br>
-						주소<input id="addr2" name="addr2" size="30px" readonly="readonly"><br>
-						상세주소<input id="addr3" name="addr3" size="30px" readonly="readonly"><br>
+						주소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="addr2" name="addr2" size="40px" readonly="readonly"><br>
+						상세주소&nbsp;<input id="addr3" name="addr3" size="40px" readonly="readonly"><br>
 						
-						<!--  주소(시/도)<input type="text"	name="addr1" value="${modifyInfo.addr1}"> <br>
-						주소(동/면)<input	type="text" name="addr2" value="${modifyInfo.addr2}"><br>
-						주소(상세주소)<input type="text" name="addr3" value="${modifyInfo.addr3}"> <br>
-						
-						
-						성별
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="M" id="flexRadioDefault1"> 
-								<label class="form-check-label" for="flexRadioDefault1">
-								남 
-								</label>
+						<div align="right">
+						<input type="submit" value="정보수정완료"> &nbsp;&nbsp;
+						<input type="button" value="회원 탈퇴" onclick="location.href='${contextPath }/mypage/delete/${modifyInfo.userId}'">
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="W" id="flexRadioDefault2" checked>
-								<label class="form-check-label" for="flexRadioDefault2">
-								여 
-								</label>
-						</div> <br>
-						-->
-						<input type="submit" value="정보수정완료"> 
-						<input type="button" value="로그인" onclick="javascript:window.location='login'">
-						<input type="button" value="회원 탈퇴" onclick="location.href='${contextPath }/mypage/delete/${userInfo.userId}'">
 					</td>
 				</tr>
 			</table>

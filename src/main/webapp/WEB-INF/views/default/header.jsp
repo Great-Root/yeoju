@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
+
+<!DOCTYPE html>	
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 	<header class="p-3 bg-white text-dark">
 		<div class="container">
 			<div class="container px-4" style ="width: 1133px; ">
@@ -89,22 +97,5 @@
 		</div>
 		
 	</header>
-
-
-<script>
-$(document).ready(function(){
-	$("#sellBtn").click(function () {
-		location.href = "${contextPath}/goods/write.do"
-	})
-});
-$("#searchBtn").on("click", function() {
-	if($(".input-group.p-3").find("input.form-control").val().length == 0){
-	        alert("검색어를 입력해주세여!");
-	         $(".btn-secondary").css("background-color","red");
-	           setInterval(borderDel, 3000);
-	}
-	});
-	function borderDel() {
-	     $("#searchBtn").css("background-color","pink");
-	}
-</script>
+</body>
+</html>

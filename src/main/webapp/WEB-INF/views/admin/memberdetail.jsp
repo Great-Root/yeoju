@@ -19,26 +19,18 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
-	<c:choose>
-					
-					  <c:when test="${grade !=1}">
-					 
-						<h1>관리자 전용 페이지 입니다</h1>
-					 </c:when>
-					  <c:otherwise>	
 	<div  align="right"  style=" padding-right: 250px; ">
 	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="logout">쇼핑몰로 이동</a></th>
+	<th><a href="/">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
-		
 		<div class="row" style="padding: 40px;">
 		<table class="table col" >
 			<thead>
-				<tr align="center" >
+				<tr  >
 					<th><a href="adminlist">관리자 메뉴</a></th>
 					<th><a href="memmanagement">회원 관리</a></th>
 					<th><a href="commanagement">커뮤니티 관리</a></th>
@@ -46,35 +38,30 @@
 			</thead>
 		</table>
 		</div>
-		<div class="row" >
-				<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:20%;" >
+		<h1>===${userId }회원님의 정보===</h1>
+		<table class="table table-striped col" style="width: 80%;">
 					<tbody>
-						<tr>
-							<th><a href="adminlist">관리자 목록</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminmodify_form">관리자 계정 수정</a></th>
-						</tr>
+							<c:forEach var="detaildto" items="${detailList }">
+								<tr><th>이름</th><td>${detaildto.name }</td></tr>
+								<tr><th>성별</th><td>
+								<c:choose>
+								<c:when test="${detaildto.gender !=0}">
+								남자</c:when>
+								<c:otherwise>
+								여자</c:otherwise></c:choose>
+								</td></tr>
+								<tr><th>생년월일</th><td>${detaildto.birth }</td></tr>
+								<tr><th>우편번호</th><td>${detaildto.addr1 }</td> </tr>
+								<tr><th>주소</th><td>${detaildto.addr2 }</td> </tr>
+								<tr><th>상세주소</th><td>${detaildto.addr3 }</td> </tr>
+							</c:forEach>
+							<c:forEach var="dto" items="${memberInfo}"> 	
+								<tr><th>전화번호</th><td>${dto.tel }</td></tr>
+								<tr><th>이메일</th><td>${dto.email }</td></tr>
+							</c:forEach> 
 					</tbody>
 				</table>
-				<div class="col" align="right">
-				
-				<form action="adminmodify" method="post">
-				<h6 align="center">계정 수정</h6>
-					
-					아이디<input type="text" name="id"  placeholder="값으로 가져올것" value="${loginUser }" ><br>
-
-				바꿀 비밀번호<input type="password" name="pw" placeholder="영문,숫자,특수문자 포함 6~15자"><br>
-				바꿀 전화번호<input type="text" name="tel" placeholder="숫자만 입력"><br>
-					<input type="submit" value="계정 수정" >
-					
-				</form></div>
-			</div>
 	</div>
-		</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>

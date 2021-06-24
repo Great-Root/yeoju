@@ -49,7 +49,7 @@ public class MyPageServiceImpl implements MyPageService{
 	public boolean delete(MemberDTO dto, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		if(mydao.delete(dto) != 1) {
+		if(mydao.deletedetail(dto) != 1) {
 			out.println("<script>");
 			out.println("alert('회원탈퇴 실패');");
 			out.println("history.go(-1);");
@@ -57,8 +57,17 @@ public class MyPageServiceImpl implements MyPageService{
 			out.close();
 			return false;
 		}else {
-			mydao.deletedetail(dto);
-			return true;
+			if(mydao.delete(dto) != 1) {
+				out.println("<script>");
+				out.println("alert('회원탈퇴 실패');");
+				out.println("history.go(-1);");
+				out.println("</script>");
+				out.close();
+				return false;
+			}else {
+				
+				return true;
+			}
 		}
 	}
 	

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.ui.Model;
+
 import com.yeoju.root.common.dto.MemberDTO;
 
 
@@ -32,4 +34,7 @@ public interface MemberService {
 //	public String create_key() throws Exception;
 //	public void send_mail(MemberDTO member) throws Exception;
 //	public void approval_member(MemberDTO member, HttpServletResponse response) throws Exception;
+	public void memberList(Model model);
+	public void memberInfo(Model model,String userId);
+	public void detailList(Model model, String userId);
 }
