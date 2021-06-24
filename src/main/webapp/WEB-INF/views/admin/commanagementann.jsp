@@ -19,11 +19,18 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<c:choose>
+					
+					  <c:when test="${grade !=1}">
+					 
+						<h1>관리자 전용 페이지 입니다</h1>
+					 </c:when>
+					  <c:otherwise>	
 	<div  align="right"  style=" padding-right: 250px; ">
 	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="/">쇼핑몰로 이동</a></th>
+	<th><a href="logout">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
@@ -54,6 +61,7 @@
 							<th>작성일</th>
 							<th>조회수</th>
 						</tr>
+						
 					</thead>
 					<tbody>
 					<!--<c:if test="${adminAnnBoardList.size() == 0 }">
@@ -75,10 +83,15 @@
 							<td>sysdate</td>
 							<td>hit가져오는법연습해야징</td>
 						</tr>
-						
+						<tr align="right">
+							<th colspan="5" >
+								<input type="submit" onclick="" value="공지 작성">
+							</th>
+						</tr>
 					</tbody>
 				</table>
 	</div>
+	</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>
