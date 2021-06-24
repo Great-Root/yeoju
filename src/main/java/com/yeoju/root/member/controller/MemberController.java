@@ -179,7 +179,7 @@ public class MemberController implements MemberSessionName{
 			bs.QnABoardView(writeNo,model);
 			return "member/qnaview";
 		}
-		@GetMapping("QnABoardDelete")
+		@PostMapping("QnABoardDelete")
 		public String QnABoardDelete(@RequestParam int writeNo) {
 			System.out.println(writeNo);
 			bs.QnABoardDelete(writeNo);

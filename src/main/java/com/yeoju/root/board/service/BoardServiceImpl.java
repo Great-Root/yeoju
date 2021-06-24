@@ -8,8 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.yeoju.root.common.dto.QnaBoardDTO;
@@ -55,6 +53,6 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 		}
 	@Override
 	public void QnABoardDelete(int writeNo) {
-		dao.QnaBoardDelete(writeNo);
+		dao.QnABoardDelete(writeNo);
 	}
 }

@@ -114,7 +114,7 @@
 		<tr>
 		<td colspan="4" align="center">
 			<div id="reply"></div>
-				<input type="button" class="b btn btn-outline-secondary" onclick="slideClick()" value="답글달기">
+				<input type="button" class="b btn btn-outline-secondary" onclick="slideClick()" value="답변달기">
 			<input type="button" class="b btn btn-outline-success" onclick="location.href='${contextPath }/admin/commanagement'" value="리스트로 돌아가기">
 		</td>
 	</tr>
