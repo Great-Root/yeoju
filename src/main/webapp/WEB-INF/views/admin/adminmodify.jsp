@@ -19,11 +19,18 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
+	<c:choose>
+					
+					  <c:when test="${grade !=1}">
+					 
+						<h1>관리자 전용 페이지 입니다</h1>
+					 </c:when>
+					  <c:otherwise>	
 	<div  align="right"  style=" padding-right: 250px; ">
 	<table  >
 	<tr>
 	<th>관리자 모드</th>
-	<th><a href="/">쇼핑몰로 이동</a></th>
+	<th><a href="logout">쇼핑몰로 이동</a></th>
 	</tr>
 	</table></div>
 	<div class="container">
@@ -55,16 +62,19 @@
 				</table>
 				<div class="col" align="right">
 				
-				<form action="adminmodify">
+				<form action="adminmodify" method="post">
 				<h6 align="center">계정 수정</h6>
-					아이디<input type="text" name="id"  placeholder="값으로 가져올것"><br>
+					
+					아이디<input type="text" name="id"  placeholder="값으로 가져올것" value="${loginUser }" ><br>
+
 				바꿀 비밀번호<input type="password" name="pw" placeholder="영문,숫자,특수문자 포함 6~15자"><br>
-				바꿀 전화번호<input type="text" name="phonenum" placeholder="숫자만 입력"><br>
+				바꿀 전화번호<input type="text" name="tel" placeholder="숫자만 입력"><br>
 					<input type="submit" value="계정 수정" >
 					
 				</form></div>
 			</div>
 	</div>
+		</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />
 </body>
 </html>

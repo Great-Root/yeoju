@@ -6,23 +6,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디 찾기</title>
+<title>아이디 찾는 페이지</title>
+<link href="${pageContext.request.contextPath}/resources/css/member/login.css" rel="stylesheet" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-	<c:import url="../default/header.jsp" />
-		<div align="center">
-		<h1 style="color: green; font-size: 30px;">아이디 찾기</h1>
+		<div class="login-page">
+		<div class="form">
+		<img src="../../resources/img/test.png" width="110px" height="140px">
+		<h1 style="color: green; font-size: 30px;">find ID</h1>
 		<form action="${contextPath }/member/find_id.do" method="post">
-			<div class="mb-3" style="width: 300px;">
-				<label style="text-align: left" for="exampleInputEmail1" class="form-label">Email</label> 
-				<input type="text" name="email" class="form-control" id="email" required aria-describedby="emailHelp">
+			<div>
+				<input type="text" name="email" placeholder="가입한 이메일을 입력해주세요" id="email" required aria-describedby="emailHelp">
 			</div>
 			
 			<button type="submit" style="size: 120px" class="btn btn-primary">아이디 찾기</button><br>
-			
+			<button type="button" onclick="javascript:window.location='${contextPath }/'" class="btn btn-primary">취소</button>
+		</div>
 		</form>
 	</div>
-	<c:import url="../default/footer.jsp" />
 </body>
 </html>

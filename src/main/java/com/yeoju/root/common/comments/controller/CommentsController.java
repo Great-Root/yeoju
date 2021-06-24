@@ -29,20 +29,21 @@ public class CommentsController {
 	
 	@GetMapping(value ="insertComment",produces="application/json; charset = utf-8")
 	public int insertComment(GoodsCommentsDTO dto) {
-		
-		return cs.insertComments(dto);
+		System.out.println(dto.toString());
+//		return cs.insertComments(dto);
+		return 1;
 	}
 	//1. 댓글 리스트 
 		@GetMapping("/commentslist")
-		public List<GoodsCommentsDTO> commentsList() {
+		public List<GoodsCommentsDTO> commentsList(@RequestParam int goodsId) {
 			System.out.println("확인작업");
-			int goodsId = 112;
+			System.out.println("상품 번호는 ? "+goodsId);
 			List<GoodsCommentsDTO> dto = new ArrayList<GoodsCommentsDTO>();
-			try {
-				dto = gs.redaReply(goodsId);
-			} catch(Exception e) {
-				e.getMessage();
-			}
+//			try {
+//				dto = gs.redaReply(goodsId);
+//			} catch(Exception e) {
+//				e.getMessage();
+//			}
 			
 			return dto;
 		}

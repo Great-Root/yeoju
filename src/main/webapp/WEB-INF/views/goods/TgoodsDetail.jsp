@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 상세 페이지</title>
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 <script>
+
 	$(document).ready(function(){
 		var goodsId = $("#goodsId").val()
 		$("#modiBtn").click(function(){
@@ -21,10 +21,57 @@
 				document.form1.submit();
 			}
 		});
-		$("#listBtn").click(function(){
-			location.href = "${path}/goods/list.do";	
+		$heartBtn = $("#heartBtn");
+		$heartBtn.click(function () {
+			$.ajax('${path}/goods/heart.do?goodsId=${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (result) {
+	            	btnClass(result);
+					heartNum();
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
 		});
 	});
+		function heartNum() {
+			$.ajax('${path}/goods/heartNum.do/${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (heartNum) {
+	            	  $("#heartNum").html(heartNum)
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
+		}
+		function isheart() {
+			$.ajax('${path}/goods/isheart.do/${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (result) {
+					btnClass(result);
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
+		}
+		function btnClass(result) {
+      	  if(result){
+    		  $heartBtn.addClass('bg-danger');
+    	  }else{
+    		  $heartBtn.removeClass('bg-danger');
+    	  }
+		}
+		function initHeart() {
+			isheart();
+			heartNum();
+		}
+	window.onload = function() { 
+		initHeart();
+	};
+
 </script>
 <style type="text/css">
  .carousel-inner> .carousel-item> img {
@@ -435,53 +482,49 @@
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										상품상태
+										판매자
 									</div>
-									<div class ="goods2-9">중고</div>
+									<div class ="goods2-9">${dto.userId}</div>
 								</div>
 							</div>
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										배송비
+										등록날짜
 									</div>
-									<div class ="goods2-9">배송비 별도</div>
+									<div class ="goods2-9">${dto.regDate}</div>
 								</div>
 							</div>
 							<div class ="goods2-6">
 								<div class ="goods2-7">
 									<div class ="goods2-8">
-										교환여부
+										카테고리
 									</div>
-									<div class ="goods2-9">교환불가능</div>
+									<div class ="goods2-9">${dto.categoryCode}</div>
 								</div>
 							</div>
 				</div>
 			</div>
 			<div class="goods3">
 				<div class ="goods3-1">
-					<button class ="goods3-2">
+					<button class ="goods3-2" id="heartBtn">
 						<img alt="찜하트" width="16" height="16"
 						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcuMDA1IDEuMDQ1aC4yMzNjLjI4LjIyOC41MzcuNDkuNzYyLjc3Ny4yMjUtLjI4OC40ODEtLjU0OS43NjItLjc3N2guMjMzYTYuMTYgNi4xNiAwIDAgMC0uMDktLjExM0M5LjY4NC4zNDQgMTAuNjI4IDAgMTEuNiAwIDE0LjA2NCAwIDE2IDIuMTEgMTYgNC43OTZjMCAzLjI5Ni0yLjcyIDUuOTgxLTYuODQgMTAuMDYyTDggMTZsLTEuMTYtMS4xNTFDMi43MiAxMC43NzcgMCA4LjA5MiAwIDQuNzk2IDAgMi4xMSAxLjkzNiAwIDQuNCAwYy45NzIgMCAxLjkxNi4zNDQgMi42OTUuOTMyYTYuMTYgNi4xNiAwIDAgMC0uMDkuMTEzeiIvPgo8L3N2Zz4K">
 						<span>찜</span>
-						<span>0</span>
+						<span id="heartNum">0</span>
 					</button>
-					<!-- 
-					<div class="3-3">
-						<img alt=""  width="14" height="14"
-						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTIuMTA2IDdsMy42NjMgNCA3LjAxNS04IiBvcGFjaXR5PSIuNDA2Ii8+Cjwvc3ZnPgo=">
-					</div>
-					 -->
 				</div>
+				<c:if test="${loginUser == dto.userId}">
 				<button class="3-4" 
 				 style="background: rgb(255, 164, 37);
    				 border: 1px solid rgb(243, 150, 20);
-    			 color: rgb(255, 255, 255);">연락하기</button>
+    			 color: rgb(255, 255, 255);">수정하기</button>
 				<button class ="3-5"
 				style ="background: rgb(247, 0, 0);
    				border: 1px solid rgb(223, 0, 0);
     			color: rgb(255, 255, 255);"
-				>바로구매</button>
+				>판매완료</button>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -567,7 +610,7 @@ $(function() {
 			url : "/comments/commentslist",
 			type : "GET",
 			data : {
-				goodsId : "112"
+				goodsId : ${dto.goodsId}
 			},
 			success : function(data) {
 				alert(data);
@@ -579,10 +622,9 @@ $(function() {
 	
 	$(".goods5-6").on("click", function(){
 		var param = {
-			"goodsId" : 162,
-			"userId"  : "aaa",
-			"content" : $(".goods-text").val(),
-			"commentId" : ""
+			"goodsId" : ${dto.goodsId},
+			"userId"  : '${loginUser}',
+			"content" : $(".goods-text").val()
 		};
 		console.log(param);
 		$.ajax({

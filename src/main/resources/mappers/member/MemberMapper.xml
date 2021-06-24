@@ -6,17 +6,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="member" type="com.yeoju.root.common.dto.MemberDTO">
 		<id property="userId" column="user_id"/>
 		<result property="pw" column="pw"/>
-		<result property="profileImg" column="profile_img"/>
+		<result property="tel" column="tel"/>
 		<result property="regDate" column="reg_date"/>
 		<result property="sessionId" column="session_id"/>
 		<result property="limitTime" column="limit_time"/>
+		<result property="approval_status" column="approval_status"/>
+		<result property="approval_key" column="approval_key"/>
+		<result property="recentDate" column="recent_date"/>
 	</resultMap>
+	
 	
 	
 	<select id="user_check" resultMap="member">
 		select * from member where user_id=#{userId}
 	</select>
 	
+	<!-- 아이디 중복 검사  -->
+	<select id="check_id" parameterType="String" resultType="int" >
+		select count(*) from member where user_id = #{userId}
+	</select>
+	
+	<!-- 이메일 중복 검사 -->
+	<select id="check_email" parameterType="String" resultType="int">
+		select count(*) from member where email = #{email}
+	</select>
+	
+	<!-- 회원가입 insert into member(user_id, pw, email, reg_date,  approval_status, approval_key) values(#{userId}, #{pw}, #{email}, sysdate, 'false', #{approval_key})-->
+	<insert id="join_member" >
+		insert into member(user_id, pw, email, reg_date) values(#{userId}, #{pw}, #{email}, sysdate)
+	</insert>
+	<insert id="join_memberdetail" >
+		insert into member_detail(user_id) values(#{userId})
+		</insert>
+	<select id="memberInfo" resultMap="member">
+		select * from member where user_id=#{userId}
+	</select>
+	<select id="memberList" resultMap="member">
+		select * from member 
+	</select>
 	<insert id="register">
 		insert into member(user_id, pw, tel, reg_date, profile_img) values(#{userId}, #{pw}, #{tel}, sysdate, 'default.png')
 	</insert>
@@ -30,12 +57,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from member where session_id=#{sessionId}
 	</select>
 	
-	<select id="find_id" resultMap="member">
+	<select id="find_id" parameterType="String" resultType="String">
 		select user_id from member where email = #{email}
 	</select>
+	
+	<!-- 로그인 접속일자 수정 -->
+	<update id="recent_date" parameterType="String">
+		update member set recent_date = sysdate where user_id = #{userId}
+	</update>
+
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw" >
+		update member set pw = #{pw} where user_id = #{userId}
+	</update>	
 	
 	<select id="getUserInfo" resultMap="member">
 		select * from member where user_id=#{userId}
 	</select>
-		
+	
+	
 </mapper>

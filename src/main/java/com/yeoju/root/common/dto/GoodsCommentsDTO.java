@@ -68,4 +68,11 @@ public class GoodsCommentsDTO {
         this.regDate = param.getRegDate();
         this.commentId = param.getCommentId();
     }
+
+	@Override
+	public String toString() {
+		return "GoodsCommentsDTO [goodsId=" + goodsId + ", userId=" + userId + ", content=" + content + ", regDate="
+				+ regDate + ", commentId=" + commentId + "]";
+	}
+    
 }

@@ -16,5 +16,11 @@ public interface MyPageDAO {
 	// 찜한 상품 가져오기
 	public ArrayList<GoodsDTO> heartPage();
 	
-
+	public int modify(MemberDTO dto) throws Exception;
+	
+	public int modifydetail(MemberDTO dto) throws Exception;
+	
+	public int delete(MemberDTO dto) throws Exception;
+	
+	public int deletedetail(MemberDTO dto) throws Exception;
 }

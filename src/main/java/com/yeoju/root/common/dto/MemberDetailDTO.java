@@ -14,10 +14,10 @@ public class MemberDetailDTO {
 	    protected String addr3;
 
 	    // 0 : 여성 1 : 남성 
-	    protected Integer gender;
+	    protected String gender;
 
 	    // 생년월일 
-	    protected Date birth;
+	    protected String birth;
 
 	    protected String name;
 
@@ -47,19 +47,19 @@ public class MemberDetailDTO {
 	        this.addr3 = addr3;
 	    }
 
-	    public Integer getGender() {
+	    public String getGender() {
 	        return gender;
 	    }
 
-	    public void setGender(Integer gender) {
+	    public void setGender(String gender) {
 	        this.gender = gender;
 	    }
 
-	    public Date getBirth() {
+	    public String getBirth() {
 	        return birth;
 	    }
 
-	    public void setBirth(Date birth) {
+	    public void setBirth(String birth) {
 	        this.birth = birth;
 	    }
 

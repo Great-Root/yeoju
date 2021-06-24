@@ -3,6 +3,7 @@ package com.yeoju.root.goods.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,6 +14,7 @@ import javax.security.cert.X509Certificate;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
+import com.yeoju.root.common.dto.HeartDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
@@ -47,9 +50,8 @@ public class GoodsController extends URL implements MemberSessionName{
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
-	public List<GoodsDTO> list() {
-		System.out.println("확인작업");
-		return gs.listGoods();
+	public List<GoodsDTO> list(@RequestParam int pageNo) {
+		return gs.listGoods(pageNo);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
@@ -66,11 +68,13 @@ public class GoodsController extends URL implements MemberSessionName{
 	
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
+	@ResponseBody
 	public String insert(GoodsDTO dto, HttpSession session) {
 
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
+		System.out.println(uploadFile.getOriginalFilename());
 		if (!uploadFile.isEmpty()) {
 			try {
 				// SSL인증서 오류 처리
@@ -89,9 +93,13 @@ public class GoodsController extends URL implements MemberSessionName{
 				RestTemplate restTemplate = new RestTemplate();
 				ResponseEntity<String> response = restTemplate
 						.postForEntity(serverUrl, requestEntity, String.class);
-				dto.setImgFileName(response.getBody()); 
-				dto.setUserId((String) session.getAttribute(LOGIN));
-				url = gs.insertGoods(dto) ? "redirect:/" : "redirect:/goods/write.do";
+				String result = response.getBody();
+				if(!result.equals("Failed to save")) {
+					dto.setImgFileName(result); 
+					dto.setUserId((String) session.getAttribute(LOGIN));
+					url = gs.insertGoods(dto) ? "/" : "";
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -192,6 +200,31 @@ public class GoodsController extends URL implements MemberSessionName{
 	FileCopyUtils.copy(in, response.getOutputStream());
 	in.close();
 	}
+	
+	//9.상품 찜버튼 클릭시
+	@GetMapping("heart.do")
+	@ResponseBody
+	public boolean heart(int goodsId,HttpSession session) {
+		String loginUser = (String)session.getAttribute(LOGIN);
+		return loginUser == null ? false : gs.heart(new HeartDTO(loginUser, goodsId));
+	}
+	
+	// 해당 상품 찜갯수 확인
+	@GetMapping("heartNum.do/{goodsId}")
+	@ResponseBody
+	public int heartNum(@PathVariable int goodsId) {
+		return gs.heartTotalCnt(goodsId);
+	}
+	
+	// 상품 찜 활성화 확인
+	@GetMapping("isheart.do/{goodsId}")
+	@ResponseBody
+	public boolean isheartNum(@PathVariable int goodsId, HttpSession session) {
+		String loginUser = (String)session.getAttribute(LOGIN);
+		return loginUser == null ? false : gs.isheart(new HeartDTO(loginUser, goodsId));
+	}
+	
+	
 	TrustManager[] dummyTrustManager = new TrustManager[] { new X509TrustManager() { 
 	     public java.security.cert.X509Certificate[] getAcceptedIssuers() { 
 	     return null; 

@@ -1,6 +1,9 @@
 package com.yeoju.root.common.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class MemberDTO extends MemberDetailDTO{
 
@@ -14,7 +17,7 @@ public class MemberDTO extends MemberDetailDTO{
 	private Date regDate;
 
 	// 이미지 경로
-	private String profileImg;
+	private MultipartFile profileImg;
 
 	// 이메일 주소
 	private String email;
@@ -28,11 +31,7 @@ public class MemberDTO extends MemberDetailDTO{
 	private Date limitTime;
 
 	private String sessionId;
-	
-	
-	
-	
-	
+
 	public Date getLimitTime() {
 		return limitTime;
 	}
@@ -89,11 +88,11 @@ public class MemberDTO extends MemberDetailDTO{
 		this.regDate = regDate;
 	}
 
-	public String getProfileImg() {
+	public MultipartFile getProfileImg() {
 		return profileImg;
 	}
 
-	public void setProfileImg(String profileImg) {
+	public void setProfileImg(MultipartFile profileImg) {
 		this.profileImg = profileImg;
 	}
 

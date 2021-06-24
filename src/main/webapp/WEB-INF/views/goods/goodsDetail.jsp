@@ -458,6 +458,7 @@
 							</div>
 				</div>
 			</div>
+<<<<<<< HEAD
 			<div class="goods3">
 				<div class ="goods3-1">
 					<button class ="goods3-2">
@@ -619,6 +620,25 @@
 				</div>
 			</div>
 		</div>
+=======
+		</div>
+		<div class="col">
+			<input class="form-control mb-2" type="text" placeholder="상품명"  name="goodsName" id="goodsName" value="${dto.goodsName}" aria-label="상품명 입력칸" readonly="readonly">
+			<input class="form-control mb-2" type="text" placeholder="상품가격"  name="goodsPrice" id="goodsPrice" value="${dto.goodsPrice}" aria-label="상품가격" readonly="readonly">
+			<div class="mb-3">
+			  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="상품 설명을 입력해주세요"  name="goodsInfo" id="goodsInfo" readonly="readonly">${dto.goodsInfo}</textarea>
+			</div>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col d-flex justify-content-center">
+				<input type="button" class="btn btn-primary mx-3" value="상품 내용 수정" id="modiBtn"> 
+				<input type="button" class="btn btn-secondary mx-3" value="목록" onclick="location.href='${path}/';">
+				<input type="button" class="btn btn-danger mx-3" value="상품 삭제 하기" id="delBtn"> 
+			</div>
+		</div>
+	</form>
+>>>>>>> e74df7ef51c3251aaf77a003eba48ea472d12fd9
 	</div>
 </div>
 </div>
