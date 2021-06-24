@@ -20,10 +20,10 @@
 						
 					</thead>
 					<tbody>
-					<c:if test="${adminAnnBoardList.size() == 0 }">
+					<c:if test="${AnnBoardList.size() == 0 }">
 						<tr> <th colspan="6">저장 데이터 없음</th> </tr>
 					</c:if>
-					<c:forEach var="dto" items="${adminAnnBoardList }">
+					<c:forEach var="dto" items="${AnnBoardList }">
 					<tr>
 						<td>${dto.writeNo }</td>
 					    <td><a href="${contextPath }/board/contentView?writeNo=${dto.writeNo }">${dto.title }</a></td>
