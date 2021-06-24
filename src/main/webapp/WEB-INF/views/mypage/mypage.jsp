@@ -78,7 +78,7 @@
 						class="card-img-top rounded" alt="..." onload="setProfile()">
 					<div class="card-body">
 						<h5 class="card-title">ID : ${userInfo.userId}</h5>
-						<a href="mypage/memberModify?userId=${userInfo.userId}" class="btn btn-primary">회원정보
+						<a href="mypage/memberModify/${userInfo.userId}" class="btn btn-primary">회원정보
 							수정</a>
 						<p class="card-text">${userInfo.regDate}시작</p>
 						<div class="mb-3">

@@ -3,7 +3,9 @@ package com.yeoju.root.goods.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.yeoju.root.category.CategoryService;
@@ -52,23 +56,37 @@ public class GoodsController extends URL implements MemberSessionName{
 	@Autowired
 	CategoryService cs;
 	
-	
-	
-	
 	//1. 상품 전체 목록 
 	@ResponseBody
 	@RequestMapping("/list.do")
-	public List<GoodsDTO> list() {
-		System.out.println("확인작업");
-		return gs.listGoods();
+	public List<GoodsDTO> list(@RequestParam int pageNo) {
+		return gs.listGoods(pageNo);
+		
+		
 	}
+//	public ModelAndView list(@RequestParam(defaultValue="goodsName") String searchOption,
+//						@RequestParam(defaultValue="")String keyword)throws Exception{
+//		List<GoodsDTO> list = gs.listGoods(searchOption,keyword);
+//		//갯수
+//		int count = gs.countArticle(searchOption,keyword);
+//		//뷰
+//		ModelAndView mav = new ModelAndView();
+//		//데이터 맵에 저장
+//		Map<String, Object> map=new HashMap<String,Object >();
+//		map.put("list", list); //list
+//		map.put("count", count); //레코드 갯수
+//		map.put("searchOption", searchOption); //검색옵션
+//		map.put("keyword", keyword); //검색키워드
+//		mav.addObject("map",map);
+//		mav.setViewName("/index");
+//		return mav;
+//		}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
 	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
 		model.addAttribute("dto",gs.detailGoods(goodsId));
 		return "goods/TgoodsDetail";
 	}
-	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
 	public String write(Model model) throws Exception{ 
@@ -79,14 +97,14 @@ public class GoodsController extends URL implements MemberSessionName{
 	
 	return "/goods/goodsWrite";	
 	}
-	
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
+	@ResponseBody
 	public String insert(GoodsDTO dto, HttpSession session) {
-
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
+		System.out.println(uploadFile.getOriginalFilename());
 		if (!uploadFile.isEmpty()) {
 			try {
 				// SSL인증서 오류 처리
@@ -105,23 +123,25 @@ public class GoodsController extends URL implements MemberSessionName{
 				RestTemplate restTemplate = new RestTemplate();
 				ResponseEntity<String> response = restTemplate
 						.postForEntity(serverUrl, requestEntity, String.class);
-				dto.setImgFileName(response.getBody()); 
-				dto.setUserId((String) session.getAttribute(LOGIN));
-				url = gs.insertGoods(dto) ? "redirect:/" : "redirect:/goods/write.do";
+				String result = response.getBody();
+				if(!result.equals("Failed to save")) {
+					dto.setImgFileName(result); 
+					dto.setUserId((String) session.getAttribute(LOGIN));
+					url = gs.insertGoods(dto) ? "/" : "";
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return url;			
 	}
-	
 	//5. 상품 수정(편집) 페이지 매핑
 	@RequestMapping("edit/{goodsId}")
 	public String edit(@PathVariable("goodsId")int goodsId,Model model) {
 		model.addAttribute("dto", gs.detailGoods(goodsId));
 		return "goods/goodsEdit";
 	}
-	
 	//6.상품 수정(편집) 처리 매핑
 	@RequestMapping("update.do")
 	public String update(GoodsDTO dto, HttpSession session) {
@@ -160,7 +180,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		url = gs.updateGoods(dto) ? "redirect:/goods/detail/"+goodsId : "redirect:/goods/edit/"+goodsId;
 		return url;		
 	}
-	
 	//7.상품 삭제 처리 매핑
 	@RequestMapping("delete.do")
 	public String delete(@RequestParam int goodsId) {
@@ -228,6 +247,8 @@ public class GoodsController extends URL implements MemberSessionName{
 			
 		} 
 	    } }; 
+	
+
 	
 	
 }

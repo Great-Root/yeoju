@@ -19,17 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<!-- 01.상품 리스트 -->
 	<select id="listGoods" resultMap="GoodsMap">
-		<!-- SELECT B.* FROM(
+		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
 		SELECT * FROM goods
-		<if test="keyword != ''">
-		WHERE goods_name LIKE '%'||#{keyword}||'%'
-		</if>
-		ORDER BY goods_id DESC)A)B WHERE rn -->
-		select * from goods order by goods_id desc
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pagNo}*5
 	</select>
 	
-		
+	
+	
 	<!-- 02.상품 상세보기 -->
 	<select id="detailGoods" resultMap="GoodsMap">
 		SELECT * FROM goods WHERE goods_id=#{goodsId}
@@ -69,6 +66,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=1
 	</select>
 	
+	<!-- 07.게시글 전체목록 조회 및 검색 -->
+	<select id="listAll" resultType="com.yeoju.root.common.dto.GoodsDTO">
+		SELECT goods_name, user_id FROM goods
+		<!-- WHERE절 include 태그 삽입하기 -->
+		<include refid="search"></include>
+		ORDER BY goods_name desc, user_id desc
+	</select>
 	
+	<!-- 게시글 레코드 갯수 -->
+	<select id="countArticle" resultType="int">
+		SELECT COUNT(*) FROM goods
+		<!-- WHERE절 include 태그 삽입하기 -->
+		<include refid="search"></include>
+	</select>
 	
+	<!-- sql code 조각 -->
+	<!-- 반복되는 sql의 일부 sql태그를 이용하여 따로 빼둘 수 있음 -->
+	<sql id="search">
+		<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			
+		</choose>
+	</sql>
 </mapper>

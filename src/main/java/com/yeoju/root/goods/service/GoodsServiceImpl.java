@@ -21,8 +21,8 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	
 	//01.상품목록
 	@Override
-	public List<GoodsDTO> listGoods(){
-		return goodsDao.listGoods();
+	public List<GoodsDTO> listGoods(int pageNo){
+		return goodsDao.listGoods(pageNo);
 	}
 	//02.상품상세
 		@Override
@@ -44,12 +44,18 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public void deleteGoods(int goodsId) {
 		goodsDao.deleteGoods(goodsId);
 	}
-
 	//06.상품이미지 삭제를 위한 이미지파일 정보
 	@Override
 	public String imgFileName(int goodsId) {
 		return goodsDao.imgFileName(goodsId);
 	}
-	
+	//07.상품검색
+//	public List<GoodsDTO> listGoods(String searchOption, String keyword){
+//		return goodsDao.listGoods(0);
+//	}
+//	public int countArticle(String searchOption, String keyword) {
+//		return goodsDao.searchGoods(0);
+//	}
 
+	
 }

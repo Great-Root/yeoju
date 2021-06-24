@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,31 +43,14 @@ public class MemberController implements MemberSessionName{
 		return "member/login";
 	}
 	
-	@PostMapping("register")
-	public String register(MemberDTO dto) {
-		int result = ms.register(dto);
-		if(result == 1) {
-			return "redirect:login"; //성공
-		}
-		return "redirect:registerPage";//실패
+
+	// 회원 가입 폼 이동
+	@RequestMapping(value = "/memberJoinForm.do")
+	public String memberJoinForm() throws Exception{
+		return "member/memberJoinForm";
 	}
 	
-	@GetMapping("registerPage")
-	public String registerpage() {
-		return "member/register";
-	}
-	
-	@PostMapping("/user_check")
-	public String user_check(HttpServletRequest request, RedirectAttributes rs ) {
-		int result = ms.user_check(request);
-		if(result == 0) {
-			rs.addAttribute("userId", request.getParameter("userId"));
-			rs.addAttribute("autoLogin", request.getParameter("autoLogin"));
-			return "redirect:/member/successLogin";
-		}
-		rs.addFlashAttribute("result",result);
-		return "redirect:login";
-	}
+
 	
 	
 	@RequestMapping("/successLogin")
@@ -91,7 +75,7 @@ public class MemberController implements MemberSessionName{
 			Date limitDate = new Date(cal.getTimeInMillis());
 			ms.keepLogin(session.getId(), limitDate, userId);
 		}
-		return "member/successLogin";
+		return "redirect:/";
 	}
 	
 	
@@ -123,5 +107,50 @@ public class MemberController implements MemberSessionName{
 			model.addAttribute("userId", ms.find_id(response, email));
 			return "/member/find_id";
 		}
+	
+
+		/* 비밀번호 찾기 */
+		@RequestMapping(value = "/findpw", method = RequestMethod.GET)
+		public void findPwGET() throws Exception{
+		}
+
+		@RequestMapping(value = "/findpw", method = RequestMethod.POST)
+		public void findPwPOST(@ModelAttribute MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws Exception{
+			ms.findPw(request, response, dto);
+		}
+		
+		
+		// 아이디 중복 검사(AJAX)
+		@RequestMapping(value = "/check_id.do", method = RequestMethod.POST)
+		public void check_id(@RequestParam("userId") String userId, HttpServletResponse response) throws Exception{
+			ms.check_id(userId, response);
+		}
+		
+		@PostMapping("/user_check")
+		public String user_check(HttpServletRequest request, HttpServletResponse response, RedirectAttributes rs ) throws Exception {
+			int result = ms.user_check(request, response);
+			if(result == 0) {
+				rs.addAttribute("userId", request.getParameter("userId"));
+				rs.addAttribute("autoLogin", request.getParameter("autoLogin"));
+				return "redirect:/member/successLogin";
+			}
+			rs.addFlashAttribute("result",result);
+			return "redirect:login";
+		}
+		
+		// 이메일 중복 검사(AJAX)
+		@RequestMapping(value = "/check_email.do", method = RequestMethod.POST)
+		public void check_email(@RequestParam("email") String email, HttpServletResponse response) throws Exception{
+			ms.check_email(email, response);
+		}
+		
+		// 회원 가입
+		@RequestMapping(value = "/join_member.do", method = RequestMethod.POST)
+		public String join_member(@ModelAttribute MemberDTO dto, RedirectAttributes rttr, HttpServletResponse response) throws Exception{
+			rttr.addFlashAttribute("result", ms.join_member(dto, response));
+			return "/member/login";
+		}
+
+		
 	
 }

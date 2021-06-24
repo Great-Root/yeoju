@@ -10,7 +10,7 @@ import com.yeoju.root.common.dto.GoodsDTO;
 public interface GoodsDAO {
 	
 	//01.상품목록
-	public List<GoodsDTO> listGoods();
+	public List<GoodsDTO> listGoods(int pageNo);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -19,7 +19,6 @@ public interface GoodsDAO {
 	public int updateGoods(GoodsDTO dto);
 	
 	//04.상품삭제
-	//void deleteGoods(int goodsId);
 	public void deleteGoods(int goodsId);
 	
 	//05.상품추가
@@ -33,6 +32,10 @@ public interface GoodsDAO {
 	
 	// 찜한 상품 가져오기
 	public ArrayList<GoodsDTO> heartPage(String userId);
+
+	//07.상품검색
+	public GoodsDTO searchGoods(int goodsName);
+
 	
 	
 

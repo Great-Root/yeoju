@@ -4,7 +4,7 @@ import java.io.File;
 
 public class URL {
 	//이미지 서버 경로
-	protected static final String IMG_URL = "C:\\Users\\USER\\Desktop\\WorkSpace\\springworkspace\\img\\";
+	protected static final String IMG_URL = "C:\\Spring\\yeoju\\";
 	
 //	protected static final String IMG_URL = "/home/ubuntu/img/";
 	

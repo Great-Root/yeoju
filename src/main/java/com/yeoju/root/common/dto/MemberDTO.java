@@ -1,6 +1,7 @@
 package com.yeoju.root.common.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MemberDTO extends MemberDetailDTO{
 
@@ -29,10 +30,29 @@ public class MemberDTO extends MemberDetailDTO{
 
 	private String sessionId;
 	
+	//이메일 인증 여부
+	private String approval_status;
 	
+	//이메일 발송 key
+	private String approval_key;
+
 	
-	
-	
+	public String getApproval_status() {
+		return approval_status;
+	}
+
+	public void setApproval_status(String approval_status) {
+		this.approval_status = approval_status;
+	}
+
+	public String getApproval_key() {
+		return approval_key;
+	}
+
+	public void setApproval_key(String approval_key) {
+		this.approval_key = approval_key;
+	}
+
 	public Date getLimitTime() {
 		return limitTime;
 	}

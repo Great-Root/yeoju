@@ -18,5 +18,9 @@ public class CategoryDTO {
 		Code = code;
 	}
 	
+//	@Override
+//	public String toString() {
+//		return "CategoryDTO["Name="+ Name+",Code="+Code]";
+//	}
 	
 }

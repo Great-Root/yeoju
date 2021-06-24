@@ -12,7 +12,10 @@
 <script type="text/javascript">
 	$(function(){
 		$("#find_id_btn").click(function(){
-			location.href="/find_id_form.do";
+			location.href="${contextPath }/member/find_id_form.do";
+		})
+		$("#find_pw_btn").click(function(){
+			location.href="${contextPath }/member/findpw";
 		})
 	})
 
@@ -20,7 +23,6 @@
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-	<c:import url="../default/header.jsp" />
 		<div align="center">
 		<h1 style="color: green; font-size: 30px;">로그인</h1>
 		<form action="${contextPath }/member/user_check" method="post">
@@ -30,27 +32,24 @@
 			</div>
 			
 			<div class="mb-3" style="width: 300px;">
-				<label style="text-align: left" for="exampleInputPassword1" class="form-label">비밀번호</label> 
+				<label for="exampleInputPassword1" class="form-label">비밀번호</label> 
 				<input type="password" name="pw" class="form-control" id="exampleInputPassword1">
 			</div>
 
-			<c:if test="${result == 1 }">
-				<div>ID 또는 비밀번호 틀림</div>
-			</c:if>
+			
 
 			<div class="mb-3 form-check">
 				<input type="checkbox" class="form-check-input" id="exampleCheck1">
-				<label style="text-align: left" name="autoLogin" class="form-check-label" for="exampleCheck1">로그인 유지</label>
+				<label name="autoLogin" class="form-check-label" for="exampleCheck1">로그인 유지</label>
 			</div>
 			
 			<button type="submit" style="size: 120px" class="btn btn-primary">로그인</button><br>
 			
-			<button type="button" style="size: 60px" class="btn btn-primary">아이디 찾기</button>
-			<button type="button" id="find_id_btn" style="size: 60px" class="btn btn-primary">비밀번호 찾기</button>
-			<!--  <a href="#">아이디 찾기</a>&nbsp;<a href="#">비밀번호 찾기</a> -->
+			<button type="button" id="find_id_btn" style="size: 60px" class="btn btn-primary">아이디 찾기</button>
+			<button type="button" id="find_pw_btn" style="size: 60px" class="btn btn-primary">비밀번호 찾기</button>
+			
 		</form>
 	</div>
-	<c:import url="../default/footer.jsp" />
 
 	
 

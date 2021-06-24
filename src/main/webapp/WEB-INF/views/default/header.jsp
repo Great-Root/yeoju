@@ -35,19 +35,18 @@
 						</div>
 					</div>
 					
+					
 					 <c:choose>
 					 <c:when test="${loginUser == null}">
 					 
 					<div class ="col">
 					<div class="text-end p-3" style="margin-right: 0.5rem;">
 						<button type="button" class="btn btn-outline-success me-2" onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
-						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/registerPage'">Sign-up</button>
+						<button type="button" class="btn btn-outline-warning" onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
 					</div>
 					 </div>
 					 </c:when>
 					  <c:otherwise>
-					<!-- 
-					 -->
 					<!-- 
 					  -->
 					<div class="col">
@@ -60,14 +59,11 @@
 										class="rounded-circle" width="30px" height="30px" >
 									${loginUser } 님 
 								</div>
-
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 								<li><a class="dropdown-item" href="${contextPath}/mypage">내상점</a></li>
 								<li><a class="dropdown-item" href="#">거래현황</a></li>
 								<li><a class="dropdown-item" href="#">결제현황</a></li>
-								<!--  
-								-->
 								<li><a class="dropdown-item" href="${contextPath}/member/logout">로그아웃</a></li>
 							</ul>
 						</div>
@@ -87,9 +83,6 @@
                   </c:choose>
                </li>
 				 -->
-	
-
-
 			</div>
 			<div class="container px-4">
 				<div class="dropdown row gx-5">
@@ -121,8 +114,6 @@
 		</div>
 		
 	</header>
-
-
 </body>
 <script>
 $(document).ready(function(){
