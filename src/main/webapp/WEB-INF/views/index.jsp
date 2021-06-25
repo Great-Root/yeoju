@@ -13,6 +13,7 @@
    var pageNo = 1;
    $(document).ready(function(){
       initPage(pageNo);
+      initPage(++pageNo);
       $(window).scroll(function() {
     	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
         	  pageNo += 1;
@@ -24,7 +25,8 @@
    function initPage(pageNo) {
       
       var param = {
-         "pageNo" : pageNo
+         "pageNo" : pageNo,
+         "keyword" : '${keyword}'
       };
       // 데이터를 불러온다.
       $.ajax({
@@ -32,6 +34,7 @@
           type : "GET",
           dataType : "json",
           data : param,
+          async : false,
           success : function(list) {
             lodingList(list);
           },
@@ -51,7 +54,7 @@
             html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
             html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
          })
-   	  if(list.length === 0){
+   	  if(list.length < 5){
    		  msg = '<hr>더이상 상품이 없습니다'
    		  $("#msg").html(msg)
    	  }
@@ -61,6 +64,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/list.css">
 
 </head>
+
 <body>
    <c:import url="default/header.jsp" />
    <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">

@@ -3,6 +3,8 @@ package com.yeoju.root.common.dto;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberDTO extends MemberDetailDTO{
 
 	private String userId;
@@ -15,7 +17,7 @@ public class MemberDTO extends MemberDetailDTO{
 	private Date regDate;
 
 	// 이미지 경로
-	private String profileImg;
+	private MultipartFile profileImg;
 
 	// 이메일 주소
 	private String email;
@@ -29,33 +31,6 @@ public class MemberDTO extends MemberDetailDTO{
 	private Date limitTime;
 
 	private String sessionId;
-	
-	//이메일 인증 여부
-	private String approval_status;
-	
-	//이메일 발송 key
-	private String approval_key;
-
-	
-	
-	
-	
-	
-	public String getApproval_status() {
-		return approval_status;
-	}
-
-	public void setApproval_status(String approval_status) {
-		this.approval_status = approval_status;
-	}
-
-	public String getApproval_key() {
-		return approval_key;
-	}
-
-	public void setApproval_key(String approval_key) {
-		this.approval_key = approval_key;
-	}
 
 	public Date getLimitTime() {
 		return limitTime;
@@ -113,11 +88,11 @@ public class MemberDTO extends MemberDetailDTO{
 		this.regDate = regDate;
 	}
 
-	public String getProfileImg() {
+	public MultipartFile getProfileImg() {
 		return profileImg;
 	}
 
-	public void setProfileImg(String profileImg) {
+	public void setProfileImg(MultipartFile profileImg) {
 		this.profileImg = profileImg;
 	}
 

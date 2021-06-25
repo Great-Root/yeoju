@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재!! -->
+<mapper namespace="com.yeoju.root.mybatis.CommentsDAO">
+		<resultMap type="com.yeoju.root.common.dto.GoodsCommentsDTO" id="GoodsCommentsMap">
+		<id column="goods_id" property="goodsId"/>
+		<result column="user_id" property="userId"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="comment_id" property="commentId"/>
+		<result column="num" property="num"/>
+		<result column="ref_group" property="refGroup"/>
+		<result column="comment_group" property="commentGroup"/>
+	</resultMap>
+	<!-- 댓글 조회 -->
+	<select id="redaReply" resultMap ="GoodsCommentsMap">
+		select * from goods_comment where goods_id = #{goodsId}
+	</select>
+	
+	<select id="selectCommentSeq" resultMap ="GoodsCommentsMap">
+		select GOODS_COMMENT_SEQ.nextval AS comment_id from dual
+	</select>
+	
+	
+	<!-- 댓글 추가 -->
+	<insert id ="insertComments">
+		insert into goods_comment(
+		goods_id,user_id,content,reg_date,comment_id)
+		values(
+		#{goodsId},#{userId},#{content},sysdate, #{commentId}
+		)
+	</insert>
+	<!-- 댓글 수정 -->
+	<update id="updateComments">
+		update goods_comment set 
+		content = #{content},reg_date=sysdate
+		where comment_id=#{commentId}
+	</update>
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComments">
+		delete from goods_comment
+		where comment_id =#{commentId}
+	</delete>
+</mapper>

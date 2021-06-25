@@ -21,9 +21,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listGoods" resultMap="GoodsMap">
 		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
-		SELECT * FROM goods
-		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pagNo}*5
+		SELECT * FROM goods WHERE goods_name LIKE '%'||#{keyword}||'%'
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
+	
+	<sql id="search">
+		<!-- 동적 SQL 구문 -->
+		<if test="searchOption == 'goodsName'">
+		WHERE goods_name LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'writer'">
+		WHERE writer LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'content'">
+		WHERE content LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'titleContent'">
+		WHERE title LIKE '%'||#{keyword}||'%'
+		OR content LIKE '%'||#{keyword}||'%'
+		</if>
+	</sql>
 	
 		
 	<!-- 02.상품 상세보기 -->
@@ -59,10 +76,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE goods_id=#{goodsId}
 	</select>
 	<select id="sellGoods" resultMap="GoodsMap">
+		SELECT B.* FROM(
+		SELECT rownum rn, A.* FROM (
 		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=0
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
 	<select id="heartPage" resultMap="GoodsMap">
-		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=1
+		SELECT * FROM(
+		SELECT B.* FROM(
+		SELECT rownum rn, A.* FROM (
+		SELECT goods_id FROM heart WHERE user_id=#{userId}
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5) a 
+		INNER JOIN goods b
+		ON a.goods_id = b.goods_id 
 	</select>
+	
+	<!-- 로그인 사용자의 해당상품 찜 여부확인 -->
+	<select id="heartCnt" resultType="Integer">
+		SELECT count(*) FROM heart WHERE user_id = #{userId} AND goods_id = #{goodsId}
+	</select>
+	
+	<!-- 해당상품의 전체 찜 갯수 -->
+	<select id="heartTotalCnt" resultType="Integer">
+		SELECT count(*) FROM heart WHERE goods_id = #{goodsId}
+	</select>
+	
+	<insert id="insertHeart">
+		INSERT INTO heart (user_id, goods_id, reg_date) VALUES (#{userId}, #{goodsId}, sysdate)
+	</insert>
+	<delete id="deleteHeart">
+		DELETE heart WHERE user_id = #{userId} AND goods_id = #{goodsId}
+	</delete>
 	
 </mapper>

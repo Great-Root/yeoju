@@ -22,13 +22,15 @@ public class MyPageServiceImpl implements MyPageService{
 	@Autowired MyPageDAO mydao;
 	
 	@Override
-	public ArrayList<GoodsDTO> sellGoods(String userId){
-		return gdao.sellGoods(userId);
+	public ArrayList<GoodsDTO> sellGoods(String userId, int pageNo){
+		System.out.println(userId +" : "+ pageNo);
+		return gdao.sellGoods(userId,pageNo);
 	}
 
 	@Override
-	public ArrayList<GoodsDTO> heartPage(String userId) {
-		return gdao.heartPage(userId);
+	public ArrayList<GoodsDTO> heartPage(String userId, int pageNo) {
+		System.out.println(userId +" : "+pageNo);
+		return gdao.heartPage(userId,pageNo);
 	}
 
 	@Override

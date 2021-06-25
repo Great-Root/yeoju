@@ -2,21 +2,24 @@ package com.yeoju.root.common.dto;
 
 import java.sql.Date;
 
-public class GoodsCommentDTO {
+public class GoodsCommentsDTO {
 
+	//제품 
     private Integer goodsId;
 
-    // 댓글 작성자 
+    // 제품 작성자 
     private String userId;
 
     // 내용 
     private String content;
-
+    //날짜
     private Date regDate;
-
+    // 댓글 작성자
     private Integer commentId;
 
-    public Integer getGoodsId() {
+    
+
+	public Integer getGoodsId() {
         return goodsId;
     }
 
@@ -57,7 +60,7 @@ public class GoodsCommentDTO {
     }
 
     // GoodsComment 모델 복사
-    public void CopyData(GoodsCommentDTO param)
+    public void CopyData(GoodsCommentsDTO param)
     {
         this.goodsId = param.getGoodsId();
         this.userId = param.getUserId();
@@ -65,4 +68,11 @@ public class GoodsCommentDTO {
         this.regDate = param.getRegDate();
         this.commentId = param.getCommentId();
     }
+
+	@Override
+	public String toString() {
+		return "GoodsCommentsDTO [goodsId=" + goodsId + ", userId=" + userId + ", content=" + content + ", regDate="
+				+ regDate + ", commentId=" + commentId + "]";
+	}
+    
 }
