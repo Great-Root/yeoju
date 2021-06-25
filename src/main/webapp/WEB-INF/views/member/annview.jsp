@@ -6,32 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-	function replyData(){
-		$.ajax({
-			url:"replyData/"+${personalData.writeNo}, type:"GET", 
-			dataType:"json",
-			success: function(rep){
-				let html = ""
-				rep.forEach(function(data){
-					let date = new Date(data.write_date)
-					let writeDate = date.getFullYear()+"년"+(date.getMonth()+1)+"월"
-					writeDate += date.getDate()+"일"+date.getHours()+"시"
-					writeDate += date.getMinutes()+"분"+date.getSeconds()+"초"
-					html += "<div align='left'><b>아이디 : </b>"+data.userid+"님 / ";
-					html += "<b>작성일</b> : "+writeDate+"<br>"
-					html += "<b>제목</b> : "+data.title+"<br>"
-					html += "<b>내용</b> : "+data.content+"<hr></div>"
-				})
-				$("#reply").html(html)
-			},error:function(){
-				alert('데이터를 가져올 수 없습니다')
-			}
-		})
-	}
-	
-</script>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
 	integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -41,10 +15,10 @@
 	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
 </head>
-<body onload="replyData()">
+<body>
 	<c:import url="../default/header.jsp" />
 	<div class="container">
-		<h3>QnA 게시판</h3>
+		<h3>공지사항 게시판</h3>
 		<div class="row" style="padding: 40px;">
 		<table class="table table-bordered row">
 	<tr>
@@ -61,19 +35,13 @@
 		
 		<tr>
 		<td colspan="4" align="center">
-			<div id="reply"></div>
 			<c:choose>
 			<c:when test="${personalData.userid==loginUser}">
 			<form action="${contextPath }/member/QnABoardDelete" method="post">
 			 <input type="hidden" name="writeNo" value="${personalData.writeNo}"> 
-			<input type="submit" value="삭제하기" class="b btn btn-outline-secondary col">
-			</form>
-			<form action="${contextPath }/member/QnaModifyForm" method="get">
-			 <input type="hidden" name="writeNo" value="${personalData.writeNo}"> 
-			<input type="submit" value="수정하기" class="b btn btn-outline-secondary">
-			</form>
+			<input type="submit" value="삭제하기" class="b btn btn-outline-secondary col"></form>
 			</c:when></c:choose>
-			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath }/member/qnaBoardView'" value="리스트로 돌아가기">
+			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath }/member/annBoardView'" value="리스트로 돌아가기">
 		</td>
 	</tr>
 		</table>

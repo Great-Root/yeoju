@@ -38,7 +38,7 @@
   <div class="row">
   	
     <div class="col-sm-3" style = " text-align: center;  border-right: solid 1px black;">
-     	<a href ="#">공지사항</a>
+     	<a href ="../member/annBoardView">공지사항</a>
     </div>
     <div class="col-sm-3"  style = " text-align: center;  border-right: solid 1px black;">
       <a href ="../member/qnaBoardView"> Q&A</a>
