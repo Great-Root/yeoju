@@ -12,76 +12,7 @@
 	rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<link rel="stylesheet" href="/resources/css/cropper.css"> 
-<script src="/resources/js/cropper.js"></script>
 <script>
-	window.addEventListener('DOMContentLoaded', function () {
-	      var avatar = document.getElementById('avatar');
-	      var image = document.getElementById('image');
-	      var input = document.getElementById('input');
-	      var $modal = $('#modal');
-	      var $close = $('#close');
-	      var cropper;
-	      var canvas;
-	      var inputchange = false;
-		  var fileName = '';
-	      $('[data-toggle="tooltip"]').tooltip();
-
-	      input.addEventListener('change', function (e) {
-	        var files = e.target.files;
-	        var done = function (url) {
-	          input.value = '';
-	          image.src = url;
-	          $modal.modal('show');
-	        };
-	        var reader;
-	        var file;
-	        var url;
-
-	        if (files && files.length > 0) {
-	          file = files[0];
-	          inputchange = true;
-	          fileName = file.name;
-	          if (URL) {
-	            done(URL.createObjectURL(file));
-	          } else if (FileReader) {
-	            reader = new FileReader();
-	            reader.onload = function (e) {
-	              done(reader.result);
-	            };
-	            reader.readAsDataURL(file);
-	          }
-	        }
-	      });
-	      $close.click(function () {
-			$modal.modal('hide');
-		  });
-	      $modal.on('shown.bs.modal', function () {
-	        cropper = new Cropper(image, {
-	          aspectRatio: 1,
-	          viewMode: 3,
-	        });
-	      }).on('hidden.bs.modal', function () {
-	        cropper.destroy();
-	        cropper = null;
-	      });
-
-	      document.getElementById('crop').addEventListener('click', function () {
-	        var initialAvatarURL;
-	        
-
-	        $modal.modal('hide');
-	        if (cropper) {
-	          canvas = cropper.getCroppedCanvas({
-	            width: 640,
-	            height: 640,
-	          });
-	          initialAvatarURL = avatar.src;
-	          avatar.src = canvas.toDataURL();
-	          
-	        }
-	      });
-	});
 	function daumPost() {
 		new daum.Postcode({
 			oncomplete : function(data) {
@@ -122,18 +53,8 @@
 <body>
 	<c:import url="../default/header.jsp" />
 	<div class="form">
-		<form id="modifyForm" action="${contextPath }/mypage/modify"
-			method="post">
+		<form id="modifyForm" action="${contextPath }/mypage/modify" method="post">
 					<h1 style="color: green; font-size: 30px; text-align: center;">회원정보 수정</h1>
-					<br>
-					<div style="text-align: center;">
-					<label class="label" data-toggle="tooltip" title="클릭해서 프로필 이미지 변경">
-						<img class="img-thumbnail" id="avatar"
-						src="https://www.greatroot.net/img/download?fileName=default.png"
-						alt="avatar" width="240" height="240"> <input type="file"
-						class="sr-only" id="input" name="imgFile" accept="image/*" hidden="hidden">
-					</label>
-					</div>
 					<hr>
 			<table>
 				<tr>
@@ -222,34 +143,13 @@
 				<tr>
 					<td colspan="2">
 						<div align="right">
-							<input type="submit" value="정보수정완료"> &nbsp;&nbsp; <input
-								type="button" value="회원 탈퇴"
-								onclick="location.href='${contextPath }/mypage/delete/${modifyInfo.userId}'">
+							<input type="submit" class="btn btn-outline-success" value="정보수정완료" style="margin-right: 0.7em;"> 
+							<input type="button" class="btn btn-outline-danger" value="회원 탈퇴" onclick="location.href='${path}/mypage/delete/${modifyInfo.userId}'">
 						</div>
 					</td>
 				</tr>
 			</table>
 		</form>
-	</div>
-	<!-- 이미지 Modal -->
-	<div class="modal fade" id="modal" tabindex="-1" role="dialog"
-		aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modalLabel">상품이미지 선택</h5>
-				</div>
-				<div class="modal-body">
-					<div class="img-container">
-						<img id="image" src="">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="crop">등록하기</button>
-				</div>
-			</div>
-		</div>
 	</div>
 	<c:import url="../default/footer.jsp" />
 </body>

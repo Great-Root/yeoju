@@ -4,14 +4,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yeoju.root.mybatis.ProfileDAO">
 	<resultMap id="ProfileMap" type="com.yeoju.root.common.dto.ProfileDTO">
-		<id property="userId" column="user_id"/>
 		<result property="imgName" column="img_name"/>
 		<result property="imgSize" column="img_size"/>
 		<result property="imgType" column="img_type"/>
-		<result property="imgData" column="img_data"/>
+		<result property="imgData" column="img_data" jdbcType="BLOB" javaType="_byte[]"/>
+		<result property="userId" column="user_id"/>
 	</resultMap>
 	
-
+	
+	<insert id="insertProfileImg">
+		INSERT INTO profile_img(img_name, img_size, img_type, img_data, user_id) 
+		VALUES(#{imgName}, #{imgSize}, #{imgType}, #{imgData}, #{userId})
+	</insert>
+	
+	<select id="getProfileImg" resultMap="ProfileMap">
+		SELECT * FROM profile_img WHERE user_id=#{userId}
+	</select>
+	
+	<select id="imgCount" resultType="Integer">
+		SELECT COUNT(*) FROM profile_img WHERE user_id=#{userId} 
+	</select>
+	
+	<delete id="deleteProfileImg">
+		DELETE FROM profile_img WHERE user_id=#{userId}
+	</delete>
 	
 	<!-- <select id="user_check" resultMap="member">
 		select * from member where user_id=#{userId}

@@ -54,6 +54,10 @@ public interface GoodsDAO {
 
 	public String getUserId(int goodsId);
 	
+	public ArrayList<Integer> getUserTotalGoods(String userId);
 	
+	public void deleteAllHeart(String userId);
+	
+	public void deleteAllHeartGoodsId(int goodsId);
 
 }

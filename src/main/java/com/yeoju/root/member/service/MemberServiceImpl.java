@@ -36,7 +36,6 @@ import com.yeoju.root.mybatis.MemberDetailDAO;
 public class MemberServiceImpl implements MemberService, MemberSessionName {
 	@Autowired Components comp;
 	@Autowired MemberDAO dao;
-	@Autowired ProfileDAO pDAO;
 	@Autowired MemberDetailDAO detaildao;
 	
 	public void user_check(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -232,23 +231,6 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 		}
 		
 	}
-
-	@Override
-	public void setProfileImg(MultipartFile file, String userId) {
-		try {
-			ProfileDTO dto = new ProfileDTO();
-			dto.setUserId(userId);
-			dto.setImgName(file.getOriginalFilename());
-			dto.setImgSize(file.getSize());
-			dto.setImgType(file.getContentType());
-			dto.setImgData(file.getBytes());
-			System.out.println(dto);
-			pDAO.insertProfileImg(dto);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 
 
 }

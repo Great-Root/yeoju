@@ -78,7 +78,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
-		System.out.println(uploadFile.getOriginalFilename());
 		if (!uploadFile.isEmpty()) {
 			try {
 				// SSL인증서 오류 처리
@@ -197,12 +196,12 @@ public class GoodsController extends URL implements MemberSessionName{
 	@GetMapping("img/{userId}")
 	public void img(@PathVariable String userId,@RequestParam String fileName,
 			HttpServletResponse response) throws Exception {
-	response.addHeader("Content-disposition", "attachment; fileName="+fileName);
-	String path = getImgURL(userId, fileName);
-	File file = new File(path);
-	FileInputStream in = new FileInputStream(file);
-	FileCopyUtils.copy(in, response.getOutputStream());
-	in.close();
+		response.addHeader("Content-disposition", "attachment; fileName="+fileName);
+		String path = getImgURL(userId, fileName);
+		File file = new File(path);
+		FileInputStream in = new FileInputStream(file);
+		FileCopyUtils.copy(in, response.getOutputStream());
+		in.close();
 	}
 	
 	//9.상품 찜버튼 클릭시

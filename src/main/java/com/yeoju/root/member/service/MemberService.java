@@ -28,8 +28,6 @@ public interface MemberService {
 	//비밀번호찾기
 	public void findPw(HttpServletRequest request, HttpServletResponse response, MemberDTO dto) throws Exception;
 
-	//프로필 이미지 등록
-	public void setProfileImg(MultipartFile file, String userId);
 	//메일 발송
 //	public String create_key() throws Exception;
 //	public void send_mail(MemberDTO member) throws Exception;

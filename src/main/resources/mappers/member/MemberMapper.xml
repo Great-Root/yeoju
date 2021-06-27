@@ -70,5 +70,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.user_id=#{userId}
 	</select>
 	
-	
 </mapper>

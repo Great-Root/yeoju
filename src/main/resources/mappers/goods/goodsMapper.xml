@@ -107,9 +107,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteHeart">
 		DELETE heart WHERE user_id = #{userId} AND goods_id = #{goodsId}
 	</delete>
+	<delete id="deleteAllHeart">
+		DELETE heart WHERE user_id = #{userId}
+	</delete>
+	<delete id="deleteAllHeartGoodsId">
+		DELETE heart WHERE goods_id = #{goodsId}
+	</delete>
 	
 	<select id="getUserId" resultType="String">
 		SELECT user_id FROM goods WHERE goods_id=#{goodsId}
+	</select>
+	
+	<select id="getUserTotalGoods" resultType="Integer">
+		SELECT goods_id FROM goods WHERE user_id = #{userId} ORDER BY goods_id ASC
 	</select>
 	
 </mapper>

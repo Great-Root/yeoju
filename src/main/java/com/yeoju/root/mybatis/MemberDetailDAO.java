@@ -9,20 +9,20 @@ public interface MemberDetailDAO {
 
 	ArrayList<MemberDetailDTO> detailList(String userId);
 	
-	public int modify(MemberDTO dto) throws Exception;
+	public int modify(MemberDTO dto);
 	
 	
-	public int delete(MemberDTO dto) throws Exception;
+	public int delete(String userId);
 	
 	
 	// Member Detail 추가하기
 	public void insertDetail(MemberDTO dto);
 	
 	//Member Detail 수정하기
-	public int modifyDetail(MemberDTO dto) throws Exception;
+	public int modifyDetail(MemberDTO dto);
 
 	// Member Detail 삭제하기
-	public int deleteDetail(MemberDTO dto) throws Exception;
+	public int deleteDetail(String userId);
 	
 	// Member Detail 확인하기
 	public int cnt(String userId);

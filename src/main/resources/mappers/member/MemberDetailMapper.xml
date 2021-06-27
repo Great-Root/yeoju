@@ -12,24 +12,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="name" column="name"/>
 		<result property="tel" column="tel"/>
 	</resultMap>
-	<resultMap id="ProfileMap" type="com.yeoju.root.common.dto.ProfileDTO">
-		<id property="userId" column="user_id"/>
-		<result property="imgName" column="img_name"/>
-		<result property="imgSize" column="img_size"/>
-		<result property="imgType" column="img_type"/>
-		<result property="imgData" column="img_data"/>
-	</resultMap>
 	<insert id="join_memberdetail" >
 		insert into member_detail(user_id) values(#{userId})
 	</insert>
 	<select id="detailList" resultMap="memberdetail">
 		select * from member_detail where user_id=#{userId}
 	</select>
-	
-	<insert id="insertProfileImg">
-		INSERT INTO profile_img(user_id, img_name, img_size, img_type, img_data) 
-		VALUES(#{userId}, #{imgName}, #{imgSize}, #{imgType}, #{imgData})
-	</insert>
 	
 		<!-- 회원정보 수정 -->
 	<update id="modify">
@@ -53,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 회원탈퇴 -->
 	<delete id="delete">
-		delete from member where user_id = #{userId} and pw = #{pw}
+		delete from member where user_id = #{userId}
 	</delete>
 	
 	<delete id="deletedetail">

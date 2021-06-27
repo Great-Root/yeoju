@@ -2,8 +2,6 @@ package com.yeoju.root.common.dto;
 
 import java.sql.Date;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class MemberDTO extends MemberDetailDTO{
 
 	private String userId;
@@ -12,9 +10,6 @@ public class MemberDTO extends MemberDetailDTO{
 
 	// sysdate
 	private Date regDate;
-
-	// 이미지 경로
-	private MultipartFile profileImg;
 
 	// 이메일 주소
 	private String email;
@@ -74,14 +69,6 @@ public class MemberDTO extends MemberDetailDTO{
 		this.regDate = regDate;
 	}
 
-	public MultipartFile getProfileImg() {
-		return profileImg;
-	}
-
-	public void setProfileImg(MultipartFile profileImg) {
-		this.profileImg = profileImg;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -95,7 +82,6 @@ public class MemberDTO extends MemberDetailDTO{
 		this.userId = param.getUserId();
 		this.pw = param.getPw();
 		this.regDate = param.getRegDate();
-		this.profileImg = param.getProfileImg();
 		this.email = param.getEmail();
 		//Member Detail DTO
 		this.addr1 = param.getAddr1();
@@ -110,9 +96,8 @@ public class MemberDTO extends MemberDetailDTO{
 
 	@Override
 	public String toString() {
-		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + ", profileImg="
-				+ profileImg + ", email=" + email + ", recentDate=" + recentDate + ", limitTime="
-				+ limitTime + ", sessionId=" + sessionId + "]" +
+		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + 
+				", email=" + email + ", recentDate=" + recentDate + ", limitTime=" + limitTime + ", sessionId=" + sessionId + "]" +
 				"\nMemberDetailDTO [addr1=" + addr1 + ", addr2=" + addr2 + ", addr3=" + addr3 + ", gender=" + gender
 				+ ", birth=" + birth + ", name=" + name + ", userId=" + userId + "]";
 	}
