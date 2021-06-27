@@ -11,10 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="imgData" column="img_data"/>
 	</resultMap>
 	
-	<insert id="insertProfileImg">
-		INSERT INTO profile_img(user_id, img_name, img_size, img_type, img_data) 
-		VALUES(#{userId}, #{imgName}, #{imgSize}, #{imgType}, #{imgData})
-	</insert>
+
 	
 	<!-- <select id="user_check" resultMap="member">
 		select * from member where user_id=#{userId}

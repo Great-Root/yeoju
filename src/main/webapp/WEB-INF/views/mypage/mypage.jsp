@@ -114,13 +114,11 @@
 				alt="...">
 			<div class="card-body">
 				<h5 class="card-title">ID : ${userInfo.userId}</h5>
-				<a href="mypage/memberModify/${userInfo.userId}"
-					class="btn btn-primary">회원정보 수정</a>
+				<a href="mypage/memberModify?userId=${loginUser}" class="btn btn-primary">회원정보 수정</a>
 				<p class="card-text">${userInfo.regDate}시작</p>
 				<div class="mb-3">
 					<label for="exampleFormControlTextarea1" class="form-label">자기소개</label>
-					<textarea class="form-control" id="exampleFormControlTextarea1"
-						rows="3"></textarea>
+					<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 				</div>
 			</div>
 		</div>

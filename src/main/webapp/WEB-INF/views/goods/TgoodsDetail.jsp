@@ -11,38 +11,40 @@
 <script>
 
 	$(document).ready(function(){
-		var goodsId = $("#goodsId").val()
 		$("#modiBtn").click(function(){
-			location.href = "${path}/goods/edit/"+goodsId;	
+			location.href = "${path}/goods/edit?goodsId=${dto.goodsId}";	
 		});
 		$("#delBtn").click(function(){
 			if(confirm("상품을 삭제하시겠습니까?")){
-				document.form1.action = "${path}/goods/delete.do";
-				document.form1.submit();
+				location.href = "${path}/goods/delete.do?goodsId=${dto.goodsId}";
 			}
 		});
 		$heartBtn = $("#heartBtn");
 		$heartBtn.click(function () {
-			$.ajax('${path}/goods/heart.do?goodsId=${dto.goodsId}', {
-	              method: 'GET',
-	              success: function (result) {
-	            	btnClass(result);
-					heartNum();
-	              },
-	              error: function () {
-	            	  alert('실패')
-	              }
-	        });
+			if(${loginUser != null}){
+				$.ajax('${path}/goods/heart.do?goodsId=${dto.goodsId}', {
+		              method: 'GET',
+		              success: function (result) {
+		            	btnClass(result);
+						heartNum();
+		              },
+		              error: function () {
+		            	  alert('실패')
+		              }
+		        });
+			}else{
+				alert('로그인을 해주세요~');
+			}
 		});
 	});
 		function heartNum() {
 			$.ajax('${path}/goods/heartNum.do/${dto.goodsId}', {
 	              method: 'GET',
 	              success: function (heartNum) {
-	            	  $("#heartNum").html(heartNum)
+	            	  $("#heartNum").html(heartNum);
 	              },
 	              error: function () {
-	            	  alert('실패')
+	            	  alert('실패');
 	              }
 	        });
 		}
@@ -515,15 +517,10 @@
 					</button>
 				</div>
 				<c:if test="${loginUser == dto.userId}">
-				<button class="3-4" 
-				 style="background: rgb(255, 164, 37);
-   				 border: 1px solid rgb(243, 150, 20);
-    			 color: rgb(255, 255, 255);">수정하기</button>
-				<button class ="3-5"
-				style ="background: rgb(247, 0, 0);
-   				border: 1px solid rgb(223, 0, 0);
-    			color: rgb(255, 255, 255);"
-				>판매완료</button>
+				<button class="3-4" id="modiBtn" style="background: rgb(255, 164, 37);
+   				 border: 1px solid rgb(243, 150, 20); color: rgb(255, 255, 255);">수정하기</button>
+				<button class ="3-5" id="delBtn" style ="background: rgb(247, 0, 0);
+   				border: 1px solid rgb(223, 0, 0); color: rgb(255, 255, 255);">판매완료</button>
 				</c:if>
 			</div>
 		</div>

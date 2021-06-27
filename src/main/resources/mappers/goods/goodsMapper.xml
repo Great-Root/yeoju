@@ -108,4 +108,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE heart WHERE user_id = #{userId} AND goods_id = #{goodsId}
 	</delete>
 	
+	<select id="getUserId" resultType="String">
+		SELECT user_id FROM goods WHERE goods_id=#{goodsId}
+	</select>
+	
 </mapper>

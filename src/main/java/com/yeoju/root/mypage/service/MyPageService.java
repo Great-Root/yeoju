@@ -16,7 +16,7 @@ public interface MyPageService {
 
 	public MemberDTO getUserInfo(String userId);
 	
-	public MemberDTO modify(MemberDTO dto) throws Exception;
+	public void modify(MemberDTO dto, HttpServletResponse response) throws Exception;
 	
 	public boolean delete(MemberDTO dto, HttpServletResponse response) throws Exception;
 	

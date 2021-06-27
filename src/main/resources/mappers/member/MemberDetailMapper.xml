@@ -10,9 +10,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="addr3" column="addr3"/>
 		<result property="gender" column="gender"/>
 		<result property="name" column="name"/>
+		<result property="tel" column="tel"/>
 	</resultMap>
-<select id="detailList" resultMap="memberdetail">
-	select * from member_detail where user_id=#{userId}
-</select>
+	<resultMap id="ProfileMap" type="com.yeoju.root.common.dto.ProfileDTO">
+		<id property="userId" column="user_id"/>
+		<result property="imgName" column="img_name"/>
+		<result property="imgSize" column="img_size"/>
+		<result property="imgType" column="img_type"/>
+		<result property="imgData" column="img_data"/>
+	</resultMap>
+	<insert id="join_memberdetail" >
+		insert into member_detail(user_id) values(#{userId})
+	</insert>
+	<select id="detailList" resultMap="memberdetail">
+		select * from member_detail where user_id=#{userId}
+	</select>
+	
+	<insert id="insertProfileImg">
+		INSERT INTO profile_img(user_id, img_name, img_size, img_type, img_data) 
+		VALUES(#{userId}, #{imgName}, #{imgSize}, #{imgType}, #{imgData})
+	</insert>
+	
+		<!-- 회원정보 수정 -->
+	<update id="modify">
+		update member set pw = #{pw}, email = #{email} where user_id = #{userId}
+	</update>
+	
+	<insert id="insertDetail">
+		INSERT INTO member_detail (user_id, name, birth, gender, addr1, addr2, addr3, tel) 
+		VALUES (#{userId}, #{name}, #{birth}, #{gender}, #{addr1}, #{addr2}, #{addr3}, #{tel})
+	</insert>
+	<update id="modifyDetail">
+		UPDATE member_detail 
+		SET name = #{name}, birth = #{birth}, gender = #{gender}, 
+		addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}, tel = #{tel}
+		WHERE user_id = #{userId} 
+	</update>
+	
+	<select id="cnt" resultType="Integer">
+		SELECT COUNT(*) FROM member_detail WHERE user_id = #{userId} 
+	</select>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="delete">
+		delete from member where user_id = #{userId} and pw = #{pw}
+	</delete>
+	
+	<delete id="deletedetail">
+		delete from member_detail where user_id = #{userId}
+	</delete>
 
 </mapper>

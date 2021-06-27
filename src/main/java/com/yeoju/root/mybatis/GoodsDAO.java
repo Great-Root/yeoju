@@ -51,6 +51,8 @@ public interface GoodsDAO {
 
 	// 찜삭제
 	public void deleteHeart(HeartDTO dto);
+
+	public String getUserId(int goodsId);
 	
 	
 

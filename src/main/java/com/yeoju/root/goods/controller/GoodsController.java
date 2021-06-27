@@ -112,8 +112,8 @@ public class GoodsController extends URL implements MemberSessionName{
 	}
 	
 	//5. 상품 수정(편집) 페이지 매핑
-	@RequestMapping("edit/{goodsId}")
-	public String edit(@PathVariable("goodsId")int goodsId,Model model) {
+	@RequestMapping("edit")
+	public String edit(@RequestParam int goodsId,Model model) {
 		model.addAttribute("dto", gs.detailGoods(goodsId));
 		return "goods/goodsEdit";
 	}

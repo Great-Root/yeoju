@@ -17,6 +17,7 @@
 			location.href="${contextPath }/member/findpw";
 		})
 	})
+	
 
 </script>
 </head>
@@ -26,7 +27,9 @@
 		<form action="${contextPath }/member/user_check" method="post">
 			<div class="login-page">
 			<div class="form">
+			<a href="${contextPath}/">
 			<img src="../../resources/img/test.png" width="110px" height="140px">
+			</a>
 			<h1 style="color: green; font-size: 30px;">login</h1>
 			<div>
 				<input type="text" name="userId" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp" placeholder="ID">

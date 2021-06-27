@@ -21,7 +21,7 @@
 					</div>
 					<div class="col">
 						<div class="input-group p-3">
-							<input type="text" class="form-control" id="keyword" placeholder="검색 키워드를 입력하세요!"> 
+							<input type="text" class="form-control" id="keyword" placeholder="검색 키워드를 입력하세요!" onkeyup="enterkey();"> 
 							<span class="input-group-btn">
 								<button class="btn btn-secondary btn-info" id="searchBtn" type="button">찾기</button>
 							</span>
@@ -102,6 +102,13 @@ $(document).ready(function(){
 		location.href = "${contextPath}/goods/write.do";
 	})
 });
+	function enterkey() {
+	    if (window.event.keyCode == 13) {
+	    	$("#searchBtn").click();
+	    }
+	}
+
+
 $("#searchBtn").on("click", function() {
 	if($(".input-group.p-3").find("input.form-control").val().length == 0){
 	    alert("검색어를 입력해주세여!");

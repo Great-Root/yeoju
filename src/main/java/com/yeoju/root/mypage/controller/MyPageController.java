@@ -32,25 +32,23 @@ public class MyPageController implements MemberSessionName{
 	@ResponseBody
 	@GetMapping(value="/sellGoods", produces = "application/json; charset=utf-8")
 	public ArrayList<GoodsDTO> sellGoods(@RequestParam int pageNo, HttpSession session){
-		System.out.println(pageNo);
 		return mps.sellGoods((String)session.getAttribute(LOGIN),pageNo);
 	}
 	@ResponseBody
 	@GetMapping(value="/heartPage", produces = "application/json; charset=utf-8")
 	public ArrayList<GoodsDTO> heartPage(@RequestParam int pageNo, HttpSession session){
-		System.out.println(pageNo);
 		return mps.heartPage((String)session.getAttribute(LOGIN),pageNo);
 	}
-	@GetMapping("/memberModify/{userId}")
-	public String memebrModify(@PathVariable String userId, Model model) {
-		model.addAttribute("modifyInfo", mps.getUserInfo(userId));
+	@GetMapping("/memberModify")
+	public String memebrModify(@RequestParam String userId, Model model) {
+		MemberDTO dto = mps.getUserInfo(userId);
+		dto.toString();
+		model.addAttribute("modifyInfo", dto);
 		return "mypage/memberModifyForm";
 	}
-	@PostMapping(value = "/modify")
-	public String modifyMember(@ModelAttribute MemberDTO dto, HttpSession session, RedirectAttributes rttr) throws Exception{
-		session.setAttribute("dto", mps.modify(dto));
-		rttr.addFlashAttribute("msg", "회원정보 수정 완료");
-		return "redirect:/";
+	@PostMapping("/modify")
+	public void modifyMember(MemberDTO dto, HttpServletResponse response) throws Exception{
+		mps.modify(dto, response);
 	}
 	@GetMapping("/delete/{userId}")
 	public String delete(@PathVariable String userId, Model model) {
