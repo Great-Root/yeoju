@@ -113,9 +113,18 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 		out.close();
 	}
 	@Override
-	public void memberList(Model model) {
-		ArrayList<MemberDTO> list = dao.memberList();
-		model.addAttribute("memberList", list);
+	public void memberList(Model model,int num) {
+		int allConunt=dao.selectBoardCount();
+		int pageLetter= 10;
+		int repeat= allConunt/pageLetter;
+		if(allConunt%pageLetter!=0) {
+			repeat+=1;
+		}
+		int end =num*pageLetter;
+		int start =end+1-pageLetter;
+		
+		model.addAttribute("repeat",repeat);
+		model.addAttribute("memberList",  dao.memberList(start,end));
 		
 	}
 	public void memberInfo(Model model,String userId) {

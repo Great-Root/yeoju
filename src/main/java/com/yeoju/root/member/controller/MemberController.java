@@ -163,6 +163,6 @@ public class MemberController implements MemberSessionName{
 		public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
 			session.setAttribute("writeNo", writeNo);
 			bs.annBoardView(writeNo,model);
-			return "admin/annview";
+			return "member/annview";
 		}
 }

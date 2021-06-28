@@ -49,9 +49,10 @@
 								<tr><th>우편번호</th><td>${detaildto.addr1 }</td> </tr>
 								<tr><th>주소</th><td>${detaildto.addr2 }</td> </tr>
 								<tr><th>상세주소</th><td>${detaildto.addr3 }</td> </tr>
+								<tr><th>전화번호</th><td>${detaildto.tel }</td></tr>
 							</c:forEach>
 							<c:forEach var="dto" items="${memberInfo}"> 	
-								<tr><th>전화번호</th><td>${dto.tel }</td></tr>
+								
 								<tr><th>이메일</th><td>${dto.email }</td></tr>
 							</c:forEach> 
 					</tbody>

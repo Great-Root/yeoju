@@ -174,7 +174,16 @@ input:focus {
 									onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
 							</div>
 						</c:if>
-						<c:if test="${loginUser != null}">
+						<c:choose>
+						<c:when test="${grade ==1 }">
+							<div class="search04">
+									<button type="button"
+										onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
+									<button type="button"
+										onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
+							</div>
+						</c:when>
+						<c:when test="${loginUser != null}">
 							<div class="search04-1">
 								<div class="dropdown p-3" style="float: right;">
 									<button class="btn  dropdown-toggle text-dark" type="button"
@@ -199,7 +208,9 @@ input:focus {
 									</ul>
 								</div>
 							</div>
-						</c:if>
+						</c:when>
+						
+						</c:choose>
 					</div>
 					<div class="search05">
 						<!-- 
