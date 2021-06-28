@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yeoju.root.admin.service.AdminService;
@@ -145,11 +146,26 @@ public class AdminController implements MemberSessionName{
 	public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
 	
 		session.setAttribute("writeNo", writeNo);
-		bs.upHit(writeNo);
 		bs.QnABoardView(writeNo,model);
 		return "admin/qnaview";
 	}
-
+	@GetMapping("annview")
+	public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
+		session.setAttribute("writeNo", writeNo);
+		bs.annBoardView(writeNo,model);
+		return "admin/annview";
+	}
+	@GetMapping("/AnnwriteForm")
+	public String writeForm(Model model) {
+		return "admin/AnnwriteForm";
+	}
+	@PostMapping("writeSave")
+	public String writeSave(MultipartHttpServletRequest mul,
+							HttpServletRequest request
+							,Model model) throws Exception{
+		bs.AnnwriteSave(mul, request);
+		return "redirect:commanagementann";
+	}
 	@GetMapping("commanagementann")
 	public String commanagementann(Model model) {
 		return "admin/commanagementann";
@@ -169,5 +185,22 @@ public class AdminController implements MemberSessionName{
 	@ResponseBody
 	public List<QnaBoardRepDTO> replyData(@PathVariable int write_group){
 		return bs.getRepList(write_group);
+	}
+	@PostMapping("AnnBoardDelete")
+	public String AnnBoardDelete(@RequestParam int writeNo) {
+		System.out.println(writeNo);
+		bs.AnnBoardDelete(writeNo);
+		return "redirect:commanagementann";
+	}
+	@GetMapping("AnnModifyForm")
+	public String AnnModifyForm(@RequestParam int writeNo, Model model) {
+		bs.annBoardView(writeNo,model);
+		return "admin/AnnModifyForm";
+	}
+	@PostMapping("modify")
+	public String modify(MultipartHttpServletRequest mul,
+						HttpServletRequest request )throws Exception {
+		bs.Annmodify(mul, request);
+		return "redirect:commanagementann";
 	}
 }

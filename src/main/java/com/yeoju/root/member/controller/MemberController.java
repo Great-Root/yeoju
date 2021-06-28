@@ -113,6 +113,11 @@ public class MemberController implements MemberSessionName{
 			bs.QnABoardList(model);
 			return "member/qnaBoardView";
 		}
+		@GetMapping("/annBoardView")
+		public String annBoardView(Model model) {
+			bs.AnnBoardList(model);
+			return "member/annBoardView";
+		}
 		@GetMapping("/writeForm")
 		public String writeForm(Model model) {
 			return "board/writeForm";
@@ -128,9 +133,19 @@ public class MemberController implements MemberSessionName{
 		public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
 		
 			session.setAttribute("writeNo", writeNo);
-			bs.upHit(writeNo);
 			bs.QnABoardView(writeNo,model);
 			return "member/qnaview";
+		}
+		@GetMapping("QnaModifyForm")
+		public String QnaModifyForm(@RequestParam int writeNo, Model model) {
+			bs.QnABoardView(writeNo,model);
+			return "board/QnaModifyForm";
+		}
+		@PostMapping("modify")
+		public String modify(MultipartHttpServletRequest mul,
+							HttpServletRequest request )throws Exception {
+			bs.modify(mul, request);
+			return "redirect:qnaBoardView";
 		}
 		@PostMapping("QnABoardDelete")
 		public String QnABoardDelete(@RequestParam int writeNo) {
@@ -138,9 +153,16 @@ public class MemberController implements MemberSessionName{
 			bs.QnABoardDelete(writeNo);
 			return "redirect:qnaBoardView";
 		}
+		
 		@GetMapping(value="replyData/{write_group}",produces = "application/json; charset=utf-8")
 		@ResponseBody
 		public List<QnaBoardRepDTO> replyData(@PathVariable int write_group){
 			return bs.getRepList(write_group);
+		}
+		@GetMapping("annview")
+		public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
+			session.setAttribute("writeNo", writeNo);
+			bs.annBoardView(writeNo,model);
+			return "admin/annview";
 		}
 }
