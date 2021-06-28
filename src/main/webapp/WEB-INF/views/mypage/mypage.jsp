@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MyPage</title>
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="/resources/css/cropper.css"> 
 <script src="/resources/js/cropper.js"></script>
@@ -117,6 +117,9 @@
 	      var cropper;
 	      var fileName;
 	      
+	      $('#close').click(function () {
+			$modal.modal('hide');
+		  });
 
 
 	      $('[data-toggle="tooltip"]').tooltip();

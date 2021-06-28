@@ -96,4 +96,8 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public boolean isheart(HeartDTO dto) {
 		return goodsDao.heartCnt(dto) == 0 ? false : true;
 	}
+	@Override
+	public boolean isYours(String loginUser, int goodsId) {
+		return goodsDao.getUserId(goodsId).equals(loginUser);
+	}
 }

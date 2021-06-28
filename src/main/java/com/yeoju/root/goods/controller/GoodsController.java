@@ -2,8 +2,6 @@ package com.yeoju.root.goods.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.io.IOException;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -14,7 +12,6 @@ import javax.security.cert.X509Certificate;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,10 +27,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yeoju.root.common.components.Components;
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
@@ -119,41 +116,49 @@ public class GoodsController extends URL implements MemberSessionName{
 	
 	//6.상품 수정(편집) 처리 매핑
 	@RequestMapping("update.do")
-	public String update(GoodsDTO dto, HttpSession session) {
-		String url = "";
+	@ResponseBody
+	public String update(GoodsDTO dto,HttpSession session) {
 		int goodsId = dto.getGoodsId();
-		//상품 이미지 등록 : 이미지 서버로 POST 요청
-		MultipartFile uploadFile = dto.getImgFile();
-		if (!uploadFile.isEmpty()) {
-			try {
-				// SSL인증서 오류 처리
-				SSLContext sc = SSLContext.getInstance("SSL");
-				sc.init(null, dummyTrustManager, new java.security.SecureRandom()); 
-				HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-				// 이미지 업로드 요청
-				HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-				MultiValueMap<String, Object> body
-				= new LinkedMultiValueMap<>();
-				// 새로 등록할 이미지 파일
-				body.add("file", uploadFile.getResource());
-				// 삭제할 기존 이미지 이름
-				body.add("delFileName", dto.getImgFileName());
-				HttpEntity<MultiValueMap<String, Object>> requestEntity
-				= new HttpEntity<>(body, headers);
-				String serverUrl = "https://www.greatroot.net/img/modify";
-				RestTemplate restTemplate = new RestTemplate();
-				ResponseEntity<String> response = restTemplate
-						.postForEntity(serverUrl, requestEntity, String.class);
-				// 새로 등록된 이미지 이름
-				dto.setImgFileName(response.getBody()); 
-			} catch (Exception e) {
-				e.printStackTrace();
+		String loginUser = (String) session.getAttribute(LOGIN);
+		dto.setUserId(loginUser);
+		System.out.println(dto.toString());
+		boolean result = false;
+		if(gs.isYours(loginUser,goodsId)) {
+			//상품 이미지 등록 : 이미지 서버로 POST 요청
+			MultipartFile uploadFile = dto.getImgFile();
+			if (uploadFile != null && !uploadFile.isEmpty()) {
+				try {
+					// SSL인증서 오류 처리
+					SSLContext sc = SSLContext.getInstance("SSL");
+					sc.init(null, dummyTrustManager, new java.security.SecureRandom()); 
+					HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+					// 이미지 업로드 요청
+					HttpHeaders headers = new HttpHeaders();
+					headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+					MultiValueMap<String, Object> body
+					= new LinkedMultiValueMap<>();
+					// 새로 등록할 이미지 파일
+					body.add("file", uploadFile.getResource());
+					// 삭제할 기존 이미지 이름
+					body.add("delFileName", dto.getImgFileName());
+					HttpEntity<MultiValueMap<String, Object>> requestEntity
+					= new HttpEntity<>(body, headers);
+					String serverUrl = "https://www.greatroot.net/img/modify";
+					RestTemplate restTemplate = new RestTemplate();
+					ResponseEntity<String> response = restTemplate
+							.postForEntity(serverUrl, requestEntity, String.class);
+					// 새로 등록된 이미지 이름
+					dto.setImgFileName(response.getBody()); 
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+			result = gs.updateGoods(dto);
+		}else {
+			result = false;
 		}
-		dto.setUserId((String) session.getAttribute(LOGIN));
-		url = gs.updateGoods(dto) ? "redirect:/goods/detail/"+goodsId : "redirect:/goods/edit/"+goodsId;
-		return url;		
+		System.out.println(result);
+		return result ? "/goods/detail/"+goodsId : "/goods/edit?goodsId="+goodsId;	
 	}
 	
 	//7.상품 삭제 처리 매핑

@@ -38,5 +38,7 @@ public interface GoodsService {
 
 	public boolean isheart(HeartDTO dto);
 
+	public boolean isYours(String loginUser, int goodsId);
+
 	
 }

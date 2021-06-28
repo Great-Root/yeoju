@@ -17,8 +17,11 @@
 	      var canvas;
 	      var inputchange = false;
 		  var fileName = '';
+		  $('#close').click(function () {
+				$modal.modal('hide');
+		  });
 	      $('[data-toggle="tooltip"]').tooltip();
-
+		
 	      input.addEventListener('change', function (e) {
 	        var files = e.target.files;
 	        var done = function (url) {
@@ -155,9 +158,6 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalLabel">상품이미지 선택</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
           <div class="modal-body">
             <div class="img-container">
@@ -165,7 +165,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" id="crop">등록하기</button>
           </div>
         </div>
