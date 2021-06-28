@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yeoju.root.common.comments.service.CommentsService;
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
@@ -47,6 +48,8 @@ public class GoodsController extends URL implements MemberSessionName{
 	@Autowired
 	GoodsService gs;
 	
+	@Autowired
+	CommentsService cs;
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
