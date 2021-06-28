@@ -56,37 +56,20 @@ public class GoodsController extends URL implements MemberSessionName{
 	GoodsService gs;
 	@Autowired
 	CategoryService cs;
-	
 	//1. 상품 전체 목록 
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list(
-			@RequestParam int pageNo
-			,
-			@RequestParam String keyword
+			@RequestParam int pageNo,
+			@RequestParam String keyword,
+			@RequestParam String searchOption
 			) {
 		System.out.println("pageNo : "+pageNo);
 		System.out.println("keyword : "+keyword);
-		return null;
+		System.out.println("searchOption : "+searchOption);
+		
+		return gs.listGoods(pageNo, keyword,searchOption);
 	}
-//	public ModelAndView list(@RequestParam(defaultValue="title")String searchOption,
-//						@RequestParam(defaultValue="")String keyword,
-//						@RequestParam(defaultValue="")int pageNo) throws Exception{
-//		List<GoodsDTO> list = gs.listGoods(pageNo,searchOption,keyword);
-//
-//		//ModelAndView mav = new ModelAndView();
-//		ModelAndView mav = new ModelAndView();
-//		//데이터를 맵에 저장
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("list", list); //list
-//		map.put("pageNo", pageNo);
-//		map.put("searchOption", searchOption); //검색옵션
-//		map.put("keyword", keyword); //검색키워드
-//		mav.addObject("map",map);
-//		mav.setViewName("index"); //뷰를 index.jsp로 설정
-//		return mav; //index.jsp로 List가 전달?
-//	
-//	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
 	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
@@ -192,7 +175,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		//상품 이미지 정보
 		String delFileName = gs.imgFileName(goodsId);
 		String path="";
-		
 		try {
 			// SSL인증서 오류 처리
 			SSLContext sc = SSLContext.getInstance("SSL");
@@ -219,9 +201,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		}
 		return "redirect:/";
 	}
-
-	
-	
 	//8.상품 이미지 출력
 	@GetMapping("img/{userId}")
 	public void img(@PathVariable String userId,@RequestParam String fileName,
@@ -233,7 +212,6 @@ public class GoodsController extends URL implements MemberSessionName{
 	FileCopyUtils.copy(in, response.getOutputStream());
 	in.close();
 	}
-	
 	//9.상품 찜버튼 클릭시
 	@GetMapping("heart.do")
 	@ResponseBody
@@ -241,14 +219,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		String loginUser = (String)session.getAttribute(LOGIN);
 		return loginUser == null ? false : gs.heart(new HeartDTO(loginUser, goodsId));
 	}
-	
 	// 해당 상품 찜갯수 확인
 	@GetMapping("heartNum.do/{goodsId}")
 	@ResponseBody
 	public int heartNum(@PathVariable int goodsId) {
 		return gs.heartTotalCnt(goodsId);
 	}
-	
 	// 상품 찜 활성화 확인
 	@GetMapping("isheart.do/{goodsId}")
 	@ResponseBody
@@ -257,28 +233,21 @@ public class GoodsController extends URL implements MemberSessionName{
 		return loginUser == null ? false : gs.isheart(new HeartDTO(loginUser, goodsId));
 	}
 	
-	
 	TrustManager[] dummyTrustManager = new TrustManager[] { new X509TrustManager() { 
 	     public java.security.cert.X509Certificate[] getAcceptedIssuers() { 
 	     return null; 
 	     } 
-	 
 	     public void checkClientTrusted(X509Certificate[] certs, String authType) { 
 	     } 
-	 
 	     public void checkServerTrusted(X509Certificate[] certs, String authType) { 
 	     }
-
 		@Override
 		public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 				throws java.security.cert.CertificateException {
-			
 		}
-
 		@Override
 		public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 				throws java.security.cert.CertificateException {
-			
 		} 
 	    } }; 
 	

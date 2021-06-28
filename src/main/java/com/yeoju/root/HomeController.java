@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.member.session_name.MemberSessionName;
@@ -25,11 +26,15 @@ public class HomeController implements MemberSessionName{
 	@Autowired MyPageService mps;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model,
+			@RequestParam(required = false,defaultValue = "") String keyword,
+			@RequestParam(required = false,defaultValue = "all") String searchOption) {
 		logger.info("Welcome home! The client locale is {}.", locale);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("searchOption", searchOption);
+		//System.out.println(searchOption);
 		return "index";
 	}
-	
 	@GetMapping("/mypage")
 	public String mypage(Model model,HttpSession session) {
 		MemberDTO dto = mps.getUserInfo((String)session.getAttribute(LOGIN));

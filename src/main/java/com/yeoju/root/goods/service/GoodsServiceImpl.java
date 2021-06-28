@@ -18,14 +18,13 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	
 	@Autowired
 	GoodsDAO goodsDao;
-	
 	@Autowired
 	CommentsDAO commentsDAO;
 	
 	//01.상품목록
 	@Override
-	public List<GoodsDTO> listGoods(int pageNo, String searchOption, String keyword) throws Exception{
-		return goodsDao.listGoods(pageNo, searchOption, keyword);
+	public List<GoodsDTO> listGoods(int pageNo, String keyword, String searchOption){
+		return goodsDao.listGoods(pageNo, keyword, searchOption);
 	}
 	//02.상품상세
 	//제품 상세 페이지에 댓글 기능이 들어가기 때문에 retrunDTO라는 변수에 GoodsDTO,CommentDTO를 넣어버림

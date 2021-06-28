@@ -21,7 +21,12 @@
 					</div>
 					<div class="col">
 						<div class="input-group p-3">
-							<input type="text" class="form-control" id="keyword"	placeholder="검색 키워드를 입력하세요!"> 
+							<select name="searchOption" id="searchOption">
+								<option value="all" <c:out value="${searchOption=='all'?'selected':'' }"/>>전체</option>
+								<option value="goodsName" <c:out value="${searchOption=='goods_name'?'selected':''}"/>>상품이름</option>
+								<option value="userId" <c:out value="${searchOption=='user_id'?'selected':''}"/>>작성자</option>
+							</select>
+							<input type="text" class="form-control" id="keyword" placeholder="검색 키워드를 입력하세요!"> 
 							<span class="input-group-btn">
 								<button class="btn btn-secondary btn-info" id="searchBtn" type="button">찾기</button>
 							</span>
@@ -66,7 +71,7 @@
 							aria-expanded="false">카테고리</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 							<c:forEach var="cate" items="${category}">
-							<li><a class="dropdown-item" href="${cate.code}">${cate.name}</a></li>
+							<li><a class="dropdown-item" href="${cate.code}"> ${cate.name}</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -97,22 +102,21 @@
 var keyword = '';
 $(document).ready(function(){
 	$("#sellBtn").click(function () {
-		location.href = "${contextPath}/goods/write.do"
+		location.href = "${contextPath}/goods/write.do";
 	})
 	$("#searchBtn").on("click", function() {
 		if($(".input-group.p-3").find("input.form-control").val().length == 0){
-		        alert("검색어를 입력해주세여!");
-		         $(".btn-secondary").css("background-color","red");
-		           setInterval(borderDel, 3000);
-		           keyword = $("#keyword").val();
-				console.log(keyword+'searchBtn')
-		          initPage( 1, keyword);
+	 	   alert("검색어를 입력해주세여!");
+	 	   $(".btn-secondary").css("background-color","red");
+	 	   setInterval(borderDel, 3000);
+		}else{
+		    location.href = "/?keyword="+$("#keyword").val()+"/?searchOption="+$("#searchOption").val();
+		}
+		});
+		function borderDel() {
+	   	  $("#searchBtn").css("background-color","pink");
+	     
 		}
 	});
-	function borderDel() {
-	     $("#searchBtn").css("background-color","pink");
-	     
-	}
-});
 </script>
 </html>

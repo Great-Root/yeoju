@@ -14,8 +14,7 @@ public interface GoodsDAO {
 	public List<GoodsDTO> listGoods(
 			@Param("pageNo") int pageNo, 
 			@Param("searchOption") String searchOption, 
-			@Param("keyword")String keyword
-			) throws Exception;
+			@Param("keyword") String keyword);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
