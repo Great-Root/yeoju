@@ -23,6 +23,41 @@
 	
 	<context:component-scan base-package="com.yeoju.root" />
 	
+	<!-- 인터셉터 빈 등록 -->
+	<!-- 로그인 상태 -->
+	<beans:bean id="MemberInterceptor" class="com.yeoju.root.member.interceptor.MemberInterceptor" />
+	<!-- 오토로그인 -->
+	<beans:bean id="autoLoginInterceptor" class="com.yeoju.root.member.interceptor.AutoLoginInterceptor" />
+	<!-- 상품정보와 로그인 정보 확인 -->
+	<beans:bean id="UserChkInterceptor" class="com.yeoju.root.member.interceptor.UserChkInterceptor" />
+	<!-- 개인정보와 로그인 정보 확인 -->
+	<beans:bean id="LoginChkInterceptor" class="com.yeoju.root.member.interceptor.LoginChkInterceptor" />
 	
+	<interceptors>
+		
+		<interceptor>
+			<mapping path="/"/>
+			<beans:ref bean="autoLoginInterceptor" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/mypage"/>	
+			<mapping path="/mypage/*"/>	
+			<mapping path="/goods/write.do"/>	
+			<mapping path="/goods/insert.do"/>	
+			<beans:ref bean="MemberInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/goods/edit"/>	
+			<mapping path="/goods/update.do"/>	
+			<mapping path="/goods/delete.do"/>	
+			<beans:ref bean="UserChkInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/mypage/memberModify"/>	
+			<beans:ref bean="LoginChkInterceptor" />
+		</interceptor>
+		
+	</interceptors>
 	
 </beans:beans>

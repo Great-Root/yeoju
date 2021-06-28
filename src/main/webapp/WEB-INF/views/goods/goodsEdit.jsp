@@ -14,6 +14,7 @@
 			var goodsPrice = $("#goodsPrice").val();
 			var goodsInfo = $("#goodsInfo").val();
 			var img = $("#img").val();
+			var categoryCode = $("categoryCode").val();
 			
 			if(goodsName == "") {
 				alert("상품명을 입력해주세요");
@@ -24,19 +25,18 @@
 			} else if (goodsInfo == "") {
 				alert("상품 설명을 입력해주세요");
 				goodsInfo.focus();
-			} 
+			} else if (categoryCode==""){
+				alert("카테고리를 선택해주세요");
+				categoryCode.focus();
+			}
 			document.form1.action = "${path}/goods/update.do";
 			document.form1.submit();
 		});
-	});
-	$("#delBtn").click(function(){
-		if(confirm("상품을 삭제하시겠습니까?")){
-			document.form1.action = "${path}/goods/delete.do";
-			document.form1.submit();
-		}
-	});
-	$("#listBtn").click(function(){
-		location.href = "${path}/goods/list.do";	
+		$("#delBtn").click(function(){
+			if(confirm("상품을 삭제하시겠습니까?")){
+			location.href = "${path}/goods/delete.do?goodsId=${dto.goodsId}";
+			}
+		});
 	});
 	function readURL(input) {
 		var file = input.files[0]	//파일에 대한 정보
@@ -78,6 +78,12 @@
 				<div class="mb-3">
 				  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="상품 설명을 입력해주세요"  name="goodsInfo" id="goodsInfo">${dto.goodsInfo}</textarea>
 				</div>
+				<label>카테고리</label>
+					<select>
+					<c:forEach var="cate" items="${category}">
+						<option value="${cate.code}">${cate.name}</option>
+					</c:forEach>
+					</select>
 		</div>
 	</div>
 				<div class="row">

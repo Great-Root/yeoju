@@ -13,8 +13,8 @@ public interface GoodsDAO {
 	//01.상품목록
 	public List<GoodsDTO> listGoods(
 			@Param("pageNo") int pageNo, 
-			@Param("searchOption") String searchOption, 
-			@Param("keyword") String keyword);
+			@Param("keyword") String keyword,
+			@Param("searchOption") String searchOption);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -52,6 +52,13 @@ public interface GoodsDAO {
 
 	// 찜삭제
 	public void deleteHeart(HeartDTO dto);
+
+	public String getUserId(int goodsId);
 	
+	public ArrayList<Integer> getUserTotalGoods(String userId);
+	
+	public void deleteAllHeart(String userId);
+	
+	public void deleteAllHeartGoodsId(int goodsId);
 
 }

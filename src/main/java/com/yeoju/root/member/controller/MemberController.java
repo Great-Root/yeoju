@@ -1,19 +1,10 @@
 package com.yeoju.root.member.controller;
-
-import java.io.PrintWriter;
 import java.sql.Date;
-import java.text.ParseException;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,63 +13,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.yeoju.root.board.service.BoardService;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.common.dto.QnaBoardRepDTO;
 import com.yeoju.root.member.service.MemberService;
 import com.yeoju.root.member.session_name.MemberSessionName;
-import com.yeoju.root.mybatis.MemberDAO;
-
 @Controller
 @RequestMapping("member")
 public class MemberController implements MemberSessionName{
 	
-	private static Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired BoardService bs;
 	@Autowired MemberService ms;
 	@GetMapping("/login")
-	public String login() {
-		return "member/login";
+	public String login(HttpSession session) {
+		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:/";
 	}
-
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
-	public String memberJoinForm() throws Exception{
-		return "member/memberJoinForm";
-	}
-	
-	@RequestMapping("/successLogin")
-	public String successLogin(@RequestParam String userId,
-			@RequestParam( value="autoLogin", required = false) String autoLogin,
-								HttpSession session,
-								HttpServletResponse response) {
-		session.setAttribute(LOGIN, userId);
-		session.setAttribute(GRADE, "0");
-		System.out.println("id "+userId);
-		if(autoLogin != null) {
-			int limitTime = 60*60*24*90; //90일
-			Cookie loginCookie = new Cookie("loginCookie", session.getId() );
-			loginCookie.setPath("/");
-			loginCookie.setMaxAge(limitTime);
-			response.addCookie(loginCookie);
-			
-			
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(new java.util.Date());
-			cal.add(Calendar.MONTH, 3);
-			
-			Date limitDate = new Date(cal.getTimeInMillis());
-			ms.keepLogin(session.getId(), limitDate, userId);
-		}
-		return "redirect:/";
+	public String memberJoinForm(HttpSession session) throws Exception{
+		return session.getAttribute(LOGIN) == null ? "member/memberJoinForm" : "redirect:/";
 	}
 	
 	
@@ -99,9 +57,8 @@ public class MemberController implements MemberSessionName{
 	
 	
 	// 아이디 찾기 폼
-		@RequestMapping("/find_id_form.do")
-		public String find_id_form() throws Exception{
-			return "/member/find_id_form";
+		@GetMapping("/find_id_form.do")
+		public void find_id_form() throws Exception{
 		}
 		
 	// 아이디 찾기
@@ -114,7 +71,6 @@ public class MemberController implements MemberSessionName{
 		@RequestMapping(value = "/findpw", method = RequestMethod.GET)
 		public void findPwGET() throws Exception{
 		}
-
 		@RequestMapping(value = "/findpw", method = RequestMethod.POST)
 		public void findPwPOST(@ModelAttribute MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws Exception{
 			ms.findPw(request, response, dto);
@@ -128,15 +84,8 @@ public class MemberController implements MemberSessionName{
 		}
 		
 		@PostMapping("/user_check")
-		public String user_check(HttpServletRequest request, HttpServletResponse response, RedirectAttributes rs ) throws Exception {
-			int result = ms.user_check(request, response);
-			if(result == 0) {
-				rs.addAttribute("userId", request.getParameter("userId"));
-				rs.addAttribute("autoLogin", request.getParameter("autoLogin"));
-				return "redirect:/member/successLogin";
-			}
-			rs.addFlashAttribute("result",result);
-			return "redirect:login";
+		public void user_check(	HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ms.user_check(request, response);
 		}
 		
 		// 이메일 중복 검사(AJAX)
@@ -147,11 +96,8 @@ public class MemberController implements MemberSessionName{
 		
 		// 회원 가입
 		@RequestMapping(value = "/join_member.do", method = RequestMethod.POST)
-		@ResponseBody
-		public String join_member(@ModelAttribute MemberDTO dto, RedirectAttributes rttr, HttpServletResponse response, HttpSession session) throws Exception{
-			System.out.println(dto.toString());
-//			ms.setProfileImg(dto.getProfileImg(),dto.getUserId());
-//			rttr.addFlashAttribute("result", ms.join_member(dto, response));
+		public String join_member(MemberDTO dto, HttpServletResponse response) throws Exception{
+			ms.join_member(dto, response);
 			return "/member/login";
 		}
 	
@@ -159,6 +105,11 @@ public class MemberController implements MemberSessionName{
 		public String qnaBoardView(Model model) {
 			bs.QnABoardList(model);
 			return "member/qnaBoardView";
+		}
+		@GetMapping("/annBoardView")
+		public String annBoardView(Model model) {
+			bs.AnnBoardList(model);
+			return "member/annBoardView";
 		}
 		@GetMapping("/writeForm")
 		public String writeForm(Model model) {
@@ -173,11 +124,22 @@ public class MemberController implements MemberSessionName{
 		}
 		@GetMapping("qnaview")
 		public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
-		
+
 			session.setAttribute("writeNo", writeNo);
 			bs.upHit(writeNo);
 			bs.QnABoardView(writeNo,model);
 			return "member/qnaview";
+		}
+		@GetMapping("QnaModifyForm")
+		public String QnaModifyForm(@RequestParam int writeNo, Model model) {
+			bs.QnABoardView(writeNo,model);
+			return "board/QnaModifyForm";
+		}
+		@PostMapping("modify")
+		public String modify(MultipartHttpServletRequest mul,
+							HttpServletRequest request )throws Exception {
+			bs.modify(mul, request);
+			return "redirect:qnaBoardView";
 		}
 		@PostMapping("QnABoardDelete")
 		public String QnABoardDelete(@RequestParam int writeNo) {
@@ -185,9 +147,16 @@ public class MemberController implements MemberSessionName{
 			bs.QnABoardDelete(writeNo);
 			return "redirect:qnaBoardView";
 		}
+
 		@GetMapping(value="replyData/{write_group}",produces = "application/json; charset=utf-8")
 		@ResponseBody
 		public List<QnaBoardRepDTO> replyData(@PathVariable int write_group){
 			return bs.getRepList(write_group);
+		}
+		@GetMapping("annview")
+		public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
+			session.setAttribute("writeNo", writeNo);
+			bs.annBoardView(writeNo,model);
+			return "admin/annview";
 		}
 }

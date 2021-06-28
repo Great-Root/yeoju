@@ -35,7 +35,13 @@
           data : param,
           async : false,
           success : function(list) {
-            lodingList(list);
+        	  $.each(list,function(index, item) {
+            	$(lodingList(item)).hide().appendTo("#images").show(1200)
+        	  })
+         	  if(list.length < 5){
+           		  msg = '<hr>더이상 상품이 없습니다'
+           		  $("#msg").html(msg)
+           	  }
           },
           error : function() {
              alert("문제 발생!!!");
@@ -43,21 +49,14 @@
        })
    }
 
-   function lodingList(list) {
-        var html = ''
-         $.each(list,function(index, item) {
-            html += '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
+   function lodingList(item) {
+            html = '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
             html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" >'
             html += '<div class ="div-f"></div>'
             html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
             html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
             html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
-         })
-        if(list.length < 5){
-           msg = '<hr>더이상 상품이 없습니다'
-           $("#msg").html(msg)
-        }
-         $("#images").append(html);
+        return html;
    }
 </script>
 <link rel="stylesheet" type="text/css" href="resources/css/list.css">
@@ -67,7 +66,9 @@
    <c:import url="default/header.jsp" />
    <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
       <h2>오늘의 상품 추천</h2>
-      <div class ="div-a" ><div class ="div-b"><div class ="div-c" id="images">
+      <div class ="div-a" >
+      <div class ="div-b">
+      <div class ="div-c" id="images">
       </div></div></div>
       <div id="msg"></div>
    </section>

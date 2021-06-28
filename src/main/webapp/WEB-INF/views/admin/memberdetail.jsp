@@ -49,6 +49,7 @@
 								남자</c:when>
 								<c:otherwise>
 								여자</c:otherwise></c:choose>
+								<tr><th>성별</th><td>	${detaildto.gender }
 								</td></tr>
 								<tr><th>생년월일</th><td>${detaildto.birth }</td></tr>
 								<tr><th>우편번호</th><td>${detaildto.addr1 }</td> </tr>

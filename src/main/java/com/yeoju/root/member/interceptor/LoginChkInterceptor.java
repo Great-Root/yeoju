@@ -13,18 +13,18 @@ import com.yeoju.root.member.session_name.MemberSessionName;
 
 
 
-public class MemberInterceptor extends HandlerInterceptorAdapter
+public class LoginChkInterceptor extends HandlerInterceptorAdapter
 										implements MemberSessionName{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("로그인 유무 체크 인터셉터");
+		System.out.println("로그인 정보와 파라미터 일치 확인 인터셉터");
 		HttpSession session = request.getSession();
-		if(session.getAttribute(LOGIN) == null) {
+		if(!session.getAttribute(LOGIN).equals(request.getParameter("userId"))) {
 			response.setContentType("text/html; charset=utf-8");//클라이언트로 전달할 타입
 			PrintWriter out = response.getWriter();
-			out.print("<script>alert('로그인 해라'); location.href='/member/login';</script>");
+			out.print("<script>alert('로그인 정보가 다릅니다'); location.href='/';</script>");
 			return false;
 		}
 		return true;

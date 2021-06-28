@@ -93,7 +93,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
-		System.out.println(uploadFile.getOriginalFilename());
 		if (!uploadFile.isEmpty()) {
 			try {
 				// SSL인증서 오류 처리
@@ -126,8 +125,8 @@ public class GoodsController extends URL implements MemberSessionName{
 		return url;			
 	}
 	//5. 상품 수정(편집) 페이지 매핑
-	@RequestMapping("edit/{goodsId}")
-	public String edit(@PathVariable("goodsId")int goodsId,Model model) {
+	@RequestMapping("edit")
+	public String edit(@RequestParam int goodsId,Model model) {
 		model.addAttribute("dto", gs.detailGoods(goodsId));
 		return "goods/goodsEdit";
 	}
@@ -205,12 +204,12 @@ public class GoodsController extends URL implements MemberSessionName{
 	@GetMapping("img/{userId}")
 	public void img(@PathVariable String userId,@RequestParam String fileName,
 			HttpServletResponse response) throws Exception {
-	response.addHeader("Content-disposition", "attachment; fileName="+fileName);
-	String path = getImgURL(userId, fileName);
-	File file = new File(path);
-	FileInputStream in = new FileInputStream(file);
-	FileCopyUtils.copy(in, response.getOutputStream());
-	in.close();
+		response.addHeader("Content-disposition", "attachment; fileName="+fileName);
+		String path = getImgURL(userId, fileName);
+		File file = new File(path);
+		FileInputStream in = new FileInputStream(file);
+		FileCopyUtils.copy(in, response.getOutputStream());
+		in.close();
 	}
 	//9.상품 찜버튼 클릭시
 	@GetMapping("heart.do")

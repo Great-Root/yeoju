@@ -8,16 +8,11 @@ public class MemberDTO extends MemberDetailDTO{
 
 	private String pw;
 
-	private String tel;
-
 	// sysdate
 	private Date regDate;
 
 	// 이메일 주소
 	private String email;
-
-	// 인증번호
-	private Integer auth;
 	
 	//최근 활동일
 	private Date recentDate;
@@ -66,14 +61,6 @@ public class MemberDTO extends MemberDetailDTO{
 		this.pw = pw;
 	}
 
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
 	public Date getRegDate() {
 		return regDate;
 	}
@@ -90,22 +77,12 @@ public class MemberDTO extends MemberDetailDTO{
 		this.email = email;
 	}
 
-	public Integer getAuth() {
-		return auth;
-	}
-
-	public void setAuth(Integer auth) {
-		this.auth = auth;
-	}
-
 	// Member 모델 복사
 	public void CopyData(MemberDTO param) {
 		this.userId = param.getUserId();
 		this.pw = param.getPw();
-		this.tel = param.getTel();
 		this.regDate = param.getRegDate();
 		this.email = param.getEmail();
-		this.auth = param.getAuth();
 		//Member Detail DTO
 		this.addr1 = param.getAddr1();
         this.addr2 = param.getAddr2();
@@ -114,13 +91,18 @@ public class MemberDTO extends MemberDetailDTO{
         this.birth = param.getBirth();
         this.name = param.getName();
         this.userId = param.getUserId();
+        this.tel = param.getTel();
 	}
 
 	@Override
 	public String toString() {
-		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + ", email="
-				+ email + ", auth=" + auth + ", recentDate=" + recentDate + ", limitTime=" + limitTime + ", sessionId="
-				+ sessionId + "]";
+//		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + ", email="
+//				+ email + ", auth=" + auth + ", recentDate=" + recentDate + ", limitTime=" + limitTime + ", sessionId="
+//				+ sessionId + "]";
+		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + 
+				", email=" + email + ", recentDate=" + recentDate + ", limitTime=" + limitTime + ", sessionId=" + sessionId + "]" +
+				"\nMemberDetailDTO [addr1=" + addr1 + ", addr2=" + addr2 + ", addr3=" + addr3 + ", gender=" + gender
+				+ ", birth=" + birth + ", name=" + name + ", userId=" + userId + "]";
 	}
 
 }

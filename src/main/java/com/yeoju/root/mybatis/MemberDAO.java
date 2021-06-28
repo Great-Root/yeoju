@@ -3,6 +3,8 @@ package com.yeoju.root.mybatis;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.yeoju.root.common.dto.MemberDTO;
 
 public interface MemberDAO {

@@ -7,6 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
 <body>
 	<header class="p-3 bg-white text-dark">
@@ -26,7 +29,7 @@
 								<option value="goodsName" <c:out value="${searchOption=='goods_name'?'selected':''}"/>>상품이름</option>
 								<option value="userId" <c:out value="${searchOption=='user_id'?'selected':''}"/>>작성자</option>
 							</select>
-							<input type="text" class="form-control" id="keyword" placeholder="검색 키워드를 입력하세요!"> 
+							<input type="text" class="form-control" id="keyword" placeholder="검색 키워드를 입력하세요!" onkeyup="enterkey();"> 
 							<span class="input-group-btn">
 								<button class="btn btn-secondary btn-info" id="searchBtn" type="button">찾기</button>
 							</span>
@@ -47,7 +50,7 @@
 								id="dropdownMenuButton1" data-bs-toggle="dropdown"
 								aria-expanded="false" style="background-color: #7FFFD4; ">
 								<div class="col">
-									<img alt="안열림" src="../../resources/css/h1.jpg"
+									<img alt="안열림" src="${contextPath}/mypage/profileDownload/${loginUser}"
 										class="rounded-circle" width="30px" height="30px" >
 									${loginUser } 님 
 								</div>
@@ -110,13 +113,29 @@ $(document).ready(function(){
 	 	   $(".btn-secondary").css("background-color","red");
 	 	   setInterval(borderDel, 3000);
 		}else{
-		    location.href = "/?keyword="+$("#keyword").val()+"/?searchOption="+$("#searchOption").val();
+		    location.href = "/?keyword="+$("#keyword").val()+"&searchOption="+$("#searchOption").val();
 		}
 		});
 		function borderDel() {
 	   	  $("#searchBtn").css("background-color","pink");
 	     
 		}
+});
+	function enterkey() {
+	    if (window.event.keyCode == 13) {
+	    	$("#searchBtn").click();
+	    }
+	}
+
+
+$("#searchBtn").on("click", function() {
+	if($(".input-group.p-3").find("input.form-control").val().length == 0){
+	    alert("검색어를 입력해주세여!");
+	    $(".btn-secondary").css("background-color","red");
+	    setInterval(borderDel, 3000);
+	}else{
+	    location.href = "/?keyword="+$("#keyword").val();
+	}
 	});
 </script>
 </html>

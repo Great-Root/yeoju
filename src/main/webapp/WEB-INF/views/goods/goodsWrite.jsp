@@ -29,7 +29,7 @@
 				alert("상품 사진을 입력해주세요");
 				img.focus();
 			}else if(categoryCode==""){
-				alert("카테고리를 선택해주세요")
+				alert("카테고리를 선택해주세요");
 				categoryCode.focus();
 			}
 			document.form1.action = "${path}/goods/insert.do";
@@ -212,6 +212,7 @@
 				<input class="form-control mb-2" type="text" placeholder="상품명"  name="goodsName" id="goodsName" aria-label="상품명 입력칸">
 				<input class="form-control mb-2" type="text" placeholder="상품가격"  name="goodsPrice" id="goodsPrice" aria-label="상품가격">
 				<div class="mb-3">
+				
 				  <textarea class="form-control" rows="3" placeholder="상품 설명을 입력해주세요"  name="goodsInfo" id="goodsInfo"></textarea>
 				</div>
 					<label>카테고리</label>

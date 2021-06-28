@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.yeoju.root.mybatis.QnaBoardDAO">
 	<resultMap type="com.yeoju.root.common.dto.QnaBoardDTO" id="board">
 		<id property="writeNo" column="write_no"/>
@@ -13,7 +12,7 @@
 		<result property="imageFileName" column="image_file_name"/>
 		<result property="userid" column="userid"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yeoju.root.common.dto.QnaBoardRepDTO" id="reply">
 		<result property="userid" column="userid"/>
 		<result property="title" column="title"/>
@@ -47,4 +46,7 @@
 										order by write_date desc
 	</select>
 
-</mapper>
+	<update id="modify">
+		update qna_board set title=#{title}, content=#{content} where write_no = #{writeNo}
+	</update>
+</mapper> 

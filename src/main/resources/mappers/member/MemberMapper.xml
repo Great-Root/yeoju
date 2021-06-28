@@ -6,7 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="member" type="com.yeoju.root.common.dto.MemberDTO">
 		<id property="userId" column="user_id"/>
 		<result property="pw" column="pw"/>
-		<result property="tel" column="tel"/>
 		<result property="regDate" column="reg_date"/>
 		<result property="sessionId" column="session_id"/>
 		<result property="limitTime" column="limit_time"/>
@@ -14,8 +13,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="approval_key" column="approval_key"/>
 		<result property="recentDate" column="recent_date"/>
 	</resultMap>
-	
-	
 	
 	<select id="user_check" resultMap="member">
 		select * from member where user_id=#{userId}
@@ -35,18 +32,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="join_member" >
 		insert into member(user_id, pw, email, reg_date) values(#{userId}, #{pw}, #{email}, sysdate)
 	</insert>
-	<insert id="join_memberdetail" >
-		insert into member_detail(user_id) values(#{userId})
-		</insert>
+	
 	<select id="memberInfo" resultMap="member">
 		select * from member where user_id=#{userId}
 	</select>
 	<select id="memberList" resultMap="member">
 		select * from member 
 	</select>
-	<insert id="register">
-		insert into member(user_id, pw, tel, reg_date, profile_img) values(#{userId}, #{pw}, #{tel}, sysdate, 'default.png')
-	</insert>
 	
 	<update id="keepLogin">
 		update member set session_id=#{sessionId},
@@ -72,8 +64,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>	
 	
 	<select id="getUserInfo" resultMap="member">
-		select * from member where user_id=#{userId}
+		SELECT * FROM member m 
+		LEFT OUTER JOIN member_detail md 
+		ON m.user_id = md.user_id 
+		WHERE m.user_id=#{userId}
 	</select>
-	
 	
 </mapper>

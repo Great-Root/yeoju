@@ -21,10 +21,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listGoods" resultMap="GoodsMap">
 		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
-		SELECT * FROM goods 
-		<include refid="search" />
+		<!-- <SELECT * FROM goods
+		<include refid="search" />-->
+		<!--SELECT  all, goods_name, user_id FROM goods
+		<include refid="search" />-->
 		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
+	
+	<!-- <select id="listAll" resultType="com.yeoju.root.common.dto.GoodsDTO">
+		SELECT goods_name, user_id
+		FROM goods
+		 WHERE절을 include 태그로 삽입 
+		<include refid="search"></include>
+		ORDER BY goods_name desc, user_id desc
+	</select>-->
 	
 	<sql id="search">
 		<choose>
@@ -35,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</when>
 			<!-- 각각 검색 -->
 			<otherwise>
-				WHERE #{searchOption} like '%'||#{keyword}||'%'
+				WHERE ${searchOption} like '%'||#{keyword}||'%'
 			</otherwise>
 		</choose>
 	</sql>
@@ -112,5 +122,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteHeart">
 		DELETE heart WHERE user_id = #{userId} AND goods_id = #{goodsId}
 	</delete>
+	<delete id="deleteAllHeart">
+		DELETE heart WHERE user_id = #{userId}
+	</delete>
+	<delete id="deleteAllHeartGoodsId">
+		DELETE heart WHERE goods_id = #{goodsId}
+	</delete>
+	
+	<select id="getUserId" resultType="String">
+		SELECT user_id FROM goods WHERE goods_id=#{goodsId}
+	</select>
+	
+	<select id="getUserTotalGoods" resultType="Integer">
+		SELECT goods_id FROM goods WHERE user_id = #{userId} ORDER BY goods_id ASC
+	</select>
 	
 </mapper>
