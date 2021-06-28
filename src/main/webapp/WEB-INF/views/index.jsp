@@ -64,14 +64,6 @@
 </head>
 <body>
    <c:import url="default/header.jsp" />
-   <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
-      <h2>오늘의 상품 추천</h2>
-      <div class ="div-a" >
-      <div class ="div-b">
-      <div class ="div-c" id="images">
-      </div></div></div>
-      <div id="msg"></div>
-   </section>
 <div class ="div-1">
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
@@ -101,6 +93,12 @@
   </button>
 </div>
 </div>
+   <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
+      <h2>오늘의 상품 추천</h2>
+      <div class ="div-a" ><div class ="div-b"><div class ="div-c" id="images">
+      </div></div></div>
+      <div id="msg"></div>
+   </section>
    <c:import url="default/footer.jsp" />
 </body>
 </html>

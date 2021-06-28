@@ -21,8 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listGoods" resultMap="GoodsMap">
 		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
-		<!-- <SELECT * FROM goods
-		<include refid="search" />-->
+		SELECT * FROM goods
+		<include refid="search" />
 		<!--SELECT  all, goods_name, user_id FROM goods
 		<include refid="search" />-->
 		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5

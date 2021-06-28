@@ -32,9 +32,9 @@ public class CommentsServiceImpl implements CommentsService{
 
 	//댓글 삭제
 	@Override
-	public void deleteComments(int commentId) {
+	public int deleteComments(int commentId) {
 		
-		commentsDAO.deleteComments(commentId);
+		return commentsDAO.deleteComments(commentId);
 		
 	}
 

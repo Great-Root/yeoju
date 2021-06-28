@@ -100,6 +100,14 @@
 	.carousel-inner {
 	width: 1030px;
 	}
+	html,body{
+  height:100%;
+}
+
+
+
+
+	
 </style>
 </head>
 <body>

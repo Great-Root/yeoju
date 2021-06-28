@@ -39,6 +39,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.yeoju.root.category.CategoryService;
 import com.yeoju.root.common.dto.CategoryDTO;
+
+import com.yeoju.root.common.comments.service.CommentsService;
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
@@ -57,6 +59,10 @@ public class GoodsController extends URL implements MemberSessionName{
 	@Autowired
 	CategoryService cs;
 	//1. 상품 전체 목록 
+	
+	@Autowired
+	CommentsService Cs;
+	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list(

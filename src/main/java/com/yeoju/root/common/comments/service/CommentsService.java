@@ -9,5 +9,5 @@ public interface CommentsService {
 		//댓글 수정
 		public boolean updateComments(GoodsCommentsDTO dto);
 		//댓글 삭제
-		public void deleteComments(int commentId);
+		public int deleteComments(int commentId);
 }
