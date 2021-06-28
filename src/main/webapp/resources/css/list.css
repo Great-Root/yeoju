@@ -76,7 +76,7 @@
 	}
 	.div-1 {
 	position: relative;
-    max-width: 65.375rem;
+    max-width: 65rem;
     margin: 0px auto;
     height: 208px;
     background: white;
@@ -89,3 +89,19 @@
 	.carousel-inner {
 	width: 1030px;
 	}
+	.label {
+      cursor: pointer;
+    }
+
+    .progress {
+      display: none;
+      margin-bottom: 1rem;
+    }
+
+    .alert {
+      display: none;
+    }
+
+    .img-container img {
+      max-width: 100%;
+    }

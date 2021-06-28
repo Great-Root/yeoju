@@ -21,7 +21,9 @@
 	<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 		<div class="login-page">
 		<div class="form">
-		<img src="../../resources/img/test.png" width="110px" height="140px">
+		<a href="${contextPath}/">
+			<img src="../../resources/img/test.png" width="110px" height="140px">
+		</a>
 		<h1 style="color: green; font-size: 30px;">find ID</h1>
 		<form action="${contextPath }/member/find_id.do" method="post">
 		

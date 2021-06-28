@@ -22,5 +22,5 @@
 		<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml" />
 	</bean>
 	<mybatis-spring:scan base-package="com.yeoju.root.mybatis"/>
-		
+	
 </beans>

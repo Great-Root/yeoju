@@ -1,7 +1,5 @@
 package com.yeoju.root.common.dto;
 
-import java.sql.Date;
-
 public class MemberDetailDTO {
 
 	    // 도 / 시 
@@ -22,6 +20,8 @@ public class MemberDetailDTO {
 	    protected String name;
 
 	    protected String userId;
+
+	    protected String tel;
 
 	    public String getAddr1() {
 	        return addr1;
@@ -78,5 +78,14 @@ public class MemberDetailDTO {
 	    public void setUserId(String userId) {
 	        this.userId = userId;
 	    }
-	
+
+		public String getTel() {
+			return tel;
+		}
+
+		public void setTel(String tel) {
+			this.tel = tel;
+		}
+	    
+
 }

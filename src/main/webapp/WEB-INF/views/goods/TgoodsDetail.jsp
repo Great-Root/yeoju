@@ -11,38 +11,40 @@
 <script>
 
 	$(document).ready(function(){
-		var goodsId = $("#goodsId").val()
 		$("#modiBtn").click(function(){
-			location.href = "${path}/goods/edit/"+goodsId;	
+			location.href = "${path}/goods/edit?goodsId=${dto.goodsId}";	
 		});
 		$("#delBtn").click(function(){
 			if(confirm("상품을 삭제하시겠습니까?")){
-				document.form1.action = "${path}/goods/delete.do";
-				document.form1.submit();
+				location.href = "${path}/goods/delete.do?goodsId=${dto.goodsId}";
 			}
 		});
 		$heartBtn = $("#heartBtn");
 		$heartBtn.click(function () {
-			$.ajax('${path}/goods/heart.do?goodsId=${dto.goodsId}', {
-	              method: 'GET',
-	              success: function (result) {
-	            	btnClass(result);
-					heartNum();
-	              },
-	              error: function () {
-	            	  alert('실패')
-	              }
-	        });
+			if(${loginUser != null}){
+				$.ajax('${path}/goods/heart.do?goodsId=${dto.goodsId}', {
+		              method: 'GET',
+		              success: function (result) {
+		            	btnClass(result);
+						heartNum();
+		              },
+		              error: function () {
+		            	  alert('실패')
+		              }
+		        });
+			}else{
+				alert('로그인을 해주세요~');
+			}
 		});
 	});
 		function heartNum() {
 			$.ajax('${path}/goods/heartNum.do/${dto.goodsId}', {
 	              method: 'GET',
 	              success: function (heartNum) {
-	            	  $("#heartNum").html(heartNum)
+	            	  $("#heartNum").html(heartNum);
 	              },
 	              error: function () {
-	            	  alert('실패')
+	            	  alert('실패');
 	              }
 	        });
 		}
@@ -478,10 +480,40 @@ textarea {
 	top: 1px;
 	right: -14px;
 }
-
+.goods6-10 {
+color: rgb(136, 136, 136);
+	font-size: 13px;
+	display: flex;
+	-webkit-box-align: unset;
+	align-items: unset;
+	margin-right: 25px;
+	position: relative;
+	cursor: pointer;
+}
+.goods6-10::after {
+	content: "";
+	width: 1px;
+	height: 13px;
+	position: absolute;
+	border-right: 1px solid rgb(238, 238, 238);
+	top: 1px;
+	right: -14px;
+}
+.goods6-10 img {
+	margin-right: 4px;
+}
 .goods7 {
 	display: flex;
 	margin-bottom: 20px;
+}
+.goods-width3rd {
+	display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgb(255, 255, 255);
+}
+.goods-width4th {
+    width: 1024px;
 }
 </style>
 </head>
@@ -605,9 +637,17 @@ textarea {
 								</c:if>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
+			
+		</div>
+	</div>
+	</div>
+	<div class ="goods-width3rd">
+		<div class ="goods-width4th">
+	
+	
+	
 			<div class="goods4">
 				<div class="goods4-1">상품정보</div>
 				<div class="nothing03">
@@ -622,13 +662,16 @@ textarea {
 					</div>
 					<div class="goods5-2">
 						<div class="goods5-3">
+						<c:if test="${loginUser != null }">
 							<textarea rows="" cols="" placeholder="상품 문의 입력"
 								class="goods-text"></textarea>
+								</c:if>
 						</div>
 						<div class="goods5-4">
 							<div class="goods5-5">
 								<em class="charCnt">0</em> / 100
 							</div>
+							
 							<button class="goods5-6">
 								<img alt="" width="15" height="16"
 									src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAgCAYAAAAFQMh/AAAAAXNSR0IArs4c6QAABFdJREFUSA3Nl11MVEcUgPfnIj8B1kRi4AFI9cEiITFGfZXUYNWKxJ9CtBqC0WCMuoEGgfIPBsVsU7MpVdRV0qZpgkZLjU2qrYD6oCTw4A+YoGktTQhiIE1hC7td8Dsb7ua6ruxd2IdOMsy5Z84535wzM/cuRkOYW0tLS8zw8PCR6enpfKPRaCH865mZmRuKolysrKx8qeKMqhCO0WazJUxMTNwBlAF0gJjXkBGNHzN+wHi4pqbme2GFDexwOOIGBwf/JHgccW0pKSm1BQUFkwKRVl9fv4cqnDWZTNbq6urWsIA7OjqUrq6uH4DmwFDI7nRtbW2Zl6j509DQ8JHH42k3m83rzBr9vMS2tjZzT0+PlG9LVFTURrJahvxZZmZmdGdn56/aoCzwd/Qr0a0yaSdClQXa39//HRlm4fvH5ORkc0xMzKdk3kU/Ttan/GOS7RXsc+YNxtnU19fXSuBNERERWfHx8euBucfHx38LAv8PO8u8wAKtq6u7TIBsMthYUVHRW1xcPBoZGbmBhTjngrMVW7F5FfLhAmrkhDoYd3I3s7ib3QTytebm5tiRkZGbKBbHxsZucDqdUtr19NMs9CH6K4zHQgLjLNALOOdKpkAf+IgaQV4iQ0ND7aiW+sE9QG+npaVl6y61QCnvOcY8oJveBxV+YWGhMzU1NRvxLyk75e0Wf9rfsv+5ubkeXRnPQr8h0F7KuxnofQEEa5z6RZz6XvzTgV7nuuWXlpb+I3667jFvm69xzAf6CdB7wYDqfEZGRgnQ3QJNTEzMs1qt/6pzQUtNee04FwDfCvSu6hhsxK+EEp9UoZTfrfWZE8wL4CuMD7Cn2VVVVZ1ax7lkDmAxi5VT7M3UHyq+7wWzYhvzh+g5QO+IsZ6Gn5VMv5wLKnGUQMHItAn9EZxz+IzdDmQTSAf0KJmeCQYV33cyBir7YmVuO9BfAgEC6SjvYaB2PVDxf+s6seITOJfgvAOovH10NfwKMTxL/1FOb6A99Q/kKzWZ1jF5nIO0iz3VDSXTAyw2JKgswpsxH+hdHIg2AoyQ7QDjIAu4zAJu+a9U+wx0P7YX0enOVPX37jHQJBQu+nkCyX3bhq5SNQo0Ut58bC4wFzJU4nlLDWwNcj/lrhIlmXxB0OUiB2rM72X+EtVp17un/nHUPRZwrzpJ0BUEnZJSIqch/8xh65B5dHtYaOtCoBLHJN9Pxg8J9EQUs20ZwQ8CdaDfhywfCAPlzUP+FvGn+WY6G9+gjI2NreaBV7HpqU+pKJ8DSIiOju52u92LXS7XM6C7BcpCFgwVjkJWUmYDXx5fxnwMfL8q7Ha7a2pqygxQoDcWmqmwpAl4LeN4WVnZy/LyckNTU1McoJVkJz9D00dHR9PFkOfepKQkXS8HsQ/WjJzkAYwS6A/IKB1Asjghexie0x+he2GxWOxFRUVDMheOJqd6EV3usMhX2etHjI+Tk5Ofav8FQRfe1tjYuCS8Ef/n0d4Ah7Y0Xn+VgFMAAAAASUVORK5CYII=">
@@ -662,22 +705,17 @@ textarea {
 											src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">
 										댓글 삭제
 									</div>
-									<div class="goods6-10">
-										<img alt="댓글수정 버튼" width="14" height="14"
-											src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">
-										댓글 삭제
-									</div>
-									<!-- <div class="goods6-9">
-										<img alt="댓글수정 버튼" width="14" height="14"
-											src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">
-										댓글 삭제
-									</div> -->
+									
 								</div>
+									
+								
 							</div>
 						</div>
 					</c:forEach>
 				</div>
 			</div>
+		</div>
+	</div>
 		</div>
 	</div>
 	<c:import url="../default/footer.jsp" />
@@ -708,8 +746,8 @@ $(function() {
 			}
 		});	
 	}); */
-	
 	 $(".goods5-6").on("click", function(){
+		 
 		var param = {
 			"goodsId" : ${dto.goodsId},
 			"userId"  : '${loginUser}',
@@ -741,20 +779,22 @@ $(function() {
 					+	'댓글달기'
 		            +   '</div>'
 					+   '<div class ="goods6-9">'
-					+   '<img alt="댓글삭제 버튼" width="14" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAuRJREFUWAnFV01rE1EUzUwSMWATENpFRNyIi0YI+eiui4LoogWFgkvBH6Dgpip+dONKgivdC3XlpkWELkTQRVw1H4QwWQmhLrKwq1IwxHyM54zvDck4mc6bTO3AY97MO/eeM/e9d+c+LeLzqlQq8Wg0ujIajW6ZprkIs7SmaRfQN9HvsOG5pev6h+Fw+LVYLPb9uNaOAzUajYXBYPAcPHeATR2HF+OHEPMuFou9yGazP71spgowDONMt9t9BOMNtDkvJx5jRxgrJRKJl5lM5rcbzlVArVabR6i3YbDsZhTgXRlTs57P5w+ctv8IAPkiwr2LdskJnuUZU7KPtgoRrXE/EwL45SDeC5tcEgoRS+OR0OUg55xhPyly8tA3OcgleW0BYsEpzTnm9THaknTm874suCy4JYBbDU9c7UoXvugzwllRMvoL3hCcEUsA9zneB91qAfgjc4IzojPD4UuYZP7rRU5y60yvYPab4cIUmSK3ztweplcVX+TWEYqMilGYWHJzEabDdKroK60jO52aAHLbiUhReShwTIHJNcBiYqYLX/IxoIMOIxBYANLweRIXCoWb2FJrEPJdUUiHa8BQNLLh2EY7+IM+a7fbZ3O53G4ymbwKf08B+GWDPDrAtrR6vX4dNdwnD5yfoR9w9hCReE9ws9m82Ov1XqF728sYUbuhMR0CxEoljGz4DdPyQP6gqtXqXayxt1NEHOL9vFWQAPgawHtTgEqvEQm4Mrcg5An6VxDdL24OMPYGEbtvCeCvsd/vcwGF+UdkZRyFmHMuAo7i8fhlVsxWHhClc8kFOMur1BRy+izJct1ORCydMVCehdGnbVlwWXBbAOt2zNs6wrbv05EyjL7JMX5GsAXQG6tVgFZPQgR90vd4RUzOCQFCRAtAFpphTkeZPkE+cSZwFSBEHGCerqG/icbjVdCLtpv05fxy6dDahvLB7X5qh1OnGMfxnFUUj+dWLYHtJo/nBhaZ0vH8D6NELRJSWvu9AAAAAElFTkSuQmCC">'
+					+   '<img alt="댓글삭제 버튼" width="14" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">'
 					+	'댓글 삭제'
 					+   '</div>'
 					+   '</div>'
 					+   '</div>'
 					+   '</div>'
 				$(".goods6").append(html);
+				$(".goods-text").val("");	
 			},error : function(e){
 				alert("댓글 작성 실패")
 			}
 		});
+		setCnt();
 	});
 	
-	$(".goods6-9").on("click", function(){
+	$(document).on("click", ".goods6-9", function(){
 		var commentId = $(this).parents(".goods6-1").attr("commentId");
 		var param = {
 			"commentId" : parseInt(commentId)
@@ -770,6 +810,14 @@ $(function() {
 				alert("댓글 삭제 실패")
 			}
 		});
+		setCnt();
+	});
+	
+	$(document).ready(function(){
+		setCnt();
+		function setCnt() {
+			$(".procCnt").text($(".goods6-1").length);
+		}
 	});
 })
 

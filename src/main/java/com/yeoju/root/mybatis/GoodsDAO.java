@@ -12,7 +12,9 @@ import com.yeoju.root.common.dto.HeartDTO;
 public interface GoodsDAO {
 	
 	//01.상품목록
-	public List<GoodsDTO> listGoods(int pageNo);
+	public List<GoodsDTO> listGoods(
+			@Param("pageNo") int pageNo, 
+			@Param("keyword") String keyword);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -49,7 +51,13 @@ public interface GoodsDAO {
 
 	// 찜삭제
 	public void deleteHeart(HeartDTO dto);
+
+	public String getUserId(int goodsId);
 	
+	public ArrayList<Integer> getUserTotalGoods(String userId);
 	
+	public void deleteAllHeart(String userId);
+	
+	public void deleteAllHeartGoodsId(int goodsId);
 
 }

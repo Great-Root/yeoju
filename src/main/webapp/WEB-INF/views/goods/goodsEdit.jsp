@@ -28,15 +28,11 @@
 			document.form1.action = "${path}/goods/update.do";
 			document.form1.submit();
 		});
-	});
-	$("#delBtn").click(function(){
-		if(confirm("상품을 삭제하시겠습니까?")){
-			document.form1.action = "${path}/goods/delete.do";
-			document.form1.submit();
-		}
-	});
-	$("#listBtn").click(function(){
-		location.href = "${path}/goods/list.do";	
+		$("#delBtn").click(function(){
+			if(confirm("상품을 삭제하시겠습니까?")){
+			location.href = "${path}/goods/delete.do?goodsId=${dto.goodsId}";
+			}
+		});
 	});
 	function readURL(input) {
 		var file = input.files[0]	//파일에 대한 정보

@@ -14,17 +14,28 @@
 <c:import url="../default/header.jsp" />
 	<div class="form">
       <form action="${contextPath }/mypage/delete.do" method="post">
+			<h1 style="color: green; font-size: 30px; text-align: center;">회원탈퇴</h1>
 			<table>
 				<tr>
-					<h1 style="color: green; font-size: 30px; text-align: center;">회원탈퇴</h1>
+					<td>
+						탈퇴계정
+					</td>
+					<td align="center">
+						<h5>${deleteInfo.userId}</h5> 
+					</td>
 				</tr>
 				<tr>
-					<td>아이디&nbsp;&nbsp;&nbsp;<input size="40" type="text" name="userId" value="${deleteInfo.userId}" readonly="readonly"><br>
-						비밀번호<input size="40" type="password" name="pw" placeholder="비밀번호를 입력하시면 탈퇴됩니다."><br> 
-						<div align="right">
-							<input type="submit" value="회원탈퇴"> 
-							<input type="button" value="취소" onclick="javascript:window.location='${contextPath }/'">
-						</div>
+					<td>
+						비밀번호
+					</td>
+					<td style="padding: 0 1em;">
+						<input size="40" type="password" name="pw" placeholder="비밀번호를 입력하시면 탈퇴됩니다.">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right" style=" padding: 0 1em;">
+						<input type="submit" class="btn btn-outline-danger" value="회원탈퇴" style="margin-right: 0.7em;"> 
+						<input type="button" class="btn btn-outline-success" value="취소" onclick="javascript:window.location='${contextPath }/'">
 					</td>
 				</tr>
 			</table>

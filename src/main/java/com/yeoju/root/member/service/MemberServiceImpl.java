@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
+import com.yeoju.root.common.components.Components;
 import com.yeoju.root.common.dto.AdminDTO;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.common.dto.ProfileDTO;
@@ -31,35 +34,42 @@ import com.yeoju.root.mybatis.MemberDetailDAO;
 
 @Service
 public class MemberServiceImpl implements MemberService, MemberSessionName {
+	@Autowired Components comp;
 	@Autowired MemberDAO dao;
-	@Autowired ProfileDAO pDAO;
 	@Autowired MemberDetailDAO detaildao;
 	
-	public int user_check(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		
+	public void user_check(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		MemberDTO dto = dao.user_check(request.getParameter("userId"));
-		
+		String inputPw = request.getParameter("pw");
+		String autoLogin = request.getParameter("autoLogin");
 		if(dto != null) {//아이디가 존재하는 경우
-			if(request.getParameter("pw").equals(dto.getPw())) {//비밀번호가 일치하는 경우
+			if(inputPw.equals(dto.getPw()) || encoder.matches(inputPw, dto.getPw())) {//비밀번호가 일치하는 경우
 				dao.recent_date(dto.getUserId());
-				return 0;
+				HttpSession session = request.getSession();
+				session.setAttribute(LOGIN, dto.getUserId());
+				session.setAttribute(GRADE, "0");
+				if(autoLogin != null) {
+					int limitTime = 60*60*24*90; //90일
+					Cookie loginCookie = new Cookie("loginCookie", session.getId() );
+					loginCookie.setPath("/");
+					loginCookie.setMaxAge(limitTime);
+					response.addCookie(loginCookie);
+					
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(new java.util.Date());
+					cal.add(Calendar.MONTH, 3);
+					
+					Date limitDate = new Date(cal.getTimeInMillis());
+					keepLogin(session.getId(), limitDate, dto.getUserId());
+				}
+				comp.sendHref(response,"/");
 			}else {//비밀번호가 일치하지 않는 경우
-				out.println("<script>");
-				out.println("alert('비밀번호가 다릅니다.');");
-				out.println("history.go(-1);");
-				out.println("</script>");
-				out.close();
+				comp.sendAlertAndBack(response, "비밀번호가 다릅니다");
 			}
 		}else{//아이디가 없는 경우
-			out.println("<script>");
-			out.println("alert('가입된 아이디가 없습니다.');");
-			out.println("history.go(-1);");
-			out.println("</script>");
-			out.close();
+			comp.sendAlertAndBack(response, "가입된 아이디가 없습니다.");
 		}
-		return 1;
 }
 	
 
@@ -80,16 +90,9 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 	
 	@Override
 	public String find_id(HttpServletResponse response, String email) throws Exception {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
 		String userId = dao.find_id(email);
-		
 		if (userId == null) {
-			out.println("<script>");
-			out.println("alert('가입된 아이디가 없습니다.');");
-			out.println("history.go(-1);");
-			out.println("</script>");
-			out.close();
+			comp.sendAlertAndBack(response, "가입된 아이디가 없습니다.");
 			return null;
 		} else {
 			return userId;
@@ -129,30 +132,18 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 	
 	
 	@Override
-	public int join_member(MemberDTO dto, HttpServletResponse response) throws Exception {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		
-		
+	public void join_member(MemberDTO dto, HttpServletResponse response) throws Exception {
+		dto.setPw(new BCryptPasswordEncoder().encode(dto.getPw()));
 		if(dao.check_id(dto.getUserId())==1) {
-			out.println("<script>");
-			out.println("alert('동일한 아이디가 있습니다.');");
-			out.println("history.go(-1);");
-			out.println("</script>");
-			out.close();
-			return 0;
+			comp.sendAlertAndBack(response, "동일한 아이디가 있습니다.");
 		}else if(dao.check_email(dto.getEmail()) == 1) {
-			out.println("<script>");
-			out.println("alert('동일한 이메일이 있습니다.');");
-			out.println("history.go(-1);");
-			out.println("</script>");
-			out.close();
-			return 0;
+			comp.sendAlertAndBack(response, "동일한 이메일이 있습니다.");
 		}else {
-			System.out.println(dto.getUserId());
-			dao.join_member(dto);
-			dao.join_memberdetail(dto);
-			return 1;
+			if(dao.join_member(dto) == 1) {
+				comp.sendAlertAndHref(response, "성공적으로 회원가입이 되었습니다.", "/member/login");
+			}else {
+				comp.sendAlertAndHref(response, "회원가입에 실패했습니다.", "/member/memberJoinForm.do");
+			}
 		}
 	}
 
@@ -240,23 +231,6 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 		}
 		
 	}
-
-	@Override
-	public void setProfileImg(MultipartFile file, String userId) {
-		try {
-			ProfileDTO dto = new ProfileDTO();
-			dto.setUserId(userId);
-			dto.setImgName(file.getOriginalFilename());
-			dto.setImgSize(file.getSize());
-			dto.setImgType(file.getContentType());
-			dto.setImgData(file.getBytes());
-			System.out.println(dto);
-			pDAO.insertProfileImg(dto);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 
 
 }

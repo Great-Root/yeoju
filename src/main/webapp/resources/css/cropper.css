@@ -302,3 +302,11 @@
 .cropper-disabled .cropper-point {
   cursor: not-allowed;
 }
+
+.label {
+  cursor: pointer;
+}
+
+.img-container img {
+  max-width: 100%;
+}

@@ -1,11 +1,17 @@
 package com.yeoju.root.mypage.service;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.common.dto.ProfileDTO;
 
 public interface MyPageService {
 
@@ -16,8 +22,13 @@ public interface MyPageService {
 
 	public MemberDTO getUserInfo(String userId);
 	
-	public MemberDTO modify(MemberDTO dto) throws Exception;
+	public void modify(MemberDTO dto, HttpServletResponse response) throws Exception;
 	
-	public boolean delete(MemberDTO dto, HttpServletResponse response) throws Exception;
+	public void delete(String pw, HttpServletResponse response, HttpServletRequest request);
+	
+	public void setProfileImg(MultipartFile file, HttpSession session);
+
+	public File getProfileImg(String userId);
+
 	
 }

@@ -12,7 +12,7 @@ public interface GoodsService {
 
 
 	//01.상품목록
-	public List<GoodsDTO> listGoods(int pageNo);
+	public List<GoodsDTO> listGoods(int pageNo, String keyword);
 
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);

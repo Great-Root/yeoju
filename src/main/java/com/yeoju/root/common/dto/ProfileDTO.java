@@ -1,17 +1,12 @@
 package com.yeoju.root.common.dto;
 
 public class ProfileDTO {
-	private String userId;
 	private String imgName;
 	private long imgSize;
 	private String imgType;
 	private byte[] imgData;
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+	private String userId;
+	
 	public String getImgName() {
 		return imgName;
 	}
@@ -36,9 +31,23 @@ public class ProfileDTO {
 	public void setImgData(byte[] imgData) {
 		this.imgData = imgData;
 	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+	public void CopyData(ProfileDTO param) {
+		this.imgName = param.getImgName();
+		this.imgSize = param.getImgSize();
+		this.imgType = param.getImgType();
+		this.imgData = param.getImgData();
+		this.userId = param.getUserId();
+	}
 	@Override
 	public String toString() {
-		return "ProfileDTO [userId=" + userId + ", imgName=" + imgName + ", imgSize=" + imgSize + ", imgType=" + imgType
+		return "ProfileDTO [imgName=" + imgName + ", imgSize=" + imgSize + ", imgType=" + imgType
 				+ ", imgData=" + imgData.length + "]";
 	}
 }
