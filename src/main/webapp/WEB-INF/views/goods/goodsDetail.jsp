@@ -458,7 +458,6 @@
 							</div>
 				</div>
 			</div>
-<<<<<<< HEAD
 			<div class="goods3">
 				<div class ="goods3-1">
 					<button class ="goods3-2">
@@ -620,7 +619,6 @@
 				</div>
 			</div>
 		</div>
-=======
 		</div>
 		<div class="col">
 			<input class="form-control mb-2" type="text" placeholder="상품명"  name="goodsName" id="goodsName" value="${dto.goodsName}" aria-label="상품명 입력칸" readonly="readonly">
@@ -638,7 +636,6 @@
 			</div>
 		</div>
 	</form>
->>>>>>> e74df7ef51c3251aaf77a003eba48ea472d12fd9
 	</div>
 </div>
 </div>

@@ -1,5 +1,6 @@
 package com.yeoju.root;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
+import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mypage.service.MyPageService;
 
@@ -26,12 +29,15 @@ public class HomeController implements MemberSessionName{
 	@Autowired MyPageService mps;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model,@RequestParam(required = false,defaultValue = "") String keyword) {
+	public String home(Locale locale, Model model,
+			@RequestParam(required = false,defaultValue = "") String keyword,
+			@RequestParam(required = false,defaultValue = "all") String searchOption) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
+		//List<GoodsDTO> list = GoodsService.listGoods(0, searchOption,keyword);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("searchOption", searchOption);
 		return "index";
 	}
-	
 	@GetMapping("/mypage")
 	public String mypage(Model model,HttpSession session) {
 		MemberDTO dto = mps.getUserInfo((String)session.getAttribute(LOGIN));

@@ -18,30 +18,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="category_code" property="categoryCode"/>
 	</resultMap>
 	<!-- 01.상품 리스트 -->
-	<select id="listGoods" resultMap="GoodsMap">
+	<select id="listGoods" resultMap="GoodsMap" >
 		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
-		SELECT * FROM goods WHERE goods_name LIKE '%'||#{keyword}||'%'
+		SELECT * FROM goods
+		<include refid="search" />
+		<!--SELECT  all, goods_name, user_id FROM goods
+		<include refid="search" />-->
+		<!--SELECT goods_name, user_id
+		FROM goods
+		<include refid="search" /> --> 
 		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
 	
 	<sql id="search">
-		<!-- 동적 SQL 구문 -->
+		<choose>
+			<!--상품이름 + 작성자?  -->
+			<when test="searchOption == 'all'">
+				WHERE goods_name like '%'||#{keyword}||'%'
+				OR user_id like '%'||#{keyword}||'%'
+			</when>
+			<!-- 각각 검색 -->
+			<otherwise>
+				WHERE ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+		<!-- 동적 SQL 구문 
 		<if test="searchOption == 'goodsName'">
 		WHERE goods_name LIKE '%'||#{keyword}||'%'
 		</if>
-		<if test="condition == 'writer'">
-		WHERE writer LIKE '%'||#{keyword}||'%'
+		<if test="searchOption == 'userId'">
+		WHERE user_id LIKE '%'||#{keyword}||'%'
 		</if>
-		<if test="condition == 'content'">
-		WHERE content LIKE '%'||#{keyword}||'%'
-		</if>
-		<if test="condition == 'titleContent'">
-		WHERE title LIKE '%'||#{keyword}||'%'
-		OR content LIKE '%'||#{keyword}||'%'
-		</if>
-	</sql>
-	
+	</sql>-->
 		
 	<!-- 02.상품 상세보기 -->
 	<select id="detailGoods" resultMap="GoodsMap">
@@ -96,11 +106,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*) FROM heart WHERE user_id = #{userId} AND goods_id = #{goodsId}
 	</select>
 	
+	
 	<!-- 해당상품의 전체 찜 갯수 -->
 	<select id="heartTotalCnt" resultType="Integer">
 		SELECT count(*) FROM heart WHERE goods_id = #{goodsId}
 	</select>
-	
 	<insert id="insertHeart">
 		INSERT INTO heart (user_id, goods_id, reg_date) VALUES (#{userId}, #{goodsId}, sysdate)
 	</insert>

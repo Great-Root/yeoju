@@ -2,15 +2,17 @@ package com.yeoju.root.goods.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.security.cert.X509Certificate;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +35,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.yeoju.root.category.CategoryService;
+import com.yeoju.root.common.dto.CategoryDTO;
 
 import com.yeoju.root.common.comments.service.CommentsService;
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
@@ -42,23 +48,33 @@ import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
 
+//import net.sf.json.JSONArray;
+
 @Controller
 @RequestMapping("goods")
 public class GoodsController extends URL implements MemberSessionName{
-	@Autowired
-	GoodsService gs;
 	
 	@Autowired
-	CommentsService cs;
+	GoodsService gs;
+	@Autowired
+	CategoryService cs;
+	//1. 상품 전체 목록 
+	
+	@Autowired
+	CommentsService Cs;
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list(
 			@RequestParam int pageNo,
-			@RequestParam String keyword) {
+			@RequestParam String keyword,
+			@RequestParam String searchOption
+			) throws Exception {
 		System.out.println("pageNo : "+pageNo);
 		System.out.println("keyword : "+keyword);
-		return gs.listGoods(pageNo, keyword);
+		System.out.println("searchOption : "+searchOption);
+		
+		return listGoods(pageNo,keyword,searchOption);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
@@ -66,18 +82,20 @@ public class GoodsController extends URL implements MemberSessionName{
 		model.addAttribute("dto",gs.detailGoods(goodsId));
 		return "goods/TgoodsDetail";
 	}
-	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
-	public String write() { 
-		return "/goods/goodsWrite";
-	}
+	public String write(Model model) throws Exception{ 
+		
+	List<CategoryDTO> category = null;
+	category = cs.category();
+	model.addAttribute("category", category);
 	
+	return "/goods/goodsWrite";	
+	}
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
 	@ResponseBody
 	public String insert(GoodsDTO dto, HttpSession session) {
-
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
@@ -112,14 +130,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		}
 		return url;			
 	}
-	
 	//5. 상품 수정(편집) 페이지 매핑
 	@RequestMapping("edit")
 	public String edit(@RequestParam int goodsId,Model model) {
 		model.addAttribute("dto", gs.detailGoods(goodsId));
 		return "goods/goodsEdit";
 	}
-	
 	//6.상품 수정(편집) 처리 매핑
 	@RequestMapping("update.do")
 	public String update(GoodsDTO dto, HttpSession session) {
@@ -158,14 +174,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		url = gs.updateGoods(dto) ? "redirect:/goods/detail/"+goodsId : "redirect:/goods/edit/"+goodsId;
 		return url;		
 	}
-	
 	//7.상품 삭제 처리 매핑
 	@RequestMapping("delete.do")
 	public String delete(@RequestParam int goodsId) {
 		//상품 이미지 정보
 		String delFileName = gs.imgFileName(goodsId);
 		String path="";
-		
 		try {
 			// SSL인증서 오류 처리
 			SSLContext sc = SSLContext.getInstance("SSL");
@@ -192,9 +206,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		}
 		return "redirect:/";
 	}
-
-	
-	
 	//8.상품 이미지 출력
 	@GetMapping("img/{userId}")
 	public void img(@PathVariable String userId,@RequestParam String fileName,
@@ -206,7 +217,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		FileCopyUtils.copy(in, response.getOutputStream());
 		in.close();
 	}
-	
 	//9.상품 찜버튼 클릭시
 	@GetMapping("heart.do")
 	@ResponseBody
@@ -214,14 +224,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		String loginUser = (String)session.getAttribute(LOGIN);
 		return loginUser == null ? false : gs.heart(new HeartDTO(loginUser, goodsId));
 	}
-	
 	// 해당 상품 찜갯수 확인
 	@GetMapping("heartNum.do/{goodsId}")
 	@ResponseBody
 	public int heartNum(@PathVariable int goodsId) {
 		return gs.heartTotalCnt(goodsId);
 	}
-	
 	// 상품 찜 활성화 확인
 	@GetMapping("isheart.do/{goodsId}")
 	@ResponseBody
@@ -230,30 +238,23 @@ public class GoodsController extends URL implements MemberSessionName{
 		return loginUser == null ? false : gs.isheart(new HeartDTO(loginUser, goodsId));
 	}
 	
-	
 	TrustManager[] dummyTrustManager = new TrustManager[] { new X509TrustManager() { 
 	     public java.security.cert.X509Certificate[] getAcceptedIssuers() { 
 	     return null; 
 	     } 
-	 
 	     public void checkClientTrusted(X509Certificate[] certs, String authType) { 
 	     } 
-	 
 	     public void checkServerTrusted(X509Certificate[] certs, String authType) { 
 	     }
-
 		@Override
 		public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 				throws java.security.cert.CertificateException {
-			
 		}
-
 		@Override
 		public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 				throws java.security.cert.CertificateException {
-			
 		} 
 	    } }; 
-
 	
+
 }

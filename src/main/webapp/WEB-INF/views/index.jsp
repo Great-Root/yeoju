@@ -15,18 +15,17 @@
       initPage(pageNo);
       initPage(++pageNo);
       $(window).scroll(function() {
-    	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        	  pageNo += 1;
+          if($(window).scrollTop() + $(window).height() == $(document).height()) {
+             pageNo += 1;
               initPage(pageNo);
-    	   }
-    	});
+          }
+       });
    });
-      
    function initPage(pageNo) {
-      
       var param = {
          "pageNo" : pageNo,
-         "keyword" : '${keyword}'
+         "keyword" : '${keyword}',
+         "searchOption" : '${searchOption}'
       };
       // 데이터를 불러온다.
       $.ajax({
@@ -63,7 +62,6 @@
 <link rel="stylesheet" type="text/css" href="resources/css/list.css">
 
 </head>
-
 <body>
    <c:import url="default/header.jsp" />
 <div class ="div-1">

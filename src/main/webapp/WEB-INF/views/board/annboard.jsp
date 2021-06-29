@@ -15,8 +15,9 @@
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
+							<th>조회수</th>
 						</tr>
-						
+
 					</thead>
 					<tbody>
 					<c:if test="${AnnBoardList.size() == 0 }">
@@ -25,9 +26,12 @@
 					<c:forEach var="dto" items="${AnnBoardList }">
 					<tr>
 						<td>${dto.writeNo }</td>
+					    <td><a href="${contextPath }/board/contentView?writeNo=${dto.writeNo }">${dto.title }</a></td>
+						<td>${dto.id }</td> 
 					    <td><a href="annview?writeNo=${dto.writeNo }">${dto.title }</a></td>
 						<td>${dto.userid }</td> 
 						<td>${dto.saveDate }</td> 
+						<td>${dto.hit }</td>
 					</tr>
 					</c:forEach>
 						<tr align="right">
@@ -39,9 +43,7 @@
 									</c:forEach>
 									<input type="button" value="공지작성"
 			onclick="location.href='${contextPath}/admin/AnnwriteForm'">
-							
 							</td>
-					
 						</c:when>
 						<c:otherwise>
 							<td colspan="4">

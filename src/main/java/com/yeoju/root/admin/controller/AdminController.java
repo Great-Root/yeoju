@@ -1,15 +1,14 @@
 package com.yeoju.root.admin.controller;
 
 import java.sql.Date;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -146,11 +145,13 @@ public class AdminController implements MemberSessionName{
 		}
 	@GetMapping("qnaview")
 	public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
-	
+
 		session.setAttribute("writeNo", writeNo);
+		bs.upHit(writeNo);
 		bs.QnABoardView(writeNo,model);
 		return "admin/qnaview";
 	}
+
 	@GetMapping("annview")
 	public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
 		session.setAttribute("writeNo", writeNo);

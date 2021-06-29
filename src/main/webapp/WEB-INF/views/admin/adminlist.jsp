@@ -57,6 +57,8 @@
 				<table class="table table-striped col" >
 					<thead>
 						<tr>
+							<th>아이디</th>
+							<th>등록일</th>
 							<th style="min-width: 100px;">아이디</th>
 							<th >등록일</th>
 							<th>최근 활동일</th>
