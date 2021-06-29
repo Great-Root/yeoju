@@ -30,8 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yeoju.root.common.components.Components;
-import com.yeoju.root.common.dto.GoodsCommentsDTO;
+import com.yeoju.root.common.comments.service.CommentsService;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
 import com.yeoju.root.common.url.URL;
@@ -44,6 +43,8 @@ public class GoodsController extends URL implements MemberSessionName{
 	@Autowired
 	GoodsService gs;
 	
+	@Autowired
+	CommentsService cs;
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
@@ -230,6 +231,17 @@ public class GoodsController extends URL implements MemberSessionName{
 	public boolean isheartNum(@PathVariable int goodsId, HttpSession session) {
 		String loginUser = (String)session.getAttribute(LOGIN);
 		return loginUser == null ? false : gs.isheart(new HeartDTO(loginUser, goodsId));
+	}
+	
+	@GetMapping("soldout.do")
+	@ResponseBody
+	public void soldOut(@RequestParam int goodsId) {
+		gs.soldOut(goodsId);
+	}
+	@GetMapping("isSoldout/{goodsId}")
+	@ResponseBody
+	public boolean isSoldOut(@PathVariable int goodsId) {
+		return gs.isSoldOut(goodsId);
 	}
 	
 	

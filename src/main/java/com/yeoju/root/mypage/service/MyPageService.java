@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.common.dto.ProfileDTO;
+import com.yeoju.root.common.dto.goodsResultDTO;
 
 public interface MyPageService {
 
@@ -19,6 +20,8 @@ public interface MyPageService {
 	public ArrayList<GoodsDTO> sellGoods(String userId, int pageNo);
 	
 	public ArrayList<GoodsDTO> heartPage(String userId, int pageNo);
+	
+	public ArrayList<GoodsDTO> soldoutGoods(String userId, int pageNo);
 
 	public MemberDTO getUserInfo(String userId);
 	
@@ -29,6 +32,8 @@ public interface MyPageService {
 	public void setProfileImg(MultipartFile file, HttpSession session);
 
 	public File getProfileImg(String userId);
+
+	public goodsResultDTO getGoodsResult(String userId);
 
 	
 }

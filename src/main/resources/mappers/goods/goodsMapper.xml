@@ -84,6 +84,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=0
 		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
 	</select>
+	<select id="soldoutGoods" resultMap="GoodsMap">
+		SELECT B.* FROM(
+		SELECT rownum rn, A.* FROM (
+		SELECT * FROM goods WHERE user_id=#{userId} AND sold_out=1
+		ORDER BY goods_id DESC)A)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
+	</select>
 	<select id="heartPage" resultMap="GoodsMap">
 		SELECT * FROM(
 		SELECT B.* FROM(
@@ -123,6 +129,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getUserTotalGoods" resultType="Integer">
 		SELECT goods_id FROM goods WHERE user_id = #{userId} ORDER BY goods_id ASC
+	</select>
+	
+	<update id="soldOut">
+		UPDATE goods SET sold_out = #{soldOut}	WHERE goods_id = #{goodsId}
+	</update>
+	
+	<select id="isSoldOut" resultType="Integer">
+		SELECT sold_out FROM goods WHERE goods_id = #{goods_id}
+	</select>
+	
+	<select id="getTotalMoney" resultType="Integer">
+		SELECT COALESCE(SUM(goods_price),0) FROM goods WHERE user_id=#{userId} AND sold_out=0
+	</select>
+	<select id="getGetMoney" resultType="Integer">
+		SELECT COALESCE(SUM(goods_price),0) FROM goods WHERE user_id=#{userId} AND sold_out=1
+	</select>
+	<select id="getHeartNum" resultType="Integer">
+		SELECT COUNT(*) FROM heart WHERE user_id=#{userId}
+	</select>
+	<select id="getSoldoutNum" resultType="Integer">
+		SELECT COUNT(*) FROM (SELECT * FROM heart WHERE user_id=#{userId})A 
+		INNER JOIN goods B ON A.goods_id = B.goods_id WHERE sold_out=1
+	</select>
+	<select id="getSellingNum" resultType="Integer">
+		SELECT COUNT(*) FROM (SELECT * FROM heart WHERE user_id=#{userId})A 
+		INNER JOIN goods B ON A.goods_id = B.goods_id WHERE sold_out=0
+	</select>
+	<select id="getNeedMoney" resultType="Integer">
+		SELECT COALESCE(SUM(goods_price),0) FROM (SELECT * FROM heart WHERE user_id=#{userId})A 
+		INNER JOIN goods B ON A.goods_id = B.goods_id WHERE sold_out=0
 	</select>
 	
 </mapper>

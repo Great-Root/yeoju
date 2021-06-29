@@ -100,4 +100,16 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public boolean isYours(String loginUser, int goodsId) {
 		return goodsDao.getUserId(goodsId).equals(loginUser);
 	}
+	@Override
+	public void soldOut(int goodsId) {
+		if(goodsDao.isSoldOut(goodsId) == 0) {
+			goodsDao.soldOut(goodsId,1);
+		}else {
+			goodsDao.soldOut(goodsId,0);
+		}
+	}
+	@Override
+	public boolean isSoldOut(int goodsId) {
+		return goodsDao.isSoldOut(goodsId) == 0 ? false : true;
+	}
 }

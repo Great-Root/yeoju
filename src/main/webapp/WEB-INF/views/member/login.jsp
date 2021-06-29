@@ -28,7 +28,7 @@
 			<div class="login-page">
 			<div class="form">
 			<a href="${contextPath}/">
-			<img src="../../resources/img/test.png" width="110px" height="140px">
+			<img src="../../resources/img/여주.png" width="110px" height="140px">
 			</a>
 			<h1 style="color: green; font-size: 30px;">login</h1>
 			<div>

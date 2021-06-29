@@ -36,6 +36,7 @@ public class HomeController implements MemberSessionName{
 	public String mypage(Model model,HttpSession session) {
 		MemberDTO dto = mps.getUserInfo((String)session.getAttribute(LOGIN));
 		model.addAttribute("userInfo", dto);
+		model.addAttribute("result", mps.getGoodsResult(dto.getUserId()));
 		return "mypage/mypage";
 	}
 	

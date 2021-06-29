@@ -144,8 +144,9 @@
 <main class="container d-flex flex-wrap align-items-center justify-content-center">
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
 	<div class="row">
-		<h2 class="text-center">상품 등록</h2><br>
+		<h2>상품 등록</h2>
 	</div>
+	<hr>
 	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
 	<div class="row">
 		<div class="col">

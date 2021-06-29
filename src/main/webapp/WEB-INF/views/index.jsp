@@ -9,6 +9,7 @@
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <c:set var="userId" value=""/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script type="text/javascript">
    var pageNo = 1;
    $(document).ready(function(){
@@ -66,14 +67,6 @@
 
 <body>
    <c:import url="default/header.jsp" />
-   <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
-      <h2>오늘의 상품 추천</h2>
-      <div class ="div-a" >
-      <div class ="div-b">
-      <div class ="div-c" id="images">
-      </div></div></div>
-      <div id="msg"></div>
-   </section>
 <div class ="div-1">
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
@@ -103,6 +96,12 @@
   </button>
 </div>
 </div>
+   <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
+      <h2>오늘의 상품 추천</h2>
+      <div class ="div-a" ><div class ="div-b"><div class ="div-c" id="images">
+      </div></div></div>
+      <div id="msg"></div>
+   </section>
    <c:import url="default/footer.jsp" />
 </body>
 </html>

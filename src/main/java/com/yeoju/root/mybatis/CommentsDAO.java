@@ -16,5 +16,5 @@ public interface CommentsDAO {
 	//댓글 수정
 	public int updateComments(GoodsCommentsDTO dto);
 	//댓글 삭제
-	public void deleteComments(int goodsId);
+	public int deleteComments(int goodsId);
 }

@@ -21,6 +21,7 @@ import com.yeoju.root.common.components.Components;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.common.dto.ProfileDTO;
+import com.yeoju.root.common.dto.goodsResultDTO;
 import com.yeoju.root.goods.controller.GoodsController;
 import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mybatis.GoodsDAO;
@@ -46,6 +47,10 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 	@Override
 	public ArrayList<GoodsDTO> heartPage(String userId, int pageNo) {
 		return gdao.heartPage(userId,pageNo);
+	}
+	@Override
+	public ArrayList<GoodsDTO> soldoutGoods(String userId, int pageNo) {
+		return gdao.soldoutGoods(userId,pageNo);
 	}
 
 	@Override
@@ -137,6 +142,17 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 			}
 		}
 		return file;
+	}
+	@Override
+	public goodsResultDTO getGoodsResult(String userId) {
+		goodsResultDTO dto = new goodsResultDTO();
+		dto.setTotalMoney(gdao.getTotalMoney(userId));
+		dto.setGetMoney(gdao.getGetMoney(userId));
+		dto.setHeartNum(gdao.getHeartNum(userId));
+		dto.setSoldoutNum(gdao.getSoldoutNum(userId));
+		dto.setSellingNum(gdao.getSellingNum(userId));
+		dto.setNeedMoney(gdao.getNeedMoney(userId));
+		return dto;
 	}
 	
 }

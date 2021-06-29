@@ -40,5 +40,9 @@ public interface GoodsService {
 
 	public boolean isYours(String loginUser, int goodsId);
 
+	public void soldOut(int goodsId);
+
+	public boolean isSoldOut(int goodsId);
+
 	
 }
