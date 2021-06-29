@@ -69,12 +69,12 @@ public class GoodsController extends URL implements MemberSessionName{
 			@RequestParam int pageNo,
 			@RequestParam String keyword,
 			@RequestParam String searchOption
-			) {
+			) throws Exception {
 		System.out.println("pageNo : "+pageNo);
 		System.out.println("keyword : "+keyword);
 		System.out.println("searchOption : "+searchOption);
 		
-		return gs.listGoods(pageNo, keyword,searchOption);
+		return listGoods(pageNo,keyword,searchOption);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")

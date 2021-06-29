@@ -98,6 +98,7 @@
   	<c:otherwise>
 		<div class ="footer1">
 			<div class ="footer2">
+				<a class="footer2-1" href ="#">공지사항</a>
 				<a class="footer2-1" href ="../member/annBoardView">공지사항</a>
 				<a class="footer2-1" href ="../member/qnaBoardView">Q&A</a>
 				<a class="footer2-1" href ="#">이용약관</a>
@@ -127,25 +128,6 @@
 		</div>
 			</c:otherwise>
   		
-  		<hr>
-	 
-  <div class="row">
-
-    <div class="col-sm-3" style = " text-align: center;  border-right: solid 1px black;">
-     	<a href ="#">공지사항</a>
-     	<a href ="../member/annBoardView">공지사항</a>
-    </div>
-    <div class="col-sm-3"  style = " text-align: center;  border-right: solid 1px black;">
-      <a href ="../member/qnaBoardView"> Q&A</a>
-    </div>
-    <div class="col-sm-3"  style = " text-align: center; border-right: solid 1px black;">
-      <a href ="#">이용약관</a>
-    </div>
-    <div class="col-sm-3"  style = " text-align: center;  ">
-      <a href ="#">자주하는 질문</a>
-    </div>
-    
-  </div>
  		 </c:choose>
 	</div>
 </body>
