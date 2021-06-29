@@ -20,7 +20,11 @@
 		<result property="write_date" column="write_date"/>
 	</resultMap>	
 	<select id="QnABoardList" resultMap="board">
-		select * from qna_board order by write_no desc
+		select B.* from(select rownum rn, A.* from
+		(select * from qna_board order by write_no desc)A)B where rn between #{s} and #{e}
+	</select>
+	<select id="selectBoardCount" resultType="Integer">
+		select count(*) from qna_board
 	</select>
 	<select id="QnABoardView" resultMap="board">
 		select * from qna_board where write_no=#{writeNo}

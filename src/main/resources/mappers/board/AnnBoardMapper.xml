@@ -11,9 +11,12 @@
 		<result property="saveDate" column="savedate"/>
 		<result property="userid" column="userid"/>
 	</resultMap>
-
+	<select id="selectBoardCount" resultType="Integer">
+		select count(*) from ann_board
+	</select>
 	<select id="AnnBoardList" resultMap="board">
-		select * from ann_board order by write_no desc
+		select B.* from(select rownum rn, A.* from
+		(select * from ann_board order by write_no desc)A)B where rn between #{s} and #{e}
 	</select>
 	<select id="annBoardView" resultMap="board">
 		select * from ann_board where write_no=#{writeNo}

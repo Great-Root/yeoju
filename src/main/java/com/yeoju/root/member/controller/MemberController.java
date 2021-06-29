@@ -109,13 +109,14 @@ public class MemberController implements MemberSessionName{
 		}
 	
 		@GetMapping("/qnaBoardView")
-		public String qnaBoardView(Model model) {
-			bs.QnABoardList(model);
+		public String qnaBoardView(Model model,
+				@RequestParam(value="qnanum",required = false,defaultValue = "1") int qnanum) {
+			bs.QnABoardList(model,qnanum);
 			return "member/qnaBoardView";
 		}
 		@GetMapping("/annBoardView")
-		public String annBoardView(Model model) {
-			bs.AnnBoardList(model);
+		public String annBoardView(Model model,@RequestParam(value="annnum",required = false,defaultValue = "1")int annnum) {
+			bs.AnnBoardList(model,annnum);
 			return "member/annBoardView";
 		}
 		@GetMapping("/writeForm")
