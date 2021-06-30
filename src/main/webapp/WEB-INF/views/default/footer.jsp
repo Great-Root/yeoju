@@ -97,7 +97,6 @@
   	<c:otherwise>
 		<div class ="footer1">
 			<div class ="footer2">
-				<a class="footer2-1" href ="#">공지사항</a>
 				<a class="footer2-1" href ="../member/annBoardView">공지사항</a>
 				<a class="footer2-1" href ="../member/qnaBoardView">Q&A</a>
 				<a class="footer2-1" href ="#">이용약관</a>

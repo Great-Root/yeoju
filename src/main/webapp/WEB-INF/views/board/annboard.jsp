@@ -15,7 +15,6 @@
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
-							<th>조회수</th>
 						</tr>
 
 					</thead>
@@ -26,12 +25,9 @@
 					<c:forEach var="dto" items="${AnnBoardList }">
 					<tr>
 						<td>${dto.writeNo }</td>
-					    <td><a href="${contextPath }/board/contentView?writeNo=${dto.writeNo }">${dto.title }</a></td>
-						<td>${dto.id }</td> 
 					    <td><a href="annview?writeNo=${dto.writeNo }">${dto.title }</a></td>
 						<td>${dto.userid }</td> 
 						<td>${dto.saveDate }</td> 
-						<td>${dto.hit }</td>
 					</tr>
 					</c:forEach>
 						<tr align="right">

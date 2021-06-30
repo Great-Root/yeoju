@@ -58,5 +58,7 @@
 		</interceptor>
 		
 	</interceptors>
-	
+	<context:component-scan base-package="com.yeoju.root" />
+<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+<beans:bean id="naverLoginBO" class="com.yeoju.root.member.login.NaverLoginBO" />
 </beans:beans>
