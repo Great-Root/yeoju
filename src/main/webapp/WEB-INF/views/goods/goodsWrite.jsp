@@ -8,42 +8,6 @@
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-	$(document).ready(function(){
-		$("#addBtn").click(function(){
-			var goodsName = $("#goodsName").val();
-			var goodsPrice = $("#goodsPrice").val();
-			var goodsInfo = $("#goodsInfo").val();
-			var img = $("#img").val();
-			var categoryCode = $("categoryCode").val();			
-			
-			if(goodsName == "") {
-				alert("상품명을 입력해주세요");
-				goodsName.foucs();
-			} else if (goodsPrice == "") {
-				alert("상품 가격을 입력해주세요");
-				goodsPrice.focus();
-			} else if (goodsInfo == "") {
-				alert("상품 설명을 입력해주세요");
-				goodsInfo.focus();
-			} else if (img == "") {
-				alert("상품 사진을 입력해주세요");
-				img.focus();
-			}else if(categoryCode==""){
-				alert("카테고리를 선택해주세요");
-				categoryCode.focus();
-			}
-			document.form1.action = "${path}/goods/insert.do";
-			document.form1.submit();
-		});
-	});
-	function readURL(input) {
-		var file = input.files[0]	//파일에 대한 정보
-		if(file != ''){
-			var reader = new FileReader();
-			reader.readAsDataURL(file);	//읽고
-			reader.onload = function (e) {	//로드한 값을 표현한다.
-				$("#preview").attr('src',e.target.result);
-			}
 	window.addEventListener('DOMContentLoaded', function () {
 	      var avatar = document.getElementById('avatar');
 	      var image = document.getElementById('image');
@@ -114,6 +78,7 @@
 		var goodsName = $("#goodsName");
 		var goodsPrice = $("#goodsPrice");
 		var goodsInfo = $("#goodsInfo");
+		var categoryCode = $("#categoryCode option:selected").val();
 		if(goodsName.val() == "") {
 			alert("상품명을 입력해주세요");
 			goodsName.focus();
@@ -132,6 +97,7 @@
 	            formData.append('goodsName', goodsName.val());
 	            formData.append('goodsPrice', goodsPrice.val());
 	            formData.append('goodsInfo', goodsInfo.val());
+	            formData.append('categoryCode', categoryCode);
 	            $.ajax('${path}/goods/insert.do', {
 	              method: 'POST',
 	              data: formData,
@@ -217,7 +183,7 @@
 				  <textarea class="form-control" rows="3" placeholder="상품 설명을 입력해주세요"  name="goodsInfo" id="goodsInfo"></textarea>
 				</div>
 					<label>카테고리</label>
-					<select>
+					<select id="categoryCode">
 					<c:forEach var="cate" items="${category}">
 						<option value="${cate.code}">${cate.name}</option>
 					</c:forEach>

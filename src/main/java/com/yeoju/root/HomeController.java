@@ -39,6 +39,7 @@ public class HomeController implements MemberSessionName{
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("searchOption", searchOption);
 		model.addAttribute("soldOutView", soldOutView);
+//		model.addAttribute("category_h", soldOutView);
 		return "index";
 	}
 	@GetMapping("/mypage")

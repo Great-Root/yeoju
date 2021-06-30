@@ -663,7 +663,7 @@ color: rgb(136, 136, 136);
 									<div class="goods2-6">
 										<div class="goods2-7">
 											<div class="goods2-8">카테고리</div>
-											<div class="goods2-9">${dto.categoryCode}</div>
+											<div class="goods2-9">${dto.name}</div>
 										</div>
 									</div>
 								</div>

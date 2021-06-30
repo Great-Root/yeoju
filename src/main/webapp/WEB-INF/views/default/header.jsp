@@ -211,7 +211,7 @@ input:focus {
 					aria-expanded="false"
 					style="color: #fff; background-color: #4CAF50; border-color: #43A047;">카테고리</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<c:forEach var="cate" items="${category}">
+					<c:forEach var="cate" items="${category_h}">
 						<li><a class="dropdown-item" href="${cate.code}">
 								${cate.name}</a></li>
 					</c:forEach>

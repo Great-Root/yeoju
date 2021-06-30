@@ -79,20 +79,12 @@ window.addEventListener('DOMContentLoaded', function () {
     });
     var formData = new FormData();
 		$("#modiBtn").click(function(){
-<<<<<<< HEAD
 			var goodsName = $("#goodsName");
 			var goodsPrice = $("#goodsPrice");
 			var goodsInfo = $("#goodsInfo");
-			if(goodsName.val() == "") {
-=======
-			var goodsName = $("#goodsName").val();
-			var goodsPrice = $("#goodsPrice").val();
-			var goodsInfo = $("#goodsInfo").val();
-			var img = $("#img").val();
-			var categoryCode = $("categoryCode").val();
+			var categoryCode = $("#categoryCode option:selected").val();
 			
-			if(goodsName == "") {
->>>>>>> 9b9acf8d5022ba4e5e6530faa52e66bf48455158
+			if(goodsName.val() == "") {
 				alert("상품명을 입력해주세요");
 				goodsName.foucs();
 			} else if (goodsPrice.val() == "") {
@@ -101,7 +93,9 @@ window.addEventListener('DOMContentLoaded', function () {
 			} else if (goodsInfo.val() == "") {
 				alert("상품 설명을 입력해주세요");
 				goodsInfo.focus();
-<<<<<<< HEAD
+			}else if (categoryCode==""){
+				alert("카테고리를 선택해주세요");
+				categoryCode.focus();
 			}else if(canvas != null){
 				canvas.toBlob(function (blob) {
 		            formData.append('imgFile', blob,fileName);
@@ -111,15 +105,8 @@ window.addEventListener('DOMContentLoaded', function () {
             formData.append('goodsPrice', goodsPrice.val());
             formData.append('goodsInfo', goodsInfo.val());
             formData.append('goodsId', '${dto.goodsId}');
+            formData.append('categoryCode', categoryCode);
 			ajax(formData);
-=======
-			} else if (categoryCode==""){
-				alert("카테고리를 선택해주세요");
-				categoryCode.focus();
-			}
-			document.form1.action = "${path}/goods/update.do";
-			document.form1.submit();
->>>>>>> 9b9acf8d5022ba4e5e6530faa52e66bf48455158
 		});
 		function ajax(formData) {
 			$.ajax('${path}/goods/update.do', {
@@ -188,9 +175,9 @@ window.addEventListener('DOMContentLoaded', function () {
 				  <textarea class="form-control" rows="3" placeholder="상품 설명을 입력해주세요" name="goodsInfo" id="goodsInfo">${dto.goodsInfo}</textarea>
 				</div>
 				<label>카테고리</label>
-					<select>
+					<select id="categoryCode">
 					<c:forEach var="cate" items="${category}">
-						<option value="${cate.code}">${cate.name}</option>
+						<option value="${cate.code}" ${dto.code == cate.code ? 'selected':''}>${cate.name}</option>
 					</c:forEach>
 					</select>
 		</div>
