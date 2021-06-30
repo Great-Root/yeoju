@@ -23,7 +23,7 @@
 		<h1 style="color: green; font-size: 30px;">관리자 로그인</h1>
 		<form action="${contextPath }/admin/admin_check" method="post">
 			<div class="mb-3" style="width: 300px;">
-				<label style="text-align: left" for="exampleInputEmail1" class="form-label">아이디</label> 
+				<label style="text-align: left" for="exampleInputEmail1" class="form-label">아이디</label> &nbsp;&nbsp;&nbsp;
 				<input type="text" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 			</div>
 			
