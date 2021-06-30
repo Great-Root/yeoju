@@ -30,9 +30,6 @@
 	<select id="QnABoardView" resultMap="board">
 		select * from qna_board where write_no=#{writeNo}
 	</select>
-	<update id="upHit">
-		update qna_board set hit=hit+1 where write_no = #{writeNo}
-	</update>
 	<insert id="writeSave">
 		insert into qna_board(write_no,userid,title,content,savedate)
 			values(qna_board_seq.nextval,#{userid},#{title},#{content},sysdate)

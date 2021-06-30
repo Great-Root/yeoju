@@ -8,7 +8,6 @@ public interface BoardService {
 	public void QnABoardView(int writeNo, Model model);
 
 	public void QnABoardList(Model model,int qnanum);
-	public void upHit(int writeNo);
 
 	public void addReply(QnaBoardRepDTO dto);
 
