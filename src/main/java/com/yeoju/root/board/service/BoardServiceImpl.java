@@ -21,14 +21,31 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 
 	@Autowired AnnBoardDAO Anndao;
 	@Override
-	public void QnABoardList(Model model) {
-		model.addAttribute("QnABoardList",dao.QnABoardList());
-
+	public void QnABoardList(Model model,int qnanum) {
+		int allConunt=dao.selectBoardCount();
+		int pageLetter= 5;
+		int repeat3= allConunt/pageLetter;
+		if(allConunt%pageLetter!=0) {
+			repeat3+=1;
+		}
+		int end =qnanum*pageLetter;
+		int start =end+1-pageLetter;
+		model.addAttribute("repeat3",repeat3);
+		model.addAttribute("QnABoardList",dao.QnABoardList(start,end));
+		
 	}
 	@Override
-	public void AnnBoardList(Model model) {
-		model.addAttribute("AnnBoardList",Anndao.AnnBoardList());
-
+	public void AnnBoardList(Model model,int annnum) {
+		int allConunt=Anndao.selectBoardCount();
+		int pageLetter= 5;
+		int repeat2= allConunt/pageLetter;
+		if(allConunt%pageLetter!=0) {
+			repeat2+=1;
+		}
+		int end =annnum*pageLetter;
+		int start =end+1-pageLetter;
+		model.addAttribute("repeat2",repeat2);
+		model.addAttribute("AnnBoardList",Anndao.AnnBoardList(start,end));
 	}
 	public void QnABoardView(int writeNo,Model model) {
 		QnaBoardDTO list = dao.QnABoardView(writeNo);

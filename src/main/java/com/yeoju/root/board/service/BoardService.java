@@ -7,7 +7,7 @@ import com.yeoju.root.common.dto.QnaBoardRepDTO;
 public interface BoardService {
 	public void QnABoardView(int writeNo, Model model);
 
-	public void QnABoardList(Model model);
+	public void QnABoardList(Model model,int qnanum);
 	public void upHit(int writeNo);
 
 	public void addReply(QnaBoardRepDTO dto);
@@ -17,7 +17,7 @@ public interface BoardService {
 
 	public void QnABoardDelete(int writeNo);
 
-	public void AnnBoardList(Model model);
+	public void AnnBoardList(Model model,int annnum);
 
 	public void AnnwriteSave(MultipartHttpServletRequest mul, HttpServletRequest request);
 

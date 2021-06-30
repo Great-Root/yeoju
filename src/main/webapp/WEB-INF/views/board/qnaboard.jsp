@@ -41,17 +41,26 @@
 						<td>${dto.hit }</td>
 					</tr>
 					</c:forEach>	
-					<c:choose>
-					<c:when test="${grade != 1 }">
-					<tr>
-						<td colspan="6" align="right">
-							<a href="${contextPath }/member/writeForm">글작성</a>
-						</td>
-					</tr>
-					</c:when>
+						<tr align="right">
+							<c:choose>
+								<c:when test="${grade == 1 }">
+								<td colspan="4">
+									<c:forEach var="qnanum" begin="1" end="${repeat3 }">
+										<a href="commanagement?qnanum=${qnanum }">${qnanum}</a>
+									</c:forEach>
+									</td>
+								</c:when>	
+								<c:otherwise >
+								<td colspan="4" >
+									<c:forEach var="qnanum" begin="1" end="${repeat3 }">
+										<a href="qnaBoardView?qnanum=${qnanum }">${qnanum}</a>
+									</c:forEach>
+									<a href="${contextPath }/member/writeForm">QnA작성</a>
+								</td>
+								</c:otherwise>
+							</c:choose>
+						</tr>
 				
-					<c:otherwise>
-					</c:otherwise></c:choose>
 					</tbody>
 				</table>
 </body>

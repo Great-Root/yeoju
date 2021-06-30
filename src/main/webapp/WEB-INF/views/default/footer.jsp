@@ -93,7 +93,6 @@
 	<div class ="footer">
 		<c:choose>
 	 <c:when test="${grade ==1}">
-	관리자는 안볼꺼얌
  	</c:when>
   	<c:otherwise>
 		<div class ="footer1">

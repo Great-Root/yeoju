@@ -135,11 +135,12 @@ public class AdminController implements MemberSessionName{
 		return "admin/memberdetail";
 	}
 	@GetMapping("commanagement")
-	public String commanagement(HttpSession session,Model model) {
+	public String commanagement(HttpSession session,Model model,
+			@RequestParam(value="qnanum",required = false,defaultValue = "1") int qnanum) {
 		recentAct="커뮤니티 관리";
 		String adminId=(String)session.getAttribute(LOGIN);
 		as.recentAct(recentAct,adminId);
-		bs.QnABoardList(model);
+		bs.QnABoardList(model,qnanum);
 		return "admin/commanagement";
 		}
 	@GetMapping("qnaview")
@@ -170,8 +171,8 @@ public class AdminController implements MemberSessionName{
 		return "redirect:commanagementann";
 	}
 	@GetMapping("commanagementann")
-	public String commanagementann(Model model) {
-		bs.AnnBoardList(model);
+	public String commanagementann(Model model,@RequestParam(value="annnum",required = false,defaultValue = "1") int annnum) {
+		bs.AnnBoardList(model,annnum);
 		return "admin/commanagementann";
 		}
 	@PostMapping(value="addReply", produces = "application/json; charset=utf-8")
