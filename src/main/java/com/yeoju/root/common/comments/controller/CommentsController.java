@@ -31,6 +31,12 @@ public class CommentsController {
 		
 		return cs.insertComments(dto);
 	}
+	
+	@GetMapping(value ="insertComment2",produces="application/json; charset = utf-8")
+	public int insertComment2(GoodsCommentsDTO dto) {
+		
+		return cs.insertComments2(dto);
+	}
 	//1. 댓글 리스트 
 		@GetMapping("/commentslist")
 		public List<GoodsCommentsDTO> commentsList(@RequestParam int goodsId) {
@@ -52,5 +58,11 @@ public class CommentsController {
 	public int deleteComment(GoodsCommentsDTO dto) {
 		System.out.println(dto.toString());
 		return cs.deleteComments(dto.getCommentId());
+		}
+		//대댓글삭제
+		@GetMapping(value ="deleteComment2",produces="application/json; charset = utf-8")
+		public int deleteComment2(GoodsCommentsDTO dto) {
+			System.out.println(dto.toString());
+			return cs.deleteComments2(dto.getCommentId2());
 	}
 }

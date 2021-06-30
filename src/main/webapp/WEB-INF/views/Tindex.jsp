@@ -248,54 +248,5 @@
 
 	<c:import url="default/footer.jsp" />
 </body>
-<!-- 
-<script>
-var pageNo = 1;
-$(document).ready(function(){
-	initPage(pageNo);
-});
 
-$(function() {
-	
-	$(body).scroll() {
-		pageNo += 1;
-		initPage(pageNo);
-	}
-});
-	
-function initPage(pageNo) {
-	
-	var param = {
-		"pageNo" : pageNo
-	};
-	
-	// 데이터를 불러온다.
-	$.ajax({
-		type : "GET",
-		data : param,
-		url : "",
-		success : function(data) {
-			lodingList(data);
-		},
-		error : function(data2) {
-		
-		}
-	});
-}
-
-function lodingList(data) {
-	var html = '';
-	for(var i : data) {
-		html = '<tr>'
-			 + '<td>'
-			 +	'<h3>'
-			 +	data.title
-			 +	'</h3>'
-			 + '</td>'
-			 + '</tr>'
-	}
-	$(".mainTable").append(html);
-}
-</script>
- -->
 </html>
