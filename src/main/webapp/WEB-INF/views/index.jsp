@@ -71,7 +71,7 @@
             html += '<div class ="div-f"></div>'
             html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+(item.soldOut == 1 ? '<b>&nbsp;(판매완료)</b>':'')+'</div>'
             html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
-            html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
+            html += '<div class ="div-k">조회수 : '+item.viewCount+' | <span>8분전</span></div></div></div></div></a></div>'
         return html;
    }
 </script>

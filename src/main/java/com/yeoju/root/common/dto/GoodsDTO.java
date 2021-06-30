@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class GoodsDTO {
+public class GoodsDTO extends CategoryDTO{
 
 	private Integer goodsId;
 
@@ -14,6 +14,9 @@ public class GoodsDTO {
 	private String goodsInfo;
 
 	private int goodsPrice;
+	
+	//조회수 카운트
+	private Integer viewCount;
 
 	// 등록한 사람
 	private String userId;
@@ -39,6 +42,14 @@ public class GoodsDTO {
 	//댓글 리스트
 	private List<GoodsCommentsDTO> goodsCommentsList;
 	
+	public Integer getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
+	}
+
 	public List<GoodsCommentsDTO> getGoodsCommentsList() {
 		return goodsCommentsList;
 	}

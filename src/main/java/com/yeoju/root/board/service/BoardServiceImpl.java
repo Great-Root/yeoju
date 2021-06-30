@@ -51,10 +51,6 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 		QnaBoardDTO list = dao.QnABoardView(writeNo);
 
 		model.addAttribute("personalData", list);
-		upHit(writeNo);
-	}
-	public void upHit(int writeNo) {
-		dao.upHit(writeNo);
 	}
 	@Override
 	public void annBoardView(int writeNo, Model model) {

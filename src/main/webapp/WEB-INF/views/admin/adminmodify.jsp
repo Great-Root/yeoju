@@ -63,7 +63,7 @@
 					
 				현재 	아이디&nbsp;&nbsp;&nbsp;<input type="text" name="id"  placeholder="값으로 가져올것" value="${loginUser }" ><br>
 
-				바꿀 비밀번호<input type="password" name="pw" placeholder="영문,숫자,특수문자 포함 6~15자"><br>
+				바꿀 비밀번호<input type="password" name="pw" placeholder="기억하기 쉽게"><br>
 				바꿀 전화번호<input type="text" name="tel" placeholder="숫자만 입력"><br>
 					<input type="submit" value="계정 수정" >
 					

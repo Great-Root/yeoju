@@ -38,14 +38,62 @@
 
 	$(function() {
 		$("#modifyForm").submit(function() {
+			var name_rule = /^[가-힝a-zA-Z]{2,}$/;
+			var email_rule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			var tel_rule = /^\d{2,3}\d{3,4}\d{4}$/;
+			var birth_rule = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+
+			if ($("#name").val() == null || $("#name").val() == "") {
+				alert("이름을 입력해주세요.");
+				$("#name").focus();
+				return false;
+			}
+			if(!name_rule.test($("#name").val())){
+				alert("이름 형식에 맞게 입력해주세요.");
+				return false;
+			}
 			if ($("#pw").val().length < 8) {
 				alert("비밀번호는 8자 이상으로 설정해야 합니다.");
 				$("#pw").val("").focus();
 				return false;
+			}else if($("#pw").val() !== $("#pw2").val()){
+					alert("비밀번호가 다릅니다.");
+					$("#pw").val("").focus();
+					$("#pw2").val("");
+					return false;
 			} else if ($.trim($("#pw").val()) !== $("#pw").val() || $.trim($("#email").val()) !== $("#email").val()) {
 				alert("공백은 입력이 불가능합니다.");
 				return false;
 			}
+			
+			if ($("#tel").val() == null || $("#tel").val() == "") {
+				alert("전화번호를 입력해주세요.");
+				$("#tel").focus();
+				return false;
+			}
+			if(!tel_rule.test($("#tel").val())){
+				alert("전화번호 형식에 맞게 입력해주세요.");
+				return false;
+			}
+			if ($("#email").val() == null || $("#email").val() == "") {
+				alert("이메일을 입력해주세요.");
+				$("#email").focus();
+				return false;
+			}
+			if(!email_rule.test($("#email").val())){
+				alert("이메일을 형식에 맞게 입력해주세요.");
+				return false;
+			}
+			if ($("#birth").val() == null || $("#birth").val() == "") {
+				alert("생년월일을 입력해주세요.");
+				$("#birth").focus();
+				return false;
+			}
+			if(!birth_rule.test($("#birth").val())){
+				alert("생년월일 형식에 맞게 입력해주세요.");
+				return false;
+			}
+			
 		});
 	});
 </script>
@@ -72,7 +120,7 @@
 						이름
 					</td>
 					<td>
-						<input type="text" name="name" size="40" value="${modifyInfo.name}">
+						<input type="text" id="name" name="name" size="40" value="${modifyInfo.name}">
 					</td>
 				</tr>
 				<tr>
@@ -81,6 +129,14 @@
 					</td>
 					<td>
 						<input type="password" id="pw" name="pw" size="40" placeholder="8자리 이상 입력해주세요">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						<input type="password" id="pw2" name="pw2" size="40" placeholder="확인을 위해 비밀번호를 다시 입력해주세요">
 					</td>
 				</tr>
 				<tr>
@@ -112,8 +168,8 @@
 						성별
 					</td>
 					<td>
-						<input type="checkbox" id="gender" name="gender" value="남">
-						남 <input type="checkbox" id="gender" name="gender" value="여">여
+						<input type="radio" id="gender" name="gender" value="남" checked>
+						남 <input type="radio" id="gender" name="gender" value="여">여
 					</td>
 				</tr>
 				<tr>

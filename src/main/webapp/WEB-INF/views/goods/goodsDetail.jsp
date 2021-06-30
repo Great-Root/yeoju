@@ -466,12 +466,6 @@
 						<span>찜</span>
 						<span>0</span>
 					</button>
-					<!-- 
-					<div class="3-3">
-						<img alt=""  width="14" height="14"
-						src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTIuMTA2IDdsMy42NjMgNCA3LjAxNS04IiBvcGFjaXR5PSIuNDA2Ii8+Cjwvc3ZnPgo=">
-					</div>
-					 -->
 				</div>
 				<button class="3-4" 
 				 style="background: rgb(255, 164, 37);

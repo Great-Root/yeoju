@@ -20,6 +20,8 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	GoodsDAO goodsDao;
 	@Autowired
 	CommentsDAO commentsDAO;
+	@Autowired
+	private GoodsDAO goodsMapper;
 	
 	//01.상품목록
 	@Override
@@ -61,6 +63,12 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	@Override
 	public String imgFileName(int goodsId) {
 		return goodsDao.imgFileName(goodsId);
+	}
+	
+	//07.조회수 카운트
+	@Override
+	public void viewCount(int goodsId) {
+		goodsMapper.viewCount(goodsId);
 	}
 
 	//댓글 조회

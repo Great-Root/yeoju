@@ -27,6 +27,9 @@ public interface GoodsService {
 	
 	//06.상품이미지 삭제를 위한 이미지파일 정보
 	public String imgFileName(int goodsId);
+	
+	//07.조회수 카운트
+	public void viewCount(int goodsId);
 
 	//댓글 조회
 	public List<GoodsCommentsDTO> redaReply(int goods_id);

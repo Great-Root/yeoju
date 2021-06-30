@@ -60,6 +60,7 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 
 	@Override
 	public void modify(MemberDTO dto, HttpServletResponse response) throws Exception {
+		dto.setPw(new BCryptPasswordEncoder().encode(dto.getPw()));
 		if(mdDAO.modify(dto) == 1) {
 			if(mdDAO.cnt(dto.getUserId()) == 0) {
 				mdDAO.insertDetail(dto);

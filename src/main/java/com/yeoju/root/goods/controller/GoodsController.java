@@ -23,6 +23,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,22 +72,31 @@ public class GoodsController extends URL implements MemberSessionName{
 	@RequestMapping("detail/{goodsId}")
 	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
 		model.addAttribute("dto",gs.detailGoods(goodsId));
+		
+		//조회수 증가
+		gs.viewCount(goodsId);
+		model.addAttribute("dto",gs.detailGoods(goodsId));
+		
 		return "goods/TgoodsDetail";
 	}
+	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
 	public String write(Model model) throws Exception{ 
 		
-	List<CategoryDTO> category = null;
-	category = cateS.category();
-	model.addAttribute("category", category);
+//	List<CategoryDTO> category = null;
+//	category = cateS.category();
+//	model.addAttribute("category", category);
 	
+	List<CategoryDTO> category = cateS.category();
+	model.addAttribute("category", category);
 	return "/goods/goodsWrite";	
 	}
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
 	@ResponseBody
 	public String insert(GoodsDTO dto, HttpSession session) {
+		System.out.println(dto.toString());
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
@@ -125,6 +135,13 @@ public class GoodsController extends URL implements MemberSessionName{
 	@RequestMapping("edit")
 	public String edit(@RequestParam int goodsId,Model model) {
 		model.addAttribute("dto", gs.detailGoods(goodsId));
+		List<CategoryDTO> category;
+		try {
+			category = cateS.category();
+			model.addAttribute("category", category);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "goods/goodsEdit";
 	}
 	//6.상품 수정(편집) 처리 매핑
@@ -266,6 +283,8 @@ public class GoodsController extends URL implements MemberSessionName{
 				throws java.security.cert.CertificateException {
 		} 
 	    } }; 
+	
+	
 	
 
 }

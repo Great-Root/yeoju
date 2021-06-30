@@ -181,6 +181,16 @@ input:focus {
 							onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
 					</div>
 				</c:if>
+				<c:choose>
+					<c:when test="${grade ==1}">
+					<div class="search04">
+						<button type="button"
+							onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
+						<button type="button"
+							onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
+					</div>
+					</c:when>
+					<c:otherwise>
 				<c:if test="${loginUser != null}">
 					<div class="search04-1">
 						<div class="dropdown p-3" style="float: right;">
@@ -204,6 +214,8 @@ input:focus {
 						</div>
 					</div>
 				</c:if>
+					</c:otherwise>
+					</c:choose>
 			</div>
 			<div class="search05">
 				<button class="btn btn-secondary dropdown-toggle " type="button"
@@ -211,7 +223,7 @@ input:focus {
 					aria-expanded="false"
 					style="color: #fff; background-color: #4CAF50; border-color: #43A047;">카테고리</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<c:forEach var="cate" items="${category}">
+					<c:forEach var="cate" items="${category_h}">
 						<li><a class="dropdown-item" href="${cate.code}">
 								${cate.name}</a></li>
 					</c:forEach>

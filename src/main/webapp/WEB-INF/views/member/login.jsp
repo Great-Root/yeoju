@@ -43,6 +43,10 @@
 				<label style="white-space:nowrap;"><input type="checkbox" style="width: 15px; height: 15px;" name="autoLogin">로그인 유지</label>
 				<!--  <label name="autoLogin" class="form-check-label" for="exampleCheck1">로그인 유지</label> -->
 				</div>
+				
+				<div class="text-center">
+				<a href="${url}"><img width="50px" src="../../resources/img/Naver.png" alt="Naver login"></a> 
+				</div>
 			
 			<button type="submit" style="size: 120px" class="btn btn-primary">로그인</button><br>
 			
