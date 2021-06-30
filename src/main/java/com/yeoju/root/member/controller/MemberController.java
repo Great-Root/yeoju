@@ -169,7 +169,6 @@ public class MemberController implements MemberSessionName{
 		public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
 
 			session.setAttribute("writeNo", writeNo);
-			bs.upHit(writeNo);
 			bs.QnABoardView(writeNo,model);
 			return "member/qnaview";
 		}
