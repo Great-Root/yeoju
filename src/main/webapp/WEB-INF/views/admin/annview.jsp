@@ -14,6 +14,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
 	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body >
 	<c:import url="../default/header.jsp" />
@@ -29,10 +30,10 @@
 		<th>제 목</th><td>${personalData.title }</td>
 		<th>작성일</th><td>${personalData.saveDate }</td>
 	</tr>
-	
+
 	<tr>
 		<th>내 용</th><td colspan="3">${personalData.content }</td>
-		
+
 		<tr>
 		<td colspan="4" align="center">
 			<c:choose>
@@ -49,9 +50,9 @@
 		</td>
 	</tr>
 		</table>
-		
+
 		</div>
 	</div>
 	<c:import url="../default/footer.jsp" />
 </body>
-</html>
+</html> 

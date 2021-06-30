@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:import url="../default/header.jsp" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MyPage</title>
 <c:set var="path" value="<%=request.getContextPath()%>"/>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="resources/css/list.css">
 <link rel="stylesheet" href="/resources/css/cropper.css"> 
 <script src="/resources/js/cropper.js"></script>
 <script type="text/javascript">
@@ -16,6 +19,7 @@
 		var $imges = $("#imges");
 		var $sellingBtn = $("#sellingBtn");
 		var $heartBtn = $("#heartBtn");
+		var $doneBtn = $("#doneBtn");
 		var	$mypageBtn = $(".myBtn");
 		var $nowList = $sellingBtn;
 		initPage();
@@ -35,6 +39,10 @@
 		})
 		$heartBtn.click(function () {
 			$nowList = $heartBtn;
+			initPage();
+		})
+		$doneBtn.click(function () {
+			$nowList = $doneBtn;
 			initPage();
 		})
 		// URL 비동기방식(Ajax) 요청 코드
@@ -75,14 +83,17 @@
 			    return 'sellGoods';
 			  case 'heartBtn':
 			    return 'heartPage';
+			  case 'doneBtn':
+			    return 'soldoutGoods';
 			}
 		}
 		// 상품 이미지 세팅하는 코드
 		function setCard(item) {
 			html = '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
-			html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" >'
+			html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" '
+					+ (item.soldOut == 1 ? 'style="opacity:0.5;"':'')+' >'
 			html += '<div class ="div-f"></div>'
-			html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
+			html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+(item.soldOut == 1 ? '<b>&nbsp;(판매완료)</b>':'')+'</div>'
 			html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
 			html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
 			return html
@@ -116,7 +127,10 @@
 	      var $modal = $('#modal');
 	      var cropper;
 	      var fileName;
-	      
+	      $progress.hide();
+	      $('#close').click(function () {
+			$modal.modal('hide');
+		  });
 
 
 	      $('[data-toggle="tooltip"]').tooltip();
@@ -258,10 +272,10 @@
 	    });
 	
 </script>
-<link rel="stylesheet" type="text/css" href="resources/css/list.css">
 </head>
 <body>
-	<main class="container d-flex ">
+<c:import url="../default/header.jsp" />
+	<main class="container d-flex">
 		<div class="card shadow-sm me-3" style="width:200px; min-width: 200px;">
 			<label class="label" data-toggle="tooltip" title="클릭해서 프로필 이미지 변경" style=" padding: 0.5em;">
 					<img class="img-thumbnail card-img-top rounded" id="avatar"
@@ -279,14 +293,17 @@
 				<button type="button" onclick="location.href='mypage/memberModify?userId=${loginUser}';" class="btn btn-outline-success">회원정보 수정</button>
 				<p class="card-text">${userInfo.regDate}시작</p>
 				<div class="mb-3">
-					<label for="exampleFormControlTextarea1" class="form-label">자기소개</label>
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+					지금 이거 다팔면<br> <b>${ result.totalMoney }원</b> 벌수 있어요~<hr>
+					지금까지<br> <b>${ result.getMoney }원</b> 벌었어요!<hr>
+					찜한 총 갯수는<br> <b>${ result.heartNum }개</b> 이며<br> <b>${ result.soldoutNum }개</b>는 이미 팔리고 <br>
+					<b>${ result.sellingNum }개</b> 남았어요<br>다사려면<br> <b>${ result.needMoney }원</b>이 필요해요
 				</div>
 			</div>
 		</div>
 		<div class ="div-a" >
 		<section class="text-center mb-2">
 			<button type="button" class="myBtn btn" id="sellingBtn" >판매상품</button>
+			<button type="button" class="myBtn btn" id="doneBtn" >판매완료</button>
 			<button type="button" class="myBtn btn" id="heartBtn">찜 상품</button>
 		</section>
 			<div class ="div-b">
@@ -312,7 +329,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="crop">등록하기</button>
+					<button type="button" class="btn btn-success" id="crop">등록하기</button>
 				</div>
 			</div>
 		</div>

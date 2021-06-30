@@ -16,6 +16,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
 	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 <table class="table table-striped col" >
@@ -39,17 +40,26 @@
 						<td>${dto.saveDate }</td> 
 					</tr>
 					</c:forEach>	
-					<c:choose>
-					<c:when test="${grade != 1 }">
-					<tr>
-						<td colspan="6" align="right">
-							<a href="${contextPath }/member/writeForm">글작성</a>
-						</td>
-					</tr>
-					</c:when>
+						<tr align="right">
+							<c:choose>
+								<c:when test="${grade == 1 }">
+								<td colspan="4">
+									<c:forEach var="qnanum" begin="1" end="${repeat3 }">
+										<a href="commanagement?qnanum=${qnanum }">${qnanum}</a>
+									</c:forEach>
+									</td>
+								</c:when>	
+								<c:otherwise >
+								<td colspan="4" >
+									<c:forEach var="qnanum" begin="1" end="${repeat3 }">
+										<a href="qnaBoardView?qnanum=${qnanum }">${qnanum}</a>
+									</c:forEach>
+									<a href="${contextPath }/member/writeForm">QnA작성</a>
+								</td>
+								</c:otherwise>
+							</c:choose>
+						</tr>
 				
-					<c:otherwise>
-					</c:otherwise></c:choose>
 					</tbody>
 				</table>
 </body>

@@ -16,6 +16,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
 	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
@@ -44,14 +45,14 @@
 							<c:forEach var="detaildto" items="${detailList }">
 								<tr><th>이름</th><td>${detaildto.name }</td></tr>
 								<tr><th>성별</th><td>	${detaildto.gender }
-								</td></tr>
 								<tr><th>생년월일</th><td>${detaildto.birth }</td></tr>
 								<tr><th>우편번호</th><td>${detaildto.addr1 }</td> </tr>
 								<tr><th>주소</th><td>${detaildto.addr2 }</td> </tr>
 								<tr><th>상세주소</th><td>${detaildto.addr3 }</td> </tr>
+								<tr><th>전화번호</th><td>${detaildto.tel }</td></tr>
 							</c:forEach>
 							<c:forEach var="dto" items="${memberInfo}"> 	
-								<tr><th>전화번호</th><td>${dto.tel }</td></tr>
+								
 								<tr><th>이메일</th><td>${dto.email }</td></tr>
 							</c:forEach> 
 					</tbody>

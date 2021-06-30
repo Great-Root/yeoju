@@ -18,14 +18,13 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	
 	@Autowired
 	GoodsDAO goodsDao;
-	
 	@Autowired
 	CommentsDAO commentsDAO;
 	
 	//01.상품목록
 	@Override
-	public List<GoodsDTO> listGoods(int pageNo, String keyword){
-		return goodsDao.listGoods(pageNo, keyword);
+	public List<GoodsDTO> listGoods(int pageNo, String keyword, String searchOption,String soldOutView){
+		return goodsDao.listGoods(pageNo, keyword, searchOption, soldOutView);
 	}
 	//02.상품상세
 	//제품 상세 페이지에 댓글 기능이 들어가기 때문에 retrunDTO라는 변수에 GoodsDTO,CommentDTO를 넣어버림
@@ -57,7 +56,6 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public void deleteGoods(int goodsId) {
 		goodsDao.deleteGoods(goodsId);
 	}
-
 	//06.상품이미지 삭제를 위한 이미지파일 정보
 	@Override
 	public String imgFileName(int goodsId) {
@@ -95,5 +93,21 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	@Override
 	public boolean isheart(HeartDTO dto) {
 		return goodsDao.heartCnt(dto) == 0 ? false : true;
+	}
+	@Override
+	public boolean isYours(String loginUser, int goodsId) {
+		return goodsDao.getUserId(goodsId).equals(loginUser);
+	}
+	@Override
+	public void soldOut(int goodsId) {
+		if(goodsDao.isSoldOut(goodsId) == 0) {
+			goodsDao.soldOut(goodsId,1);
+		}else {
+			goodsDao.soldOut(goodsId,0);
+		}
+	}
+	@Override
+	public boolean isSoldOut(int goodsId) {
+		return goodsDao.isSoldOut(goodsId) == 0 ? false : true;
 	}
 }

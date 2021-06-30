@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class GoodsDTO {
+public class GoodsDTO extends CategoryDTO{
 
 	private Integer goodsId;
 

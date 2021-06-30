@@ -81,7 +81,7 @@ public class MyPageController implements MemberSessionName{
 	public void img(@PathVariable String userId, HttpSession session ,HttpServletResponse response) throws Exception {
 		File file = mps.getProfileImg(userId);
 		if(file == null) {
-			file = new File(session.getServletContext().getRealPath("/")+"resources/img/default.png");
+			file = new File(session.getServletContext().getRealPath("/")+"resources/img/default.jpg");
 		}
 		FileInputStream in = new FileInputStream(file);
 		response.addHeader("Content-disposition", "attachment; fileName="+file.getName());
@@ -92,7 +92,7 @@ public class MyPageController implements MemberSessionName{
 	@GetMapping("setDefaultImg")
 	@ResponseBody
 	public void setDefaultImg(HttpSession session) {
-		File file = new File(session.getServletContext().getRealPath("/")+"resources/img/default.png");
+		File file = new File(session.getServletContext().getRealPath("/")+"resources/img/default.jpg");
 		MultipartFile multipartFile = null;
 		try {
 			DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length() , file.getParentFile());
@@ -104,6 +104,12 @@ public class MyPageController implements MemberSessionName{
 			e.printStackTrace();
 		}
 		mps.setProfileImg(multipartFile, session);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/soldoutGoods", produces = "application/json; charset=utf-8")
+	public ArrayList<GoodsDTO> soldoutGoods(@RequestParam int pageNo, HttpSession session){
+		return mps.soldoutGoods((String)session.getAttribute(LOGIN),pageNo);
 	}
 	
 }

@@ -96,11 +96,13 @@ public class MemberDTO extends MemberDetailDTO{
 
 	@Override
 	public String toString() {
+//		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + ", email="
+//				+ email + ", auth=" + auth + ", recentDate=" + recentDate + ", limitTime=" + limitTime + ", sessionId="
+//				+ sessionId + "]";
 		return "MemberDTO [userId=" + userId + ", pw=" + pw + ", tel=" + tel + ", regDate=" + regDate + 
 				", email=" + email + ", recentDate=" + recentDate + ", limitTime=" + limitTime + ", sessionId=" + sessionId + "]" +
 				"\nMemberDetailDTO [addr1=" + addr1 + ", addr2=" + addr2 + ", addr3=" + addr3 + ", gender=" + gender
 				+ ", birth=" + birth + ", name=" + name + ", userId=" + userId + "]";
 	}
-	
 
 }

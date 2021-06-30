@@ -17,8 +17,11 @@
 	      var canvas;
 	      var inputchange = false;
 		  var fileName = '';
+		  $('#close').click(function () {
+				$modal.modal('hide');
+		  });
 	      $('[data-toggle="tooltip"]').tooltip();
-
+		
 	      input.addEventListener('change', function (e) {
 	        var files = e.target.files;
 	        var done = function (url) {
@@ -75,6 +78,7 @@
 		var goodsName = $("#goodsName");
 		var goodsPrice = $("#goodsPrice");
 		var goodsInfo = $("#goodsInfo");
+		var categoryCode = $("#categoryCode option:selected").val();
 		if(goodsName.val() == "") {
 			alert("상품명을 입력해주세요");
 			goodsName.focus();
@@ -93,6 +97,7 @@
 	            formData.append('goodsName', goodsName.val());
 	            formData.append('goodsPrice', goodsPrice.val());
 	            formData.append('goodsInfo', goodsInfo.val());
+	            formData.append('categoryCode', categoryCode);
 	            $.ajax('${path}/goods/insert.do', {
 	              method: 'POST',
 	              data: formData,
@@ -141,8 +146,9 @@
 <main class="container d-flex flex-wrap align-items-center justify-content-center">
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
 	<div class="row">
-		<h2 class="text-center">상품 등록</h2><br>
+		<h2>상품 등록</h2>
 	</div>
+	<hr>
 	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
 	<div class="row">
 		<div class="col">
@@ -155,9 +161,6 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalLabel">상품이미지 선택</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
           <div class="modal-body">
             <div class="img-container">
@@ -165,7 +168,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" id="crop">등록하기</button>
           </div>
         </div>
@@ -176,8 +179,15 @@
 				<input class="form-control mb-2" type="text" placeholder="상품명"  name="goodsName" id="goodsName" aria-label="상품명 입력칸">
 				<input class="form-control mb-2" type="text" placeholder="상품가격"  name="goodsPrice" id="goodsPrice" aria-label="상품가격">
 				<div class="mb-3">
+				
 				  <textarea class="form-control" rows="3" placeholder="상품 설명을 입력해주세요"  name="goodsInfo" id="goodsInfo"></textarea>
 				</div>
+					<label>카테고리</label>
+					<select id="categoryCode">
+					<c:forEach var="cate" items="${category}">
+						<option value="${cate.code}">${cate.name}</option>
+					</c:forEach>
+					</select>
 		</div>
 	</div>
 				<div class="row">

@@ -40,6 +40,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
 	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body onload="replyData()">
 	<c:import url="../default/header.jsp" />
@@ -66,8 +67,7 @@
 			<c:when test="${personalData.userid==loginUser}">
 			<form action="${contextPath }/member/QnABoardDelete" method="post">
 			 <input type="hidden" name="writeNo" value="${personalData.writeNo}"> 
-			<input type="submit" value="삭제하기" class="b btn btn-outline-secondary col">
-			</form>
+			<input type="submit" value="삭제하기" class="b btn btn-outline-secondary col"></form>
 			<form action="${contextPath }/member/QnaModifyForm" method="get">
 			 <input type="hidden" name="writeNo" value="${personalData.writeNo}"> 
 			<input type="submit" value="수정하기" class="b btn btn-outline-secondary">

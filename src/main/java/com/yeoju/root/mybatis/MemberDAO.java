@@ -22,10 +22,11 @@ public interface MemberDAO {
 	public int recent_date(String userId) throws Exception;
 	public int updatePw(MemberDTO dto) throws Exception;
 
-	public ArrayList<MemberDTO> memberList();
+
 	public ArrayList<MemberDTO> memberInfo(String userId);
 	// 회원정보 가져오기
 	public MemberDTO getUserInfo(String userId);
-
+	public int selectBoardCount();
+	public ArrayList<MemberDTO> memberList(@Param("s") int start,@Param("e") int end);
 
 }

@@ -1,13 +1,15 @@
 package com.yeoju.root.member.controller;
-
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,23 +24,57 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.yeoju.root.board.service.BoardService;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.common.dto.QnaBoardRepDTO;
+import com.yeoju.root.member.login.NaverLoginBO;
 import com.yeoju.root.member.service.MemberService;
 import com.yeoju.root.member.session_name.MemberSessionName;
-
 @Controller
 @RequestMapping("member")
 public class MemberController implements MemberSessionName{
 	
 	@Autowired BoardService bs;
 	@Autowired MemberService ms;
-	@GetMapping("/login")
-	public String login(HttpSession session) {
+	
+	/* NaverLoginBO */
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
+	
+	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
+	public String login(Model model, HttpSession session) {
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		System.out.println("네이버:" + naverAuthUrl);
+		model.addAttribute("url", naverAuthUrl);
+		
 		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:/";
 	}
-
+	 
+		@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
+		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
+			System.out.println("여기는 callback");
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBO.getAccessToken(session, code, state);
+			apiResult = naverLoginBO.getUserProfile(oauthToken); //String형식의 json데이터
+			
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(apiResult);
+			JSONObject jsonObj = (JSONObject) obj;
+			
+			JSONObject response_obj = (JSONObject)jsonObj.get("response");
+			String nickname = (String)response_obj.get("nickname");
+			System.out.println(nickname);
+			session.setAttribute("loginUser",nickname); //세션 생성
+			model.addAttribute("result", apiResult);
+			
+			return "redirect:/";
+		}
+		
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
 	public String memberJoinForm(HttpSession session) throws Exception{
@@ -77,7 +113,6 @@ public class MemberController implements MemberSessionName{
 		@RequestMapping(value = "/findpw", method = RequestMethod.GET)
 		public void findPwGET() throws Exception{
 		}
-
 		@RequestMapping(value = "/findpw", method = RequestMethod.POST)
 		public void findPwPOST(@ModelAttribute MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws Exception{
 			ms.findPw(request, response, dto);
@@ -109,13 +144,14 @@ public class MemberController implements MemberSessionName{
 		}
 	
 		@GetMapping("/qnaBoardView")
-		public String qnaBoardView(Model model) {
-			bs.QnABoardList(model);
+		public String qnaBoardView(Model model,
+				@RequestParam(value="qnanum",required = false,defaultValue = "1") int qnanum) {
+			bs.QnABoardList(model,qnanum);
 			return "member/qnaBoardView";
 		}
 		@GetMapping("/annBoardView")
-		public String annBoardView(Model model) {
-			bs.AnnBoardList(model);
+		public String annBoardView(Model model,@RequestParam(value="annnum",required = false,defaultValue = "1")int annnum) {
+			bs.AnnBoardList(model,annnum);
 			return "member/annBoardView";
 		}
 		@GetMapping("/writeForm")
@@ -131,7 +167,7 @@ public class MemberController implements MemberSessionName{
 		}
 		@GetMapping("qnaview")
 		public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
-		
+
 			session.setAttribute("writeNo", writeNo);
 			bs.QnABoardView(writeNo,model);
 			return "member/qnaview";
@@ -153,7 +189,7 @@ public class MemberController implements MemberSessionName{
 			bs.QnABoardDelete(writeNo);
 			return "redirect:qnaBoardView";
 		}
-		
+
 		@GetMapping(value="replyData/{write_group}",produces = "application/json; charset=utf-8")
 		@ResponseBody
 		public List<QnaBoardRepDTO> replyData(@PathVariable int write_group){
@@ -163,6 +199,6 @@ public class MemberController implements MemberSessionName{
 		public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
 			session.setAttribute("writeNo", writeNo);
 			bs.annBoardView(writeNo,model);
-			return "admin/annview";
+			return "member/annview";
 		}
 }

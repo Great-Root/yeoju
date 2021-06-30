@@ -1,15 +1,14 @@
 package com.yeoju.root.admin.controller;
 
 import java.sql.Date;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -120,11 +119,12 @@ public class AdminController implements MemberSessionName{
 		return "redirect:adminmodify_form";
 		}
 	@GetMapping("memmanagement")
-	public String memmanagement(HttpSession session,Model model) {
+	public String memmanagement(HttpSession session,Model model,
+			@RequestParam(value="num",required = false,defaultValue = "1") int num) {
 		recentAct="회원 관리";
 		String id=(String)session.getAttribute(LOGIN);
 		as.recentAct(recentAct,id);
-		ms.memberList(model);
+		ms.memberList(model,num);
 		return "admin/memmanagement";
 		}
 	@GetMapping("memberdetail")
@@ -135,26 +135,29 @@ public class AdminController implements MemberSessionName{
 		return "admin/memberdetail";
 	}
 	@GetMapping("commanagement")
-	public String commanagement(HttpSession session,Model model) {
+	public String commanagement(HttpSession session,Model model,
+			@RequestParam(value="qnanum",required = false,defaultValue = "1") int qnanum) {
 		recentAct="커뮤니티 관리";
 		String adminId=(String)session.getAttribute(LOGIN);
 		as.recentAct(recentAct,adminId);
-		bs.QnABoardList(model);
+		bs.QnABoardList(model,qnanum);
 		return "admin/commanagement";
 		}
 	@GetMapping("qnaview")
 	public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
-	
+
 		session.setAttribute("writeNo", writeNo);
 		bs.QnABoardView(writeNo,model);
 		return "admin/qnaview";
 	}
+
 	@GetMapping("annview")
 	public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
 		session.setAttribute("writeNo", writeNo);
 		bs.annBoardView(writeNo,model);
 		return "admin/annview";
 	}
+	
 	@GetMapping("/AnnwriteForm")
 	public String writeForm(Model model) {
 		return "admin/AnnwriteForm";
@@ -167,7 +170,8 @@ public class AdminController implements MemberSessionName{
 		return "redirect:commanagementann";
 	}
 	@GetMapping("commanagementann")
-	public String commanagementann(Model model) {
+	public String commanagementann(Model model,@RequestParam(value="annnum",required = false,defaultValue = "1") int annnum) {
+		bs.AnnBoardList(model,annnum);
 		return "admin/commanagementann";
 		}
 	@PostMapping(value="addReply", produces = "application/json; charset=utf-8")

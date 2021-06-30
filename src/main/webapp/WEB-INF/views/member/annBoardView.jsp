@@ -9,9 +9,9 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
-		
+	<h3>공지사항 게시판</h3>
 	<c:import url="../board/annboard.jsp" />	
-	
+
 	<c:import url="../default/footer.jsp" />
 </body>
-</html>
+</html> 

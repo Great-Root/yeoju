@@ -2,16 +2,17 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.yeoju.root.mybatis.QnaBoardDAO">
 	<resultMap type="com.yeoju.root.common.dto.QnaBoardDTO" id="board">
 		<id property="writeNo" column="write_no"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="saveDate" column="savedate"/>
+		<result property="hit" column="hit"/>
+		<result property="imageFileName" column="image_file_name"/>
 		<result property="userid" column="userid"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yeoju.root.common.dto.QnaBoardRepDTO" id="reply">
 		<result property="userid" column="userid"/>
 		<result property="title" column="title"/>
@@ -20,7 +21,11 @@
 		<result property="write_date" column="write_date"/>
 	</resultMap>	
 	<select id="QnABoardList" resultMap="board">
-		select * from qna_board order by write_no desc
+		select B.* from(select rownum rn, A.* from
+		(select * from qna_board order by write_no desc)A)B where rn between #{s} and #{e}
+	</select>
+	<select id="selectBoardCount" resultType="Integer">
+		select count(*) from qna_board
 	</select>
 	<select id="QnABoardView" resultMap="board">
 		select * from qna_board where write_no=#{writeNo}
@@ -41,7 +46,8 @@
 		select * from reply where write_group=#{write_group}
 										order by write_date desc
 	</select>
+
 	<update id="modify">
 		update qna_board set title=#{title}, content=#{content} where write_no = #{writeNo}
 	</update>
-</mapper>
+</mapper> 
