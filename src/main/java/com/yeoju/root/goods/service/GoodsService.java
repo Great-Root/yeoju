@@ -11,7 +11,7 @@ import com.yeoju.root.common.dto.HeartDTO;
 public interface GoodsService {
 	
 	//01.상품목록
-	public List<GoodsDTO> listGoods(int pageNo, String keyword, String searchOption);
+	public List<GoodsDTO> listGoods(int pageNo, String keyword, String searchOption,String soldOutView);
 
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -34,6 +34,12 @@ public interface GoodsService {
 	public int heartTotalCnt(int goodsId);
 	public boolean isheart(HeartDTO dto);
 	
+
+	public boolean isYours(String loginUser, int goodsId);
+
+	public void soldOut(int goodsId);
+
+	public boolean isSoldOut(int goodsId);
 
 	
 	

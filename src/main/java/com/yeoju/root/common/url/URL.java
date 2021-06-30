@@ -21,5 +21,4 @@ public class URL {
 		return IMG_URL+userId+"\\"+fileName;
 	}
 
-
 }

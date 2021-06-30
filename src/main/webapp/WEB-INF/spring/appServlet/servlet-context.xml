@@ -49,7 +49,6 @@
 		</interceptor>
 		<interceptor>
 			<mapping path="/goods/edit"/>	
-			<mapping path="/goods/update.do"/>	
 			<mapping path="/goods/delete.do"/>	
 			<beans:ref bean="UserChkInterceptor" />
 		</interceptor>

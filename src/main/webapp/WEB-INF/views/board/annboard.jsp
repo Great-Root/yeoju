@@ -34,18 +34,26 @@
 						<td>${dto.hit }</td>
 					</tr>
 					</c:forEach>
-
+						<tr align="right">
 						<c:choose>
 						<c:when test="${grade==1 }">
-						<tr align="right">
-							<th colspan="5" >
-								<input type="submit" onclick="" value="공지 작성">
-							<input type="button" value="공지작성"
+							<td colspan="4">
+									<c:forEach var="annnum" begin="1" end="${repeat2 }">
+										<a href="commanagementann?annnum=${annnum }">${annnum}</a>
+									</c:forEach>
+									<input type="button" value="공지작성"
 			onclick="location.href='${contextPath}/admin/AnnwriteForm'">
-							</th>
-						</tr>
+							</td>
 						</c:when>
+						<c:otherwise>
+							<td colspan="4">
+									<c:forEach var="annnum" begin="1" end="${repeat2 }">
+										<a href="annBoardView?annnum=${annnum }">${annnum}</a>
+									</c:forEach>
+							</td>
+						</c:otherwise>
 						</c:choose>
+						</tr>
 					</tbody>
 				</table>
 </body>
