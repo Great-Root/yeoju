@@ -103,6 +103,9 @@
 				<a class="footer2-1" href ="#">자주하는 질문</a>
 			</div>
 		</div>
+		</c:otherwise>
+  		
+ 		 </c:choose>
 		<div class ="footer3">
 			<div class ="footer3-1">
 				<div class="nothing">
@@ -124,9 +127,7 @@
 				</div>
 			</div>
 		</div>
-			</c:otherwise>
-  		
- 		 </c:choose>
+			
 	</div>
 </body>
 </html>
