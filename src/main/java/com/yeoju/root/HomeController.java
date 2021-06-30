@@ -31,17 +31,21 @@ public class HomeController implements MemberSessionName{
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,
 			@RequestParam(required = false,defaultValue = "") String keyword,
-			@RequestParam(required = false,defaultValue = "all") String searchOption) throws Exception {
+			@RequestParam(required = false,defaultValue = "all") String searchOption,
+			@RequestParam(required = false,defaultValue = "false") String soldOutView
+			) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		//List<GoodsDTO> list = GoodsService.listGoods(0, searchOption,keyword);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("soldOutView", soldOutView);
 		return "index";
 	}
 	@GetMapping("/mypage")
 	public String mypage(Model model,HttpSession session) {
 		MemberDTO dto = mps.getUserInfo((String)session.getAttribute(LOGIN));
 		model.addAttribute("userInfo", dto);
+		model.addAttribute("result", mps.getGoodsResult(dto.getUserId()));
 		return "mypage/mypage";
 	}
 	

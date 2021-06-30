@@ -14,7 +14,8 @@ public interface GoodsDAO {
 	public List<GoodsDTO> listGoods(
 			@Param("pageNo") int pageNo, 
 			@Param("keyword") String keyword,
-			@Param("searchOption") String searchOption);
+			@Param("searchOption") String searchOption,
+			@Param("soldOutView") String soldOutView);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -60,5 +61,27 @@ public interface GoodsDAO {
 	public void deleteAllHeart(String userId);
 	
 	public void deleteAllHeartGoodsId(int goodsId);
+
+	public void soldOut(
+			@Param("goodsId") int goodsId,
+			@Param("soldOut") int soldOut);
+
+	public int isSoldOut(int goodsId);
+
+	public ArrayList<GoodsDTO> soldoutGoods(	
+			@Param("userId") String userId, 
+			@Param("pageNo") int pageNo);
+
+	public int getTotalMoney(String userId);
+
+	public int getGetMoney(String userId);
+
+	public int getHeartNum(String userId);
+
+	public int getSoldoutNum(String userId);
+	
+	public int getSellingNum(String userId);
+
+	public int getNeedMoney(String userId);
 
 }

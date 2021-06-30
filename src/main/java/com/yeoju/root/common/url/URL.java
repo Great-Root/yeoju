@@ -21,7 +21,4 @@ public class URL {
 		return IMG_URL+userId+"\\"+fileName;
 	}
 
-	public List<GoodsDTO> listGoods(int pageNo, String searchOption, String keyword) throws Exception {
-		return null;
-	}
 }

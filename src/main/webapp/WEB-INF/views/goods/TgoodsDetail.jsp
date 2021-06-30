@@ -8,17 +8,51 @@
 <title>상품 상세 페이지</title>
 <c:set var="path" value="<%=request.getContextPath()%>" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script>
 
 	$(document).ready(function(){
 		$("#modiBtn").click(function(){
 			location.href = "${path}/goods/edit?goodsId=${dto.goodsId}";	
 		});
-		$("#delBtn").click(function(){
-			if(confirm("상품을 삭제하시겠습니까?")){
-				location.href = "${path}/goods/delete.do?goodsId=${dto.goodsId}";
+		$doneBtn = $("#doneBtn"); 
+		opa = $(".opa");
+		$doneBtn.click(function(){
+			if(${loginUser != null}){
+				$.ajax('${path}/goods/soldout.do?goodsId=${dto.goodsId}', {
+		              method: 'GET',
+		              success: function () {
+		            	  isSoldOut();
+		              },
+		              error: function () {
+		            	  alert('실패')
+		              }
+		        });
+			}else{
+				alert('로그인을 해주세요~');
 			}
 		});
+		function isSoldOut() {
+			$.ajax('${path}/goods/isSoldout/${dto.goodsId}', {
+	              method: 'GET',
+	              success: function (result) {
+	            	btnStyle(result,$doneBtn);
+	            	btnStyle(result,opa);
+	              },
+	              error: function () {
+	            	  alert('실패')
+	              }
+	        });
+		}
+		function btnStyle(result, btn) {
+			if(result){
+				btn.css('opacity','0.5');
+				$("#soldOut").show();
+			}else{
+				btn.css('opacity','1');
+				$("#soldOut").hide();
+			}
+		}
 		$heartBtn = $("#heartBtn");
 		$heartBtn.click(function () {
 			if(${loginUser != null}){
@@ -36,6 +70,7 @@
 				alert('로그인을 해주세요~');
 			}
 		});
+		isSoldOut();
 	});
 		function heartNum() {
 			$.ajax('${path}/goods/heartNum.do/${dto.goodsId}', {
@@ -262,6 +297,9 @@
 	justify-content: center;
 	line-height: 1;
 }
+.goods3-2:hover {
+	opacity: 0.8;
+}
 
 .goods3-2 span {
 	margin-left: 5px;
@@ -288,11 +326,21 @@
 }
 
 .goods3-4 {
-	
+	background: #9FC93C; 
+	border: 1px solid #9FC93C; 
+	color: rgb(255, 255, 255);
+}
+.goods3-4:hover {
+	opacity: 0.8;
 }
 
 .goods3-5 {
-	
+	background: #47C83E; 
+	border: 1px solid #47C83E; 
+	color: rgb(255, 255, 255);
+}
+.goods3-5:hover {
+	opacity: 0.8;
 }
 
 .goods4 {
@@ -527,7 +575,6 @@ color: rgb(136, 136, 136);
 					<div class="goods1-1">
 						<div id="carouselExampleIndicators" class="carousel slide"
 							data-bs-ride="carousel">
-
 							<div class="carousel-indicators">
 								<button type="button"
 									data-bs-target="#carouselExampleIndicators"
@@ -545,17 +592,17 @@ color: rgb(136, 136, 136);
 								<div class="carousel-item active">
 									<img
 										src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}"
-										class="d-block w-100" alt="...">
+										class="d-block w-100 opa" alt="...">
 								</div>
 								<div class="carousel-item">
 									<img
 										src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}"
-										class="d-block w-100" alt="...">
+										class="d-block w-100 opa" alt="...">
 								</div>
 								<div class="carousel-item">
 									<img
 										src="https://www.greatroot.net/img/download?fileName=${dto.imgFileName}"
-										class="d-block w-100" alt="...">
+										class="d-block w-100 opa" alt="...">
 								</div>
 							</div>
 							<button class="carousel-control-prev" type="button"
@@ -574,7 +621,7 @@ color: rgb(136, 136, 136);
 						<div class="goods2-1">
 							<div class="nothing01">
 								<div class="goods2-2">
-									<div class="goods-title">${dto.goodsName}</div>
+									<div class="goods-title">${dto.goodsName}<span id="soldOut" style="display: none;">(판매완료)</span></div>
 									<div class="goods2-3">
 										<div class="goods-price">
 											${dto.goodsPrice} <span>원</span>
@@ -630,10 +677,8 @@ color: rgb(136, 136, 136);
 									</button>
 								</div>
 								<c:if test="${loginUser == dto.userId}">
-									<button class="3-4"
-										style="background: rgb(255, 164, 37); border: 1px solid rgb(243, 150, 20); color: rgb(255, 255, 255);">수정하기</button>
-									<button class="3-5"
-										style="background: rgb(247, 0, 0); border: 1px solid rgb(223, 0, 0); color: rgb(255, 255, 255);">판매완료</button>
+									<button class="goods3-4" id="modiBtn">수정하기</button>
+									<button class="goods3-5" id="doneBtn">판매완료</button>
 								</c:if>
 							</div>
 						</div>
