@@ -14,6 +14,9 @@ public class GoodsCommentsDTO {
     private Date regDate;
     // 댓글 작성자
     private Integer commentId;
+    
+    // 댓글 작성자
+    private Integer commentId2;
 
 
 	public Integer getGoodsId() {
@@ -46,6 +49,15 @@ public class GoodsCommentsDTO {
     public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
+
+    public Integer getCommentId2() {
+		return commentId2;
+	}
+
+	public void setCommentId2(Integer commentId2) {
+		this.commentId2 = commentId2;
+	}
+
     // GoodsComment 모델 복사
     public void CopyData(GoodsCommentsDTO param)
     {
@@ -54,11 +66,12 @@ public class GoodsCommentsDTO {
         this.content = param.getContent();
         this.regDate = param.getRegDate();
         this.commentId = param.getCommentId();
+        this.commentId2 = param.getCommentId2();
     }
 	@Override
 	public String toString() {
 		return "GoodsCommentsDTO [goodsId=" + goodsId + ", userId=" + userId + ", content=" + content + ", regDate="
-				+ regDate + ", commentId=" + commentId + "]";
+				+ regDate + ", commentId=" + commentId + ", commentId2=" + commentId2 + "]";
 	}
     
 }

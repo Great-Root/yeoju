@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -702,14 +703,14 @@ color: rgb(136, 136, 136);
 
 				<div class="goods5">
 					<div class="goods5-1">
-						상품문의 <span style="color: rgb(247, 47, 51);" class="procCnt">0</span>
+						상품문의 <span style="color: rgb(247, 47, 51);" class="procCnt">${fn:length(dto.goodsCommentsList)}</span>
 					</div>
 					<div class="goods5-2">
 						<div class="goods5-3">
 						<c:if test="${loginUser != null }">
 							<textarea rows="" cols="" placeholder="상품 문의 입력"
 								class="goods-text"></textarea>
-								</c:if>
+						</c:if>
 						</div>
 						<div class="goods5-4">
 							<div class="goods5-5">
@@ -727,10 +728,10 @@ color: rgb(136, 136, 136);
 				</div>
 				<div class="goods6">
 					<c:forEach var="comments" items="${dto.goodsCommentsList}">
-						<div class="goods6-1" commentId="${comments.commentId}">
+						<div class="goods6-1" commentId="${comments.commentId}" commentId2 ="${comments.commentId2 }">
 							<a class="goods6-2" href="#"> <img alt="프로필 사진" width="48"
 								height="48" style="border-radius: 50%; border-style: none;"
-								src="https://i.pinimg.com/736x/cc/bb/a8/ccbba8a07844293be3ab6a55453ec6bc.jpg">
+								src="${contextPath}/mypage/profileDownload/${comments.userId}">
 							</a>
 							<div class="goods6-3">
 								<div class="goods6-4">
@@ -738,24 +739,27 @@ color: rgb(136, 136, 136);
 									<div class="goods6-6">${comments.regDate}</div>
 								</div>
 								<div class="goods6-7">${comments.content}</div>
+								<%-- <c:if test="${loginUser != null }"> --%>
 								<div class="goods7">
 									<div class="goods6-8">
 										<img alt="댓글달기 버튼" width="17" height="14"
 											src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAAAXNSR0IArs4c6QAABIFJREFUSA2tl0lok0EUx5M0tVYpsVvqRhQFe6gH0VKkWrFKl1TrQaSggsvR/eAKoiJCbxZRwV0Ul4N6UbCLbU314EatC0b0oJY0Rg1aEcS0DWn9vfRLnH79EmPNwMt787b5z8z7ZiZmUwLN5XJZ+/r6ivr7+xfhPn9gYGAi3G42m7OQf8D99L9Aj5Cb8XtQVVXVSz/hZo7n2dTUZA+FQptJvpEBs+P5qjb8f9I/Q0wdgLyqLZZsCERWoLe3dx+JdkGjteB++EvonnAG+2qxWL4ij2YF8vCbhG4BfCG6DMhEPwg7YbPZ9hQXFwdEF6sNA9LS0jIjGAxeJeEcCSKZDzoJnaqoqJAtiNtkEj09PdU4ySTmijOxr1NSUlaXl5c/jxU8BEhjY2MBwS4ol2CZTa3D4agtKCjoi5Ugnp6tdbJaZ8k3kXyyXeVOp/OhUUwUiKwEBXkfpzzIQ2A1QbIV/9WYXBZgLpJkKTmlsBdVVlZ26JNaRAFiC9txCTEPx3epqaklyQAhuRm02263LyfvTcaxAep6e3v7GLGpLQwE1NtwKsLwi710lpWVeVSn/5ULCwuDbHENYJ6Qa5rf7z+gz2l2u92jPB6PDyDZfAVbmMFxvVNDQ0O7XpdIn1UtVP2kBlmRDgBZIAdjfYrYrV6vt0pAYPDyVZyIGFSOPfwFqbqRyAzsZlJyvmwifiVUF8ljBWGN1rkAmFDEoHK2a8jMVNu/yoA4R4wAWQX9AUJnBiStaZAN/2Wlng7XjkzDSfuMVekkeiagmLt5QDJZIYcIKDuFG7VEa0RfE0a5NN07xpva1tYmR8Vn0VlRjBUhPT1djmvDhk9SakRJ7hOZa0Tur0EgLE0XA+VzmE1A+UEc9C2ZNaLlFgCmtLQ0ubHDTVZEzox8inYa3BBIMmtkcFjTdHigtLQ0ugtSI61QGbRMk2FDW6I1MjTKZDKqGXLlyw6wE7dVfwFyBarFuIrDbafRBYctmTWyTgNwXeNhZpWHCyhvM1h1V1fXbrSHVAeRk1Ujra2tUyjQrayGj1P8hjpO+PYFyFSAuDFYGXQONfFKdUqGTH6zTJhcTkCs4ZSVSzbawpcee9mJZi80iqJtqK+vl2JKagPEURI6WY1bTPSyPnkYiCjZoiM41YF8MryNC2q23nmkfUAcJnYz9Dg3N3cl+cOnqZovCkSUrMx2nI4KGOgRYPbxdkhVA0YikytF4sh9kyfBL6Mc0ReaamRrVtA/DWVCH6FjGRkZp0tKSr4jx23Nzc22zMzMoDqg9m9AHtzZgFrC6t/RJzEEIk5U+CRO2/2IawlOg4dIJJffXegt5EffjW6sDEBf3hqLkYvQf6MgD+bk5JyTRxE2E5Obi60RWzrdDYA5L/pIiwkk4sCrfHwgENhIkqXoZpHorzGRWGK68b8GKBf0DKCy5TegLHxO8oTcHlm5hJNKckDlcA7MQ5wM2UkoS93DID/gPj79Fwz2Htt6+E643K4xG0DfQKv5lDv+CUjMjAYG7f/NYgDK6302fDp8HFy2WQpXVusj/AMT2PEbeA0W2gj2azwAAAAASUVORK5CYII=">
 										댓글달기
 									</div>
+									<c:if test="${loginUser == comments.userId }">
 									<div class="goods6-9">
 										<img alt="댓글삭제 버튼" width="14" height="14"
 											src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">
 										댓글 삭제
 									</div>
+									</c:if>
 									
 								</div>
-									
-								
+								<%-- </c:if> --%>
 							</div>
 						</div>
 					</c:forEach>
+					<input type="hidden" id="loginUser" value="${loginUser}" />
 				</div>
 			</div>
 		</div>
@@ -765,8 +769,20 @@ color: rgb(136, 136, 136);
 	<c:import url="../default/footer.jsp" />
 </body>
 <script>
+var parentCommentId = "";
+$(document).ready(function() {
+	isLogin();
+});
+
 $(function() {
 	
+	function now() {
+		var date = new Date();
+		var m = date.getMonth()+1;
+		var d = date.getDate();
+		var h = date.getHours();
+		return date.getFullYear()+'-'+(m>9?m:'0'+m)+'-'+(d>9?d:'0'+d);
+	}
 	$(".goods-text").keyup(function() {
 	    if($(".goods-text").val().length > 100) {
 	        alert("100자 초과 되었습니다.");
@@ -776,94 +792,157 @@ $(function() {
 	    }
 	});
 	
-	/* $(".goods6-8").on("click", function() {
-		$.ajax({
-			url : "/comments/commentslist",
-			type : "GET",
-			data : {
-				goodsId : ${dto.goodsId}
-			},
-			success : function(data) {
-				alert(data);
-			}, error : function(data2) {
-				alert(data2);
-			}
-		});	
-	}); */
-	 $(".goods5-6").on("click", function(){
-		 
-		var param = {
-			"goodsId" : ${dto.goodsId},
-			"userId"  : '${loginUser}',
-			"content" : $(".goods-text").val(),
-			"regDate" : '${dto.regDate}'
-		};
-		console.log(param);
-		$.ajax({
-			url : "/comments/insertComment",
-			type : "GET",
-			data : param,
-			success : function(data){
-				alert("댓글 작성 성공");
-				//append 소스
-				var html = 
-					'<div class ="goods6-1" commentId =' + data + '>'
-					+ 	'<a class ="goods6-2" href="#">'
-					+   '<img alt="프로필 사진" width="48" height="48" style ="border-radius: 50%;  border-style: none;" src="https://i.pinimg.com/736x/cc/bb/a8/ccbba8a07844293be3ab6a55453ec6bc.jpg">'
-					+   '</a>'
-					+   '<div class ="goods6-3">'
-					+   '<div class ="goods6-4">'
-					+   '<div class ="goods6-5">' + param.userId + '</div>'
-					+   '<div class ="goods6-6">' + param.regDate +'</div>'
-					+   '</div>'
-					+   '<div class="goods6-7">' + param.content + '</div>'
-					+   '<div class = "goods7">'
-					+   '<div class ="goods6-8">'
-					+   '<img alt="댓글달기 버튼" width="17" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAAAXNSR0IArs4c6QAABIFJREFUSA2tl0lok0EUx5M0tVYpsVvqRhQFe6gH0VKkWrFKl1TrQaSggsvR/eAKoiJCbxZRwV0Ul4N6UbCLbU314EatC0b0oJY0Rg1aEcS0DWn9vfRLnH79EmPNwMt787b5z8z7ZiZmUwLN5XJZ+/r6ivr7+xfhPn9gYGAi3G42m7OQf8D99L9Aj5Cb8XtQVVXVSz/hZo7n2dTUZA+FQptJvpEBs+P5qjb8f9I/Q0wdgLyqLZZsCERWoLe3dx+JdkGjteB++EvonnAG+2qxWL4ij2YF8vCbhG4BfCG6DMhEPwg7YbPZ9hQXFwdEF6sNA9LS0jIjGAxeJeEcCSKZDzoJnaqoqJAtiNtkEj09PdU4ySTmijOxr1NSUlaXl5c/jxU8BEhjY2MBwS4ol2CZTa3D4agtKCjoi5Ugnp6tdbJaZ8k3kXyyXeVOp/OhUUwUiKwEBXkfpzzIQ2A1QbIV/9WYXBZgLpJkKTmlsBdVVlZ26JNaRAFiC9txCTEPx3epqaklyQAhuRm02263LyfvTcaxAep6e3v7GLGpLQwE1NtwKsLwi710lpWVeVSn/5ULCwuDbHENYJ6Qa5rf7z+gz2l2u92jPB6PDyDZfAVbmMFxvVNDQ0O7XpdIn1UtVP2kBlmRDgBZIAdjfYrYrV6vt0pAYPDyVZyIGFSOPfwFqbqRyAzsZlJyvmwifiVUF8ljBWGN1rkAmFDEoHK2a8jMVNu/yoA4R4wAWQX9AUJnBiStaZAN/2Wlng7XjkzDSfuMVekkeiagmLt5QDJZIYcIKDuFG7VEa0RfE0a5NN07xpva1tYmR8Vn0VlRjBUhPT1djmvDhk9SakRJ7hOZa0Tur0EgLE0XA+VzmE1A+UEc9C2ZNaLlFgCmtLQ0ubHDTVZEzox8inYa3BBIMmtkcFjTdHigtLQ0ugtSI61QGbRMk2FDW6I1MjTKZDKqGXLlyw6wE7dVfwFyBarFuIrDbafRBYctmTWyTgNwXeNhZpWHCyhvM1h1V1fXbrSHVAeRk1Ujra2tUyjQrayGj1P8hjpO+PYFyFSAuDFYGXQONfFKdUqGTH6zTJhcTkCs4ZSVSzbawpcee9mJZi80iqJtqK+vl2JKagPEURI6WY1bTPSyPnkYiCjZoiM41YF8MryNC2q23nmkfUAcJnYz9Dg3N3cl+cOnqZovCkSUrMx2nI4KGOgRYPbxdkhVA0YikytF4sh9kyfBL6Mc0ReaamRrVtA/DWVCH6FjGRkZp0tKSr4jx23Nzc22zMzMoDqg9m9AHtzZgFrC6t/RJzEEIk5U+CRO2/2IawlOg4dIJJffXegt5EffjW6sDEBf3hqLkYvQf6MgD+bk5JyTRxE2E5Obi60RWzrdDYA5L/pIiwkk4sCrfHwgENhIkqXoZpHorzGRWGK68b8GKBf0DKCy5TegLHxO8oTcHlm5hJNKckDlcA7MQ5wM2UkoS93DID/gPj79Fwz2Htt6+E643K4xG0DfQKv5lDv+CUjMjAYG7f/NYgDK6302fDp8HFy2WQpXVusj/AMT2PEbeA0W2gj2azwAAAAASUVORK5CYII=">'
-					+	'댓글달기'
-		            +   '</div>'
-					+   '<div class ="goods6-9">'
-					+   '<img alt="댓글삭제 버튼" width="14" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">'
-					+	'댓글 삭제'
-					+   '</div>'
-					+   '</div>'
-					+   '</div>'
-					+   '</div>'
-				$(".goods6").append(html);
-				$(".goods-text").val("");	
-			},error : function(e){
-				alert("댓글 작성 실패")
-			}
-		});
-		setCnt();
+	 $(document).on("click",".goods5-6", function(){
+		
+		if(parentCommentId == "") {
+			var param = {
+				"goodsId" : ${dto.goodsId},
+				"userId"  : '${loginUser}',
+				"content" : $(".goods-text").val()
+			};
+			console.log(param);
+			$.ajax({
+				url : "/comments/insertComment",
+				type : "GET",
+				data : param,
+				success : function(data){
+					alert("댓글 작성 성공");
+					//append 소스
+					var html = 
+						'<div class ="goods6-1" commentId =' + data + '>'
+						+ 	'<a class ="goods6-2" href="#">'
+						+   '<img alt="프로필 사진" width="48" height="48" style ="border-radius: 50%;  border-style: none;" src="${contextPath}/mypage/profileDownload/${loginUser}">'
+						+   '</a>'
+						+   '<div class ="goods6-3">'
+						+   '<div class ="goods6-4">'
+						+   '<div class ="goods6-5">' + param.userId + '</div>'
+						+   '<div class ="goods6-6">' + now() +'</div>'
+						+   '</div>'
+						+   '<div class="goods6-7">' + param.content + '</div>'
+						+   '<div class = "goods7">'
+						+   '<div class ="goods6-8">'
+						+   '<img alt="댓글달기 버튼" width="17" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAAAXNSR0IArs4c6QAABIFJREFUSA2tl0lok0EUx5M0tVYpsVvqRhQFe6gH0VKkWrFKl1TrQaSggsvR/eAKoiJCbxZRwV0Ul4N6UbCLbU314EatC0b0oJY0Rg1aEcS0DWn9vfRLnH79EmPNwMt787b5z8z7ZiZmUwLN5XJZ+/r6ivr7+xfhPn9gYGAi3G42m7OQf8D99L9Aj5Cb8XtQVVXVSz/hZo7n2dTUZA+FQptJvpEBs+P5qjb8f9I/Q0wdgLyqLZZsCERWoLe3dx+JdkGjteB++EvonnAG+2qxWL4ij2YF8vCbhG4BfCG6DMhEPwg7YbPZ9hQXFwdEF6sNA9LS0jIjGAxeJeEcCSKZDzoJnaqoqJAtiNtkEj09PdU4ySTmijOxr1NSUlaXl5c/jxU8BEhjY2MBwS4ol2CZTa3D4agtKCjoi5Ugnp6tdbJaZ8k3kXyyXeVOp/OhUUwUiKwEBXkfpzzIQ2A1QbIV/9WYXBZgLpJkKTmlsBdVVlZ26JNaRAFiC9txCTEPx3epqaklyQAhuRm02263LyfvTcaxAep6e3v7GLGpLQwE1NtwKsLwi710lpWVeVSn/5ULCwuDbHENYJ6Qa5rf7z+gz2l2u92jPB6PDyDZfAVbmMFxvVNDQ0O7XpdIn1UtVP2kBlmRDgBZIAdjfYrYrV6vt0pAYPDyVZyIGFSOPfwFqbqRyAzsZlJyvmwifiVUF8ljBWGN1rkAmFDEoHK2a8jMVNu/yoA4R4wAWQX9AUJnBiStaZAN/2Wlng7XjkzDSfuMVekkeiagmLt5QDJZIYcIKDuFG7VEa0RfE0a5NN07xpva1tYmR8Vn0VlRjBUhPT1djmvDhk9SakRJ7hOZa0Tur0EgLE0XA+VzmE1A+UEc9C2ZNaLlFgCmtLQ0ubHDTVZEzox8inYa3BBIMmtkcFjTdHigtLQ0ugtSI61QGbRMk2FDW6I1MjTKZDKqGXLlyw6wE7dVfwFyBarFuIrDbafRBYctmTWyTgNwXeNhZpWHCyhvM1h1V1fXbrSHVAeRk1Ujra2tUyjQrayGj1P8hjpO+PYFyFSAuDFYGXQONfFKdUqGTH6zTJhcTkCs4ZSVSzbawpcee9mJZi80iqJtqK+vl2JKagPEURI6WY1bTPSyPnkYiCjZoiM41YF8MryNC2q23nmkfUAcJnYz9Dg3N3cl+cOnqZovCkSUrMx2nI4KGOgRYPbxdkhVA0YikytF4sh9kyfBL6Mc0ReaamRrVtA/DWVCH6FjGRkZp0tKSr4jx23Nzc22zMzMoDqg9m9AHtzZgFrC6t/RJzEEIk5U+CRO2/2IawlOg4dIJJffXegt5EffjW6sDEBf3hqLkYvQf6MgD+bk5JyTRxE2E5Obi60RWzrdDYA5L/pIiwkk4sCrfHwgENhIkqXoZpHorzGRWGK68b8GKBf0DKCy5TegLHxO8oTcHlm5hJNKckDlcA7MQ5wM2UkoS93DID/gPj79Fwz2Htt6+E643K4xG0DfQKv5lDv+CUjMjAYG7f/NYgDK6302fDp8HFy2WQpXVusj/AMT2PEbeA0W2gj2azwAAAAASUVORK5CYII=">'
+						+	'댓글달기'
+			            +   '</div>'
+						+   '<div class ="goods6-9">'
+						+   '<img alt="댓글삭제 버튼" width="14" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">'
+						+	'댓글 삭제'
+						+   '</div>'
+						+   '</div>'
+						+   '</div>'
+						+   '</div>'
+					$(".goods6").append(html);
+					$(".goods-text").val("");	
+					$('.procCnt').text(parseInt($('.procCnt').text())+1);
+					$(".charCnt").text("0");	
+					parentCommentId ="";
+				},error : function(e){
+					alert("댓글 작성 실패")
+				}
+			});
+		} else {
+			
+			var param = {
+				"goodsId" : ${dto.goodsId},
+				"commentId" : parentCommentId,
+				"userId"  : '${loginUser}',
+				"content" :	$(".goods-text").val(),
+			};
+			console.log(param);
+			$.ajax({
+				url : "/comments/insertComment2",
+				type : "GET",
+				data : param,
+				success : function(data){
+					alert("대댓글 작성 성공");
+					//append 소스
+					var html = 
+						'<div class ="goods6-1" commentId =' + parentCommentId + ' commentId2 =' + data + '>'
+						+ 	'<a class ="goods6-2" href="#">'
+						+   '<img alt="프로필 사진" width="48" height="48" style ="border-radius: 50%;  border-style: none;" src="${contextPath}/mypage/profileDownload/${loginUser}">'
+						+   '</a>'
+						+   '<div class ="goods6-3">'
+						+   '<div class ="goods6-4">'
+						+   '<div class ="goods6-5">' + param.userId + '</div>'
+						+   '<div class ="goods6-6">' + now()+'</div>'
+						+   '</div>'
+						+   '<div class="goods6-7">' + param.content + '</div>'
+						+   '<div class = "goods7">'
+						+   '<div class ="goods6-8">'
+						+   '<img alt="댓글달기 버튼" width="17" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAAAXNSR0IArs4c6QAABIFJREFUSA2tl0lok0EUx5M0tVYpsVvqRhQFe6gH0VKkWrFKl1TrQaSggsvR/eAKoiJCbxZRwV0Ul4N6UbCLbU314EatC0b0oJY0Rg1aEcS0DWn9vfRLnH79EmPNwMt787b5z8z7ZiZmUwLN5XJZ+/r6ivr7+xfhPn9gYGAi3G42m7OQf8D99L9Aj5Cb8XtQVVXVSz/hZo7n2dTUZA+FQptJvpEBs+P5qjb8f9I/Q0wdgLyqLZZsCERWoLe3dx+JdkGjteB++EvonnAG+2qxWL4ij2YF8vCbhG4BfCG6DMhEPwg7YbPZ9hQXFwdEF6sNA9LS0jIjGAxeJeEcCSKZDzoJnaqoqJAtiNtkEj09PdU4ySTmijOxr1NSUlaXl5c/jxU8BEhjY2MBwS4ol2CZTa3D4agtKCjoi5Ugnp6tdbJaZ8k3kXyyXeVOp/OhUUwUiKwEBXkfpzzIQ2A1QbIV/9WYXBZgLpJkKTmlsBdVVlZ26JNaRAFiC9txCTEPx3epqaklyQAhuRm02263LyfvTcaxAep6e3v7GLGpLQwE1NtwKsLwi710lpWVeVSn/5ULCwuDbHENYJ6Qa5rf7z+gz2l2u92jPB6PDyDZfAVbmMFxvVNDQ0O7XpdIn1UtVP2kBlmRDgBZIAdjfYrYrV6vt0pAYPDyVZyIGFSOPfwFqbqRyAzsZlJyvmwifiVUF8ljBWGN1rkAmFDEoHK2a8jMVNu/yoA4R4wAWQX9AUJnBiStaZAN/2Wlng7XjkzDSfuMVekkeiagmLt5QDJZIYcIKDuFG7VEa0RfE0a5NN07xpva1tYmR8Vn0VlRjBUhPT1djmvDhk9SakRJ7hOZa0Tur0EgLE0XA+VzmE1A+UEc9C2ZNaLlFgCmtLQ0ubHDTVZEzox8inYa3BBIMmtkcFjTdHigtLQ0ugtSI61QGbRMk2FDW6I1MjTKZDKqGXLlyw6wE7dVfwFyBarFuIrDbafRBYctmTWyTgNwXeNhZpWHCyhvM1h1V1fXbrSHVAeRk1Ujra2tUyjQrayGj1P8hjpO+PYFyFSAuDFYGXQONfFKdUqGTH6zTJhcTkCs4ZSVSzbawpcee9mJZi80iqJtqK+vl2JKagPEURI6WY1bTPSyPnkYiCjZoiM41YF8MryNC2q23nmkfUAcJnYz9Dg3N3cl+cOnqZovCkSUrMx2nI4KGOgRYPbxdkhVA0YikytF4sh9kyfBL6Mc0ReaamRrVtA/DWVCH6FjGRkZp0tKSr4jx23Nzc22zMzMoDqg9m9AHtzZgFrC6t/RJzEEIk5U+CRO2/2IawlOg4dIJJffXegt5EffjW6sDEBf3hqLkYvQf6MgD+bk5JyTRxE2E5Obi60RWzrdDYA5L/pIiwkk4sCrfHwgENhIkqXoZpHorzGRWGK68b8GKBf0DKCy5TegLHxO8oTcHlm5hJNKckDlcA7MQ5wM2UkoS93DID/gPj79Fwz2Htt6+E643K4xG0DfQKv5lDv+CUjMjAYG7f/NYgDK6302fDp8HFy2WQpXVusj/AMT2PEbeA0W2gj2azwAAAAASUVORK5CYII=">'
+						+	'댓글달기'
+			            +   '</div>'
+						+   '<div class ="goods6-9">'
+						+   '<img alt="댓글삭제 버튼" width="14" height="14" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAAAXNSR0IArs4c6QAAANpJREFUSA1jZCAB7N+/n+Xr16+1QC3J////lwZpZWRkfAqk5nJzczc7Ojr+AYkRA1iIUQRTA7IUaGEdjA+ioQ6oA8qBuPUgghjARIwiJDXJIDYzM7O7r68vIwiD2FB5sBySWrxMkiyGBa+Xl9cumKkwNkwOJk6IZty8efN/QopoIU+Sj2nhALiZoBCgZijgMm/AfDxqMTyu0RnocUWIj64fnT8a1OghQjP+aFDTLGjRDR4NavQQoRl/5AU10Y09UPsKOdwJ8ZHVYmOPvKAeMB/jjGNqtrsGVRwDANq3T3QbKT/vAAAAAElFTkSuQmCC">'
+						+	'댓글 삭제'
+						+   '</div>'
+						+   '</div>'
+						+   '</div>'
+						+   '</div>'
+					$(".goods6-1[commentId="+parentCommentId+"]:eq(0)").after(html);
+					$(".goods-text").val("");	
+					$('.procCnt').text(parseInt($('.procCnt').text())+1);
+					$(".charCnt").text("0");	
+					parentCommentId ="";
+				},error : function(e){
+					alert("댓글 작성 실패")
+				}
+			});
+		}
 	});
 	
 	$(document).on("click", ".goods6-9", function(){
-		var commentId = $(this).parents(".goods6-1").attr("commentId");
-		var param = {
-			"commentId" : parseInt(commentId)
-		};
-		$.ajax({
-			url : "/comments/deleteComment",
-			type : "GET",
-			data : param,
-			success : function(data){
-				alert("댓글 삭제 성공")
-				$(".goods6-1[commentId="+commentId+"]").remove();
-			},error : function(){
-				alert("댓글 삭제 실패")
-			}
-		});
-		setCnt();
-	});
-	
-	$(document).ready(function(){
-		setCnt();
-		function setCnt() {
-			$(".procCnt").text($(".goods6-1").length);
+		var commentId2 = $(this).parents(".goods6-1").attr("commentId2");
+		if(commentId2 == "" || commentId2 == null) {
+			var commentId = $(this).parents(".goods6-1").attr("commentId");
+			var param = {
+				"commentId" : parseInt(commentId)
+			};
+			$.ajax({
+				url : "/comments/deleteComment",
+				type : "GET",
+				data : param,
+				success : function(data){
+					alert("댓글 삭제 성공")
+					$(".goods6-1[commentId="+commentId+"]").remove();
+					$('.procCnt').text($(".goods6").find(".goods6-1").length);
+				},error : function(){
+					alert("댓글 삭제 실패1")
+				}
+			});
+		} else {
+			
+			var param = {
+				"commentId2" : parseInt(commentId2)
+			};
+			$.ajax({
+				url : "/comments/deleteComment2",
+				type : "GET",
+				data : param,
+				success : function(data){
+					alert("댓글 삭제 성공")
+					$(".goods6-1[commentId2="+commentId2+"]").remove();
+					$('.procCnt').text($(".goods6").find(".goods6-1").length);
+				},error : function(){
+					alert("댓글 삭제 실패2")
+				}
+			});
 		}
 	});
+	
+	$(document).on("click",".goods6-8", function() {
+	   $(".goods-text").val("@" + $(this).parents(".goods6-3").find(".goods6-5").text() + " : ");
+	   parentCommentId = $(this).parents(".goods6-1").attr("commentId");
+	});
+	
+	
 })
+
+function isLogin() {
+	if($("#loginUser").val() == "") { // if loginUser 값이 Null 값이면
+		$(".goods7").css('display',"none"); //.goods7 -> 댓글 달기, 댓글 삭제 버튼(비활성화)
+	}
+} 
 
 
 </script>
