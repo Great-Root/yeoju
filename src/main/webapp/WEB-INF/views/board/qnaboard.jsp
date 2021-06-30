@@ -25,6 +25,7 @@
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
+							<th>조회수</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,6 +38,7 @@
 					    <td><a href="qnaview?writeNo=${dto.writeNo }">${dto.title }</a></td>
 						<td>${dto.userid }</td> 
 						<td>${dto.saveDate }</td> 
+						<td>${dto.hit }</td>
 					</tr>
 					</c:forEach>	
 					<c:choose>

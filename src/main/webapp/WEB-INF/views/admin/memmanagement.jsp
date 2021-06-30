@@ -62,6 +62,15 @@
 								<td>${dto.recentDate }</td>
 							</tr>
 						</c:forEach> 
+							<tr>
+								<td colspan="3">
+									<c:forEach var="num" begin="1" end="${repeat }">
+										<a href="memmanagement?num=${num }">${num}</a>
+									</c:forEach>
+									</td>
+									
+							</tr>
+						
 					</tbody>
 				</table>
 	</div>

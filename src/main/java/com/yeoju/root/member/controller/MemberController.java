@@ -1,13 +1,10 @@
 package com.yeoju.root.member.controller;
-
 import java.sql.Date;
 import java.util.List;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import com.yeoju.root.board.service.BoardService;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.common.dto.QnaBoardRepDTO;
 import com.yeoju.root.member.service.MemberService;
 import com.yeoju.root.member.session_name.MemberSessionName;
-
 @Controller
 @RequestMapping("member")
 public class MemberController implements MemberSessionName{
@@ -38,7 +33,6 @@ public class MemberController implements MemberSessionName{
 	public String login(HttpSession session) {
 		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:/";
 	}
-
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
 	public String memberJoinForm(HttpSession session) throws Exception{
@@ -77,7 +71,6 @@ public class MemberController implements MemberSessionName{
 		@RequestMapping(value = "/findpw", method = RequestMethod.GET)
 		public void findPwGET() throws Exception{
 		}
-
 		@RequestMapping(value = "/findpw", method = RequestMethod.POST)
 		public void findPwPOST(@ModelAttribute MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws Exception{
 			ms.findPw(request, response, dto);
@@ -131,8 +124,9 @@ public class MemberController implements MemberSessionName{
 		}
 		@GetMapping("qnaview")
 		public String qnaview(@RequestParam int writeNo, Model model,HttpSession session) {
-		
+
 			session.setAttribute("writeNo", writeNo);
+			bs.upHit(writeNo);
 			bs.QnABoardView(writeNo,model);
 			return "member/qnaview";
 		}
@@ -153,7 +147,7 @@ public class MemberController implements MemberSessionName{
 			bs.QnABoardDelete(writeNo);
 			return "redirect:qnaBoardView";
 		}
-		
+
 		@GetMapping(value="replyData/{write_group}",produces = "application/json; charset=utf-8")
 		@ResponseBody
 		public List<QnaBoardRepDTO> replyData(@PathVariable int write_group){
@@ -163,6 +157,6 @@ public class MemberController implements MemberSessionName{
 		public String annview(@RequestParam int writeNo, Model model,HttpSession session) {
 			session.setAttribute("writeNo", writeNo);
 			bs.annBoardView(writeNo,model);
-			return "admin/annview";
+			return "member/annview";
 		}
 }

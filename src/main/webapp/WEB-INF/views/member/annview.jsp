@@ -29,10 +29,10 @@
 		<th>제 목</th><td>${personalData.title }</td>
 		<th>작성일</th><td>${personalData.saveDate }</td>
 	</tr>
-	
+
 	<tr>
 		<th>내 용</th><td colspan="3">${personalData.content }</td>
-		
+
 		<tr>
 		<td colspan="4" align="center">
 			<c:choose>
@@ -45,9 +45,9 @@
 		</td>
 	</tr>
 		</table>
-		
+
 		</div>
 	</div>
 	<c:import url="../default/footer.jsp" />
 </body>
-</html>
+</html> 

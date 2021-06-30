@@ -12,22 +12,36 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script type="text/javascript">
    var pageNo = 1;
+  
    $(document).ready(function(){
       initPage(pageNo);
       initPage(++pageNo);
       $(window).scroll(function() {
-    	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        	  pageNo += 1;
+          if($(window).scrollTop() + $(window).height() == $(document).height()) {
+             pageNo += 1;
               initPage(pageNo);
-    	   }
-    	});
+          }
+       });
+      var $soldOutView = $("#soldOutView");
+      if(${soldOutView}){
+    	  $soldOutView.addClass('active');
+      }else{
+    	  $soldOutView.removeClass('active');
+      }
+      $soldOutView.click(function () {
+    	  if(${soldOutView}){
+		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=false'
+    	  }else{
+		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=true'
+    	  }
+	  });
    });
-      
    function initPage(pageNo) {
-      
       var param = {
          "pageNo" : pageNo,
-         "keyword" : '${keyword}'
+         "keyword" : '${keyword}',
+         "searchOption" : '${searchOption}',
+         "soldOutView" : '${soldOutView}'
       };
       // 데이터를 불러온다.
       $.ajax({
@@ -53,9 +67,9 @@
 
    function lodingList(item) {
             html = '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
-            html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" >'
+            html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" '+(item.soldOut == 1 ? 'style="opacity:0.5;"':'')+'>'
             html += '<div class ="div-f"></div>'
-            html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
+            html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+(item.soldOut == 1 ? '<b>&nbsp;(판매완료)</b>':'')+'</div>'
             html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
             html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
         return html;
@@ -64,7 +78,6 @@
 <link rel="stylesheet" type="text/css" href="resources/css/list.css">
 
 </head>
-
 <body>
    <c:import url="default/header.jsp" />
 <div class ="div-1">
@@ -96,8 +109,10 @@
   </button>
 </div>
 </div>
-   <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;">
-      <h2>오늘의 상품 추천</h2>
+   <section class ="section01" style ="width:1035px; margin:auto; padding : 3.5rem 0px 1.5rem;"> 
+      <h2>오늘의 상품 추천</h2> 
+		  <button type="button" class="btn btn-outline-success active" id="soldOutView">판매완료 같이보기</button>
+		  
       <div class ="div-a" ><div class ="div-b"><div class ="div-c" id="images">
       </div></div></div>
       <div id="msg"></div>

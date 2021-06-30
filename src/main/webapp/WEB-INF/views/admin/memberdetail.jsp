@@ -43,15 +43,22 @@
 					<tbody>
 							<c:forEach var="detaildto" items="${detailList }">
 								<tr><th>이름</th><td>${detaildto.name }</td></tr>
+								<tr><th>성별</th><td>
+								<c:choose>
+								<c:when test="${detaildto.gender !=0}">
+								남자</c:when>
+								<c:otherwise>
+								여자</c:otherwise></c:choose>
 								<tr><th>성별</th><td>	${detaildto.gender }
 								</td></tr>
 								<tr><th>생년월일</th><td>${detaildto.birth }</td></tr>
 								<tr><th>우편번호</th><td>${detaildto.addr1 }</td> </tr>
 								<tr><th>주소</th><td>${detaildto.addr2 }</td> </tr>
 								<tr><th>상세주소</th><td>${detaildto.addr3 }</td> </tr>
+								<tr><th>전화번호</th><td>${detaildto.tel }</td></tr>
 							</c:forEach>
 							<c:forEach var="dto" items="${memberInfo}"> 	
-								<tr><th>전화번호</th><td>${dto.tel }</td></tr>
+								
 								<tr><th>이메일</th><td>${dto.email }</td></tr>
 							</c:forEach> 
 					</tbody>

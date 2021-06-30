@@ -16,6 +16,6 @@ public interface AnnBoardDAO {
 
 	public void modify(AnnBoardDTO dto);
 
-	
+
 
 }

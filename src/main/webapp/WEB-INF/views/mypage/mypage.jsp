@@ -93,7 +93,7 @@
 			html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" '
 					+ (item.soldOut == 1 ? 'style="opacity:0.5;"':'')+' >'
 			html += '<div class ="div-f"></div>'
-			html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+'</div>'
+			html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+(item.soldOut == 1 ? '<b>&nbsp;(판매완료)</b>':'')+'</div>'
 			html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
 			html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
 			return html
@@ -293,10 +293,10 @@
 				<button type="button" onclick="location.href='mypage/memberModify?userId=${loginUser}';" class="btn btn-outline-success">회원정보 수정</button>
 				<p class="card-text">${userInfo.regDate}시작</p>
 				<div class="mb-3">
-					지금 이거 다팔면 <b>${ result.totalMoney }원</b> 벌수 있어요~<hr>
-					지금 까지 <b>${ result.getMoney }원</b> 벌었어요!<hr>
-					찜한 갯수는 ${ result.heartNum }개 이며 ${ result.soldoutNum }개는 이미 팔리고 <br>
-					${ result.sellingNum }개 남았어요<br>다사려면 <b>${ result.needMoney }원</b>이 필요해요
+					지금 이거 다팔면<br> <b>${ result.totalMoney }원</b> 벌수 있어요~<hr>
+					지금까지<br> <b>${ result.getMoney }원</b> 벌었어요!<hr>
+					찜한 총 갯수는<br> <b>${ result.heartNum }개</b> 이며<br> <b>${ result.soldoutNum }개</b>는 이미 팔리고 <br>
+					<b>${ result.sellingNum }개</b> 남았어요<br>다사려면<br> <b>${ result.needMoney }원</b>이 필요해요
 				</div>
 			</div>
 		</div>

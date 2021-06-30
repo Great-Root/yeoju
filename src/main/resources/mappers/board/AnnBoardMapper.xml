@@ -28,5 +28,5 @@
 	<update id="modify">
 		update ann_board set title=#{title}, content=#{content} where write_no = #{writeNo}
 	</update>
-	
-</mapper>
+
+</mapper> 

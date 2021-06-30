@@ -1,6 +1,9 @@
 package com.yeoju.root.common.url;
 
 import java.io.File;
+import java.util.List;
+
+import com.yeoju.root.common.dto.GoodsDTO;
 
 public class URL {
 	//이미지 서버 경로
@@ -17,4 +20,5 @@ public class URL {
 	public String getImgURL(String userId, String fileName) {
 		return IMG_URL+userId+"\\"+fileName;
 	}
+
 }

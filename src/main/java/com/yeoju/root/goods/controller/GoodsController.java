@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import com.yeoju.root.category.CategoryService;
+import com.yeoju.root.common.dto.CategoryDTO;
 
 import com.yeoju.root.common.comments.service.CommentsService;
 import com.yeoju.root.common.dto.GoodsDTO;
@@ -40,20 +42,30 @@ import com.yeoju.root.member.session_name.MemberSessionName;
 @Controller
 @RequestMapping("goods")
 public class GoodsController extends URL implements MemberSessionName{
-	@Autowired
-	GoodsService gs;
 	
 	@Autowired
-	CommentsService cs;
+	GoodsService gs;
+	@Autowired
+	CategoryService cs;
+	//1. 상품 전체 목록 
+	
+	@Autowired
+	CommentsService Cs;
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list(
 			@RequestParam int pageNo,
-			@RequestParam String keyword) {
+			@RequestParam String keyword,
+			@RequestParam String searchOption,
+			@RequestParam String soldOutView
+			) throws Exception {
 		System.out.println("pageNo : "+pageNo);
 		System.out.println("keyword : "+keyword);
-		return gs.listGoods(pageNo, keyword);
+		System.out.println("searchOption : "+searchOption);
+		System.out.println("soldOutView : "+soldOutView);
+		
+		return gs.listGoods(pageNo,keyword,searchOption,soldOutView);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
@@ -61,18 +73,20 @@ public class GoodsController extends URL implements MemberSessionName{
 		model.addAttribute("dto",gs.detailGoods(goodsId));
 		return "goods/TgoodsDetail";
 	}
-	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
-	public String write() { 
-		return "/goods/goodsWrite";
-	}
+	public String write(Model model) throws Exception{ 
+		
+	List<CategoryDTO> category = null;
+	category = cs.category();
+	model.addAttribute("category", category);
 	
+	return "/goods/goodsWrite";	
+	}
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
 	@ResponseBody
 	public String insert(GoodsDTO dto, HttpSession session) {
-
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
 		MultipartFile uploadFile = dto.getImgFile();
@@ -107,14 +121,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		}
 		return url;			
 	}
-	
 	//5. 상품 수정(편집) 페이지 매핑
 	@RequestMapping("edit")
 	public String edit(@RequestParam int goodsId,Model model) {
 		model.addAttribute("dto", gs.detailGoods(goodsId));
 		return "goods/goodsEdit";
 	}
-	
 	//6.상품 수정(편집) 처리 매핑
 	@RequestMapping("update.do")
 	@ResponseBody
@@ -161,14 +173,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		System.out.println(result);
 		return result ? "/goods/detail/"+goodsId : "/goods/edit?goodsId="+goodsId;	
 	}
-	
 	//7.상품 삭제 처리 매핑
 	@RequestMapping("delete.do")
 	public String delete(@RequestParam int goodsId) {
 		//상품 이미지 정보
 		String delFileName = gs.imgFileName(goodsId);
 		String path="";
-		
 		try {
 			// SSL인증서 오류 처리
 			SSLContext sc = SSLContext.getInstance("SSL");
@@ -195,9 +205,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		}
 		return "redirect:/";
 	}
-
-	
-	
 	//8.상품 이미지 출력
 	@GetMapping("img/{userId}")
 	public void img(@PathVariable String userId,@RequestParam String fileName,
@@ -209,7 +216,6 @@ public class GoodsController extends URL implements MemberSessionName{
 		FileCopyUtils.copy(in, response.getOutputStream());
 		in.close();
 	}
-	
 	//9.상품 찜버튼 클릭시
 	@GetMapping("heart.do")
 	@ResponseBody
@@ -217,14 +223,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		String loginUser = (String)session.getAttribute(LOGIN);
 		return loginUser == null ? false : gs.heart(new HeartDTO(loginUser, goodsId));
 	}
-	
 	// 해당 상품 찜갯수 확인
 	@GetMapping("heartNum.do/{goodsId}")
 	@ResponseBody
 	public int heartNum(@PathVariable int goodsId) {
 		return gs.heartTotalCnt(goodsId);
 	}
-	
 	// 상품 찜 활성화 확인
 	@GetMapping("isheart.do/{goodsId}")
 	@ResponseBody
@@ -249,25 +253,19 @@ public class GoodsController extends URL implements MemberSessionName{
 	     public java.security.cert.X509Certificate[] getAcceptedIssuers() { 
 	     return null; 
 	     } 
-	 
 	     public void checkClientTrusted(X509Certificate[] certs, String authType) { 
 	     } 
-	 
 	     public void checkServerTrusted(X509Certificate[] certs, String authType) { 
 	     }
-
 		@Override
 		public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 				throws java.security.cert.CertificateException {
-			
 		}
-
 		@Override
 		public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 				throws java.security.cert.CertificateException {
-			
 		} 
 	    } }; 
-
 	
+
 }

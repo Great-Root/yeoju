@@ -43,23 +43,22 @@
 			</thead>
 		</table>
 		</div>
-		
+		<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:500px;" >
+			<tbody>
+					<tr>
+						<th><a href="adminlist">관리자 목록</a></th>
+						<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
+						<th><a href="adminmodify_form">관리자 계정 수정</a></th>
+					</tr>
+			</tbody>
+		</table>
 		<div class="row" >
-<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:250px;" >					<tbody>
-						<tr>
-							<th><a href="adminlist">관리자 목록</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminmodify_form">관리자 계정 수정</a></th>
-						</tr>
-					</tbody>
-				</table>
+
 				<table class="table table-striped col" >
 					<thead>
 						<tr>
+							<th>아이디</th>
+							<th>등록일</th>
 							<th style="min-width: 100px;">아이디</th>
 							<th >등록일</th>
 							<th>최근 활동일</th>

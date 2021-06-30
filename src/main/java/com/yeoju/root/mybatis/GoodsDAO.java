@@ -1,7 +1,6 @@
 package com.yeoju.root.mybatis;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +13,9 @@ public interface GoodsDAO {
 	//01.상품목록
 	public List<GoodsDTO> listGoods(
 			@Param("pageNo") int pageNo, 
-			@Param("keyword") String keyword);
+			@Param("keyword") String keyword,
+			@Param("searchOption") String searchOption,
+			@Param("soldOutView") String soldOutView);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -23,7 +24,6 @@ public interface GoodsDAO {
 	public int updateGoods(GoodsDTO dto);
 	
 	//04.상품삭제
-	//void deleteGoods(int goodsId);
 	public void deleteGoods(int goodsId);
 	
 	//05.상품추가
@@ -37,6 +37,8 @@ public interface GoodsDAO {
 											@Param("pageNo") int pageNo		);
 	
 	// 찜한 상품 가져오기
+	public ArrayList<GoodsDTO> heartPage(String userId);
+
 	public ArrayList<GoodsDTO> heartPage(	@Param("userId") String userId, 
 											@Param("pageNo") int pageNo		);
 	

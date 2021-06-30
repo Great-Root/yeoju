@@ -66,6 +66,7 @@
 			<c:when test="${personalData.userid==loginUser}">
 			<form action="${contextPath }/member/QnABoardDelete" method="post">
 			 <input type="hidden" name="writeNo" value="${personalData.writeNo}"> 
+			<input type="submit" value="삭제하기" class="b btn btn-outline-secondary col"></form>
 			<input type="submit" value="삭제하기" class="b btn btn-outline-secondary col">
 			</form>
 			<form action="${contextPath }/member/QnaModifyForm" method="get">

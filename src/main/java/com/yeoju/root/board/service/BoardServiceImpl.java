@@ -1,10 +1,8 @@
 package com.yeoju.root.board.service;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -16,31 +14,37 @@ import com.yeoju.root.common.dto.QnaBoardRepDTO;
 import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mybatis.AnnBoardDAO;
 import com.yeoju.root.mybatis.QnaBoardDAO;
+
 @Service
 public class BoardServiceImpl implements BoardService,MemberSessionName{
 	@Autowired QnaBoardDAO dao;
+
 	@Autowired AnnBoardDAO Anndao;
 	@Override
 	public void QnABoardList(Model model) {
 		model.addAttribute("QnABoardList",dao.QnABoardList());
-		
+
 	}
 	@Override
 	public void AnnBoardList(Model model) {
 		model.addAttribute("AnnBoardList",Anndao.AnnBoardList());
-		
+
 	}
 	public void QnABoardView(int writeNo,Model model) {
 		QnaBoardDTO list = dao.QnABoardView(writeNo);
 
 		model.addAttribute("personalData", list);
+		upHit(writeNo);
+	}
+	public void upHit(int writeNo) {
+		dao.upHit(writeNo);
 	}
 	@Override
 	public void annBoardView(int writeNo, Model model) {
 		AnnBoardDTO list = Anndao.annBoardView(writeNo);
 		model.addAttribute("personalData", list);
 	}
-	
+
 	@Override
 	public void addReply(QnaBoardRepDTO dto) {
 		dao.addReply(dto);
@@ -57,10 +61,10 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 		dto.setContent(mul.getParameter("content"));
 		HttpSession session = request.getSession();
 		dto.setUserid((String)session.getAttribute(LOGIN));
-		
+
 		Anndao.AnnwriteSave(dto);
 	}
-	
+
 	public void writeSave(MultipartHttpServletRequest mul,
 			HttpServletRequest request) {
 		QnaBoardDTO dto = new QnaBoardDTO();
@@ -78,7 +82,7 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 	@Override
 	public void AnnBoardDelete(int writeNo) {
 		Anndao.AnnBoardDelete(writeNo);
-		
+
 	}
 	@Override
 	public void modify(MultipartHttpServletRequest mul, HttpServletRequest request) {
@@ -95,7 +99,7 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 		dto.setTitle(mul.getParameter("title"));
 		dto.setContent(mul.getParameter("content"));
 		Anndao.modify(dto);
-		
+
 	}
-	
+
 }

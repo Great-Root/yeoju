@@ -247,6 +247,7 @@
 	</section>
 
 	<c:import url="default/footer.jsp" />
+
 </body>
 <!-- 
 <script>

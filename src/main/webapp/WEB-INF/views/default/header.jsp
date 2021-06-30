@@ -148,7 +148,6 @@ input:focus {
 </style>
 </head>
 <body>
-
 	<div class="header" style="margin-bottom: 1em;">
 		<div class="header01">
 			<div class="header02">
@@ -158,100 +157,109 @@ input:focus {
 				</a>
 				<div class="search">
 					<div class="search01">
-						<input type="text" placeholder="검색 키워드를 입력하세요!" class="search02" onkeypress="enterkey()">
-						<a class="search03" href="#" id="searchBtn"> <img alt="돋보기"
+						<select name="searchOption" id="searchOption">
+							<option value="all"
+								<c:out value="${searchOption=='all'?'selected':'' }"/>>전체</option>
+							<option value="goods_name"
+								<c:out value="${searchOption=='goods_name'?'selected':''}"/>>상품이름</option>
+							<option value="user_id"
+								<c:out value="${searchOption=='user_id'?'selected':''}"/>>작성자</option>
+						</select> <input type="text" placeholder="검색 키워드를 입력하세요!" class="search02" id="keyword"
+							onkeypress="enterkey()"> <a class="search03" href="#"
+							id="searchBtn"> <img alt="돋보기"
 							style="width: 16px; height: 16px;"
 							src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAeZJREFUOBGVVD1PAkEQ3VlOjY0xIdGOI0BMxMSGytJE+RsWWomx8mfYWNBpZWltg1b2NCZaGBppFAzR1njsOO9gzHEfIJdws/vmvcft7OySiT2DQqUakDtipjoZ4xsyzGy6RNzy2F7mu53nmGRiKprRw7XaQm/wdU6OG2xMTvFoFPKQLTXX86tn1G7/RHM6thjArP/xeWscn8rUWqJLee/klhdW8MM4xCQHDrjQqEkivhfLF++FEvf80luvsLGXIIwB5MABF5o0HoU1M+5RkvK1Xn29+3KfRlQMpmyCOyzfM3Y7XlMbboDUjIiuZpnBFBwsH3WGVv9Io8VuYuLEUMFZUbmqjfJt2BqC5JZyT9HEtLFyVRvlhrscBeYaS4/G+VaQV4DD7+FWPJk1Vy4aPs6R+nILoBTzMJ7MmitXtVGexXFCC8j5OpzWgyoCxzEfQQOt4hot+gjHSZZOhoLraabIEQU3EEMT70HgHl44m3KcNqUm+2SCVt8vX6E1dDdRMyzTcSCXBhRSImc6o9HkW7589Pz3cpAD8CBL3oXKkj1Ze+00xxZh+DNUMHF9SQKdEL2+en7lmNmFRmmm6jVXhGl4SchF0fcrjbnEWeQ008SSs8RZuC5fjIbWW6xm8ebCYdovlg8g+gXwsu0wmCVGbgAAAABJRU5ErkJggg==">
 						</a>
-	</div>
-						
-		</div>
-						<c:if test="${loginUser == null}">
-							<div class="search04">
-								<button type="button"
-									onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
-								<button type="button"
-									onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
-							</div>
-						</c:if>
-						<c:if test="${loginUser != null}">
-							<div class="search04-1">
-								<div class="dropdown p-3" style="float: right;">
-									<button class="btn  dropdown-toggle text-dark" type="button"
-										id="dropdownMenuButton1" data-bs-toggle="dropdown"
-										aria-expanded="false" style="background-color: #43A047;">
-										<div class="col">
-<!-- 											<img alt="안열림" src="../../resources/css/h1.jpg"
-												class="rounded-circle" style="width: 36px; height: 36px;">
- -->											<img alt="안열림"
-												src="${contextPath}/mypage/profileDownload/${loginUser}"
-												class="rounded-circle" style="width: 36px; height: 36px;">
-											${loginUser } 님
-										</div>
-
-									</button>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-										<li><a class="dropdown-item" href="${contextPath}/mypage">내상점</a></li>
-										<li><a class="dropdown-item" href="#">거래현황</a></li>
-										<li><a class="dropdown-item" href="#">결제현황</a></li>
-										<li><a class="dropdown-item"
-											href="${contextPath}/member/logout">로그아웃</a></li>
-									</ul>
-								</div>
-							</div>
-						</c:if>
 					</div>
-					<div class="search05">
-						<!-- 
-				 -->
-						<button class="btn btn-secondary dropdown-toggle " type="button"
-							id="dropdownMenuButton1" data-bs-toggle="dropdown"
-							aria-expanded="false"
-							style="color: #fff; background-color: #4CAF50; border-color: #43A047;">카테고리</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" href="#">남성의류</a></li>
-							<li><a class="dropdown-item" href="#">여성의류</a></li>
-							<li><a class="dropdown-item" href="#">가구</a></li>
-							<li><a class="dropdown-item" href="#">휴대폰</a></li>
-							<li><a class="dropdown-item" href="#">스포츠</a></li>
-						</ul>
 
-
-						<div class="text-end p-3" style="margin-left: 48rem;">
-							<c:if test="${loginUser != null}">
-								<button type="button" id="sellBtn"
-									style="width: 131px; height: 58px;"
-									class="btn btn-outline-success me-2">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-										fill="currentColor" class="bi bi-camera-fill"
-										viewBox="0 0 16 16">
-						  <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-						  <path
-											d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
-						</svg>
-									판매하기
-								</button>
-							</c:if>
+				</div>
+				<c:if test="${loginUser == null}">
+					<div class="search04">
+						<button type="button"
+							onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
+						<button type="button"
+							onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
+					</div>
+				</c:if>
+				<c:if test="${loginUser != null}">
+					<div class="search04-1">
+						<div class="dropdown p-3" style="float: right;">
+							<button class="btn  dropdown-toggle text-dark" type="button"
+								id="dropdownMenuButton1" data-bs-toggle="dropdown"
+								aria-expanded="false" style="background-color: #43A047;">
+								<div class="col">
+									<img alt="안열림"
+										src="${contextPath}/mypage/profileDownload/${loginUser}"
+										class="rounded-circle" style="width: 36px; height: 36px;">
+									${loginUser } 님
+								</div>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+								<li><a class="dropdown-item" href="${contextPath}/mypage">내상점</a></li>
+								<li><a class="dropdown-item" href="#">거래현황</a></li>
+								<li><a class="dropdown-item" href="#">결제현황</a></li>
+								<li><a class="dropdown-item"
+									href="${contextPath}/member/logout">로그아웃</a></li>
+							</ul>
 						</div>
 					</div>
+				</c:if>
+			</div>
+			<div class="search05">
+				<button class="btn btn-secondary dropdown-toggle " type="button"
+					id="dropdownMenuButton1" data-bs-toggle="dropdown"
+					aria-expanded="false"
+					style="color: #fff; background-color: #4CAF50; border-color: #43A047;">카테고리</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+					<c:forEach var="cate" items="${category}">
+						<li><a class="dropdown-item" href="${cate.code}">
+								${cate.name}</a></li>
+					</c:forEach>
+				</ul>
+
+				<div class="text-end p-3" style="margin-left: 48rem;">
+					<c:if test="${loginUser != null}">
+						<button type="button" id="sellBtn"
+							style="width: 131px; height: 58px;"
+							class="btn btn-outline-success me-2">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+								fill="currentColor" class="bi bi-camera-fill"
+								viewBox="0 0 16 16">
+			                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+			                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
+			                  </svg>
+							판매하기
+						</button>
+					</c:if>
 				</div>
 			</div>
+		</div>
+	</div>
 </body>
 <script>
+var keyword = '';
 
 $(document).ready(function(){
-	$("#sellBtn").click(function () {
-		location.href = "${contextPath}/goods/write.do";
-	})
+   $("#sellBtn").click(function () {
+      location.href = "${contextPath}/goods/write.do";
+   })
+   $("#searchBtn").on("click", function() {
+      if($(".search02").val().length == 0){
+          alert("검색어를 입력해주세여!");
+          $("#keyword").focus();
+      }else{
+          location.href = "/?keyword="+$("#keyword").val()+"&searchOption="+$("#searchOption").val()+"&soldOutView=${soldOutView}";
+      }
+      });
 });
-	function enterkey() {
-	    if (window.event.keyCode == 13) {
-	    	$("#searchBtn").click();
-	    }
-	}
+   function enterkey() {
+       if (window.event.keyCode == 13) {
+          $("#searchBtn").click();
+       }
+   }
 
 
-$("#searchBtn").on("click", function() {
+/* $("#searchBtn").on("click", function() {
 	if($(".input-group.p-3").find("input.form-control").val().length == 0){
 	    alert("검색어를 입력해주세여!");
 	    $(".btn-secondary").css("background-color","red");
@@ -262,6 +270,6 @@ $("#searchBtn").on("click", function() {
 	});
 	function borderDel() {
 	     $("#searchBtn").css("background-color","pink");
-	}
+	} */
 </script>
 </html>
