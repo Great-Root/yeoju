@@ -31,7 +31,7 @@ public class HomeController implements MemberSessionName{
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,
 			@RequestParam(required = false,defaultValue = "") String keyword,
-			@RequestParam(required = false,defaultValue = "all") String searchOption) throws Exception {
+			@RequestParam(required = false,defaultValue = "all") String searchOption) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		//List<GoodsDTO> list = GoodsService.listGoods(0, searchOption,keyword);
 		model.addAttribute("keyword", keyword);

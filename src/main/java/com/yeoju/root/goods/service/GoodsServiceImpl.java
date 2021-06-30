@@ -26,6 +26,7 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public List<GoodsDTO> listGoods(int pageNo, String keyword, String searchOption){
 		return goodsDao.listGoods(pageNo, keyword, searchOption);
 	}
+	// String searchOption,searchOption
 	//02.상품상세
 	//제품 상세 페이지에 댓글 기능이 들어가기 때문에 retrunDTO라는 변수에 GoodsDTO,CommentDTO를 넣어버림
 		@Override

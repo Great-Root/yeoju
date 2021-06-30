@@ -75,6 +75,7 @@ public class GoodsController extends URL implements MemberSessionName{
 		System.out.println("searchOption : "+searchOption);
 		
 		return listGoods(pageNo,keyword,searchOption);
+		
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")

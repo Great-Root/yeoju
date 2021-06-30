@@ -25,7 +25,7 @@
       var param = {
          "pageNo" : pageNo,
          "keyword" : '${keyword}',
-         "searchOption" : '${searchOption}'
+         //"searchOption" : '${searchOption}'
       };
       // 데이터를 불러온다.
       $.ajax({
