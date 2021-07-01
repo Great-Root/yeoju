@@ -241,7 +241,19 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 		
 	}
 
-
+	
+	@Override
+	public void joinNaverLogin(MemberDTO dto, HttpSession session) throws Exception {
+		String email = dto.getEmail();
+		String[] e = email.split("@");
+		String naverId = "N-" + e[0];
+		dto.setUserId(naverId);
+		if(dao.check_id(naverId) == 0) {
+			dao.join_member(dto);
+		}
+		session.setAttribute("loginUser",naverId); //세션 생성
+	}
+	
 }
 	
 	

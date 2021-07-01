@@ -2,6 +2,8 @@ package com.yeoju.root.member.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +58,7 @@ public class MemberController implements MemberSessionName{
 	}
 	 
 		@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
+		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
 			System.out.println("여기는 callback");
 			OAuth2AccessToken oauthToken;
 			oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -68,10 +70,15 @@ public class MemberController implements MemberSessionName{
 			
 			JSONObject response_obj = (JSONObject)jsonObj.get("response");
 			String nickname = (String)response_obj.get("nickname");
-			System.out.println(nickname);
-			session.setAttribute("loginUser",nickname); //세션 생성
+			String id = (String)response_obj.get("id");
+			String email = (String)response_obj.get("email");
+			System.out.println(nickname+id);
+			MemberDTO dto = new MemberDTO();
+			dto.setEmail(email);
+			dto.setPw(id);
+			ms.joinNaverLogin(dto, session);
 			model.addAttribute("result", apiResult);
-			
+			System.out.println(apiResult);
 			return "redirect:/";
 		}
 		

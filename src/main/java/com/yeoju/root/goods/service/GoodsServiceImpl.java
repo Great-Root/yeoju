@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
+import com.yeoju.root.common.dto.SearchDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.mybatis.CommentsDAO;
 import com.yeoju.root.mybatis.GoodsDAO;
@@ -23,8 +24,8 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	
 	//01.상품목록
 	@Override
-	public List<GoodsDTO> listGoods(int pageNo, String keyword, String searchOption,String soldOutView){
-		return goodsDao.listGoods(pageNo, keyword, searchOption, soldOutView);
+	public List<GoodsDTO> listGoods(SearchDTO search){
+		return goodsDao.listGoods(search);
 	}
 	//02.상품상세
 	//제품 상세 페이지에 댓글 기능이 들어가기 때문에 retrunDTO라는 변수에 GoodsDTO,CommentDTO를 넣어버림

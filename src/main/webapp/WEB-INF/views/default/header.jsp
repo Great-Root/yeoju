@@ -223,8 +223,8 @@ input:focus {
 					aria-expanded="false"
 					style="color: #fff; background-color: #4CAF50; border-color: #43A047;">카테고리</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<c:forEach var="cate" items="${category_h}">
-						<li><a class="dropdown-item" href="${cate.code}">
+					<c:forEach var="cate" items="${category_list}">
+						<li><a class="dropdown-item" href="${contextPath}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=${soldOutView}&categoryCode=${cate.code}">
 								${cate.name}</a></li>
 					</c:forEach>
 				</ul>
@@ -260,7 +260,7 @@ $(document).ready(function(){
           alert("검색어를 입력해주세여!");
           $("#keyword").focus();
       }else{
-          location.href = "/?keyword="+$("#keyword").val()+"&searchOption="+$("#searchOption").val()+"&soldOutView=${soldOutView}";
+          location.href = "${contextPath}?keyword="+$("#keyword").val()+"&searchOption="+$("#searchOption").val()+"&soldOutView=${soldOutView}";
       }
       });
 });
@@ -270,18 +270,5 @@ $(document).ready(function(){
        }
    }
 
-
-/* $("#searchBtn").on("click", function() {
-	if($(".input-group.p-3").find("input.form-control").val().length == 0){
-	    alert("검색어를 입력해주세여!");
-	    $(".btn-secondary").css("background-color","red");
-	    setInterval(borderDel, 3000);
-	}else{
-	    location.href = "/?keyword="+$("#keyword").val();
-	}
-	});
-	function borderDel() {
-	     $("#searchBtn").css("background-color","pink");
-	} */
 </script>
 </html>

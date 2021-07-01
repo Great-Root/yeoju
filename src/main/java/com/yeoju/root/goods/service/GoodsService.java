@@ -7,11 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
+import com.yeoju.root.common.dto.SearchDTO;
 
 public interface GoodsService {
 	
 	//01.상품목록
-	public List<GoodsDTO> listGoods(int pageNo, String keyword, String searchOption,String soldOutView);
+	public List<GoodsDTO> listGoods(SearchDTO search);
 
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);

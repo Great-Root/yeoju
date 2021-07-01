@@ -30,9 +30,9 @@
       }
       $soldOutView.click(function () {
     	  if(${soldOutView}){
-		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=false'
+		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=false&categoryCode=${categoryCode}'
     	  }else{
-		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=true'
+		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=true&categoryCode=${categoryCode}'
     	  }
 	  });
    });
@@ -41,8 +41,10 @@
          "pageNo" : pageNo,
          "keyword" : '${keyword}',
          "searchOption" : '${searchOption}',
-         "soldOutView" : '${soldOutView}'
+         "soldOutView" : '${soldOutView}',
+         "categoryCode" : '${categoryCode}'
       };
+      console.log(param);
       // 데이터를 불러온다.
       $.ajax({
           url : "goods/list.do",

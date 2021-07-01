@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yeoju.root.category.CategoryService;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.MemberDTO;
 import com.yeoju.root.goods.service.GoodsService;
@@ -27,19 +28,23 @@ public class HomeController implements MemberSessionName{
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired MyPageService mps;
+	@Autowired CategoryService cs;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,
 			@RequestParam(required = false,defaultValue = "") String keyword,
 			@RequestParam(required = false,defaultValue = "all") String searchOption,
-			@RequestParam(required = false,defaultValue = "false") String soldOutView
+			@RequestParam(required = false,defaultValue = "false") String soldOutView,
+			@RequestParam(required = false,defaultValue = "all") String categoryCode
 			) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		//List<GoodsDTO> list = GoodsService.listGoods(0, searchOption,keyword);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("searchOption", searchOption);
 		model.addAttribute("soldOutView", soldOutView);
-//		model.addAttribute("category_h", soldOutView);
+		model.addAttribute("category_list", cs.category());
+		model.addAttribute("categoryCode", categoryCode);
+		System.out.println("(HOME)categoryCode => "+categoryCode);
 		return "index";
 	}
 	@GetMapping("/mypage")

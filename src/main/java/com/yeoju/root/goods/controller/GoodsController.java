@@ -23,6 +23,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +36,7 @@ import com.yeoju.root.common.dto.CategoryDTO;
 import com.yeoju.root.common.comments.service.CommentsService;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
+import com.yeoju.root.common.dto.SearchDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
@@ -55,17 +57,15 @@ public class GoodsController extends URL implements MemberSessionName{
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list(
-			@RequestParam int pageNo,
-			@RequestParam String keyword,
-			@RequestParam String searchOption,
-			@RequestParam String soldOutView
+			@ModelAttribute SearchDTO search
 			) throws Exception {
-		System.out.println("pageNo : "+pageNo);
-		System.out.println("keyword : "+keyword);
-		System.out.println("searchOption : "+searchOption);
-		System.out.println("soldOutView : "+soldOutView);
+		System.out.println("pageNo : "+search.getPageNo());
+		System.out.println("keyword : "+search.getKeyword());
+		System.out.println("searchOption : "+search.getSearchOption());
+		System.out.println("soldOutView : "+search.getSoldOutView());
+		System.out.println("categoryCode : "+search.getCategoryCode());
 		
-		return gs.listGoods(pageNo,keyword,searchOption,soldOutView);
+		return gs.listGoods(search);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
