@@ -1,6 +1,7 @@
 package com.yeoju.root.common.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public class GoodsDTO extends CategoryDTO{
 	private String userId;
 
 	// sysdate
-	private Date regDate;
+	private Timestamp regDate;
 
 	// 0:판매중 1:매진
 	private Integer soldOut;
@@ -98,11 +99,11 @@ public class GoodsDTO extends CategoryDTO{
 		this.userId = userId;
 	}
 
-	public Date getRegDate() {
+	public Timestamp getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
 

@@ -134,14 +134,26 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 	
 </script>
+<style type="text/css">
+.form {
+  background: #FFFFFF;
+  max-width: 1200px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: left;
+  font-size: 13px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+</style>
 </head>
 <body>
 <c:import url="../default/header.jsp"/>
 <main class="container d-flex flex-wrap align-items-center justify-content-center">
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
+<div class="form position-relative overflow-hidden">
 	<div class="row">
-		<h2 class="text-center">상품 수정</h2><hr>
+		<h2 style="margin: 0 auto; color:green;">상품 수정</h2>
 	</div>
+	<hr>
 	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
 	<div class="row">
 		<div class="col">
@@ -185,9 +197,8 @@ window.addEventListener('DOMContentLoaded', function () {
 				<div class="row">
 					<hr>
 					<div class="col d-flex justify-content-center">
-						<input type="button" class="btn btn-primary mx-3" value="상품 수정 완료" id="modiBtn"> 
-						<input type="button" class="btn btn-secondary mx-3" value="목록" onclick="location.href='${path}/';">
-						<input type="button" class="btn btn-danger mx-3" value="상품 삭제 하기" id="delBtn"> 
+						<input type="button" class="btn btn-outline-success mx-3" value="상품 수정 완료" id="modiBtn"> 
+						<input type="button" class="btn btn-outline-danger mx-3" value="상품 삭제 하기" id="delBtn"> 
 					</div>
 				</div>
 			</form>

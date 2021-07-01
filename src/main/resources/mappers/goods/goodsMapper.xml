@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(
 			goods_seq.NEXTVAL, #{goodsName}, #{goodsInfo}, #{goodsPrice},
 			#{userId}, sysdate, <!-- #{RegDate} -->	0, <!-- #{soldOut} -->
-			1, #{imgFileName}, #{categoryCode}
+			1, #{imgFileName}, #{categoryCode}, 0
 		)
 	</insert>
 	

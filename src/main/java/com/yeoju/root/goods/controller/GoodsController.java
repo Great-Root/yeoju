@@ -71,7 +71,9 @@ public class GoodsController extends URL implements MemberSessionName{
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
 	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
-		model.addAttribute("dto",gs.detailGoods(goodsId));
+		GoodsDTO dto = gs.detailGoods(goodsId);
+		model.addAttribute("dto",dto);
+		model.addAttribute("regTime",dto.getRegDate().getTime());
 		
 		//조회수 증가
 		gs.viewCount(goodsId);
