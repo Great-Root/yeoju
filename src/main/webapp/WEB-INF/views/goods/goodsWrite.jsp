@@ -6,7 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>상품 등록</title>
 <c:set var="path" value="<%=request.getContextPath()%>"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/resources/js/cropper.js"></script>
 <script>
 	window.addEventListener('DOMContentLoaded', function () {
 	      var avatar = document.getElementById('avatar');
@@ -119,43 +122,37 @@
 	});
 	    });
 	</script>
-  <script src="/resources/js/cropper.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
   <link rel="stylesheet" href="/resources/css/cropper.css">
+  
 <style>
-    .label {
-      cursor: pointer;
-    }
-
-    .progress {
-      display: none;
-      margin-bottom: 1rem;
-    }
-
-    .alert {
-      display: none;
-    }
-
-    .img-container img {
-      max-width: 100%;
-    }
-  </style>
+   .form {
+  background: #FFFFFF;
+  max-width: 1200px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: left;
+  font-size: 13px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+ </style>
 </head>
 <body>
 <c:import url="../default/header.jsp"/>
 <main class="container d-flex flex-wrap align-items-center justify-content-center">
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
-	<div class="row">
-		<h2>상품 등록</h2>
-	</div>
+<div class="form position-relative overflow-hidden">
+		<h2 style="color:green; font-size:30px; text-align:center">상품 등록</h2>
 	<hr>
-	<form action="" id="form1" name="form1" enctype="multipart/form-data" method="post">
+	<form action="" id="modifyForm" enctype="multipart/form-data" method="post">
 	<div class="row">
 		<div class="col">
     <label class="label" data-toggle="tooltip" title="클릭해서 이미지를 등록">
       <img class="img-thumbnail" id="avatar" src="https://www.greatroot.net/img/download?fileName=default.png" alt="avatar" width="640" height="640">
       <input type="file" class="sr-only" id="input" name="imgFile" accept="image/*">
     </label>
+    <!--  -->
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -168,8 +165,14 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-primary" id="crop">등록하기</button>
+            <!--<button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" id="crop">등록하기</button>-->
+			<td colspan="2">
+				<div align="right">
+					<input type="submit" class="btn btn-secondary" id="close" data-dismis="modal" value="취소" style="margin-right: 0.7em;"> 
+					<input type="button" class="btn btn-primary" id="crop" value="등록하기" >
+				</div>
+			</td>
           </div>
         </div>
       </div>
@@ -192,9 +195,8 @@
 	</div>
 				<div class="row">
 					<div class="col d-flex justify-content-center">
-						<input type="button" class="btn btn-primary mx-3" value="상품 등록 완료" id="addBtn"> 
-						<input type="button" class="btn btn-secondary mx-3" value="목록" onclick="location.href='${path}/goods/list.do';">
-						<input type="button" class="btn btn-danger mx-3" value="취소" onClick="javascript:history.back(-1)"> 
+						<input type="button" class="btn btn-outline-success mx-3" value="상품 등록 완료" id="addBtn"> 
+						<input type="button" class="btn btn-outline-danger" value="취소" onClick="javascript:history.back(-1)"> 
 					</div>
 				</div>
 			</form>

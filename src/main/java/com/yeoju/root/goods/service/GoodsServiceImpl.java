@@ -21,12 +21,15 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	GoodsDAO goodsDao;
 	@Autowired
 	CommentsDAO commentsDAO;
+	@Autowired
+	private GoodsDAO goodsMapper;
 	
 	//01.상품목록
 	@Override
 	public List<GoodsDTO> listGoods(SearchDTO search){
 		return goodsDao.listGoods(search);
 	}
+	// String searchOption,searchOption
 	//02.상품상세
 	//제품 상세 페이지에 댓글 기능이 들어가기 때문에 retrunDTO라는 변수에 GoodsDTO,CommentDTO를 넣어버림
 		@Override
@@ -61,6 +64,12 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	@Override
 	public String imgFileName(int goodsId) {
 		return goodsDao.imgFileName(goodsId);
+	}
+	
+	//07.조회수 카운트
+	@Override
+	public void viewCount(int goodsId) {
+		goodsMapper.viewCount(goodsId);
 	}
 
 	//댓글 조회

@@ -16,6 +16,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
 	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
@@ -58,7 +59,7 @@
 					<thead>
 						<tr>
 							<th>아이디</th>
-							<th style="min-width: 100px;">아이디</th>
+							<th style="min-width: 100px;">등록일</th>
 							<th>최근 활동일</th>
 							<th>최근 활동</th>
 							<th>전화번호</th>

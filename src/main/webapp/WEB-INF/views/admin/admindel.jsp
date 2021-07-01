@@ -16,6 +16,8 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
 	integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 	crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
@@ -46,27 +48,22 @@
 			</thead>
 		</table>
 		</div>
+			<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:500px;" >
+			<tbody>
+					<tr>
+						<th><a href="adminlist">관리자 목록</a></th>
+						<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
+						<th><a href="adminmodify_form">관리자 계정 수정</a></th>
+					</tr>
+			</tbody>
+		</table>
 		<div class="row" >
-				<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:20%;" >
-					<tbody>
-						<tr>
-							<th><a href="adminlist">관리자 목록</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminjoin_form">관리자 계정 생성/삭제</a></th>
-						</tr>
-						<tr>
-							<th><a href="adminmodify_form">관리자 계정 수정</a></th>
-						</tr>
-					</tbody>
-				</table>
-				 
-				 	<div class="col" align="right">
+				 	<div class="col" align="center">
 				 	<form action="admindelete" method="post" >
-				<h6 align="center">계정 삭제</h6>
+				<h3>계정 삭제</h3>
 					
 					아이디<input type="text" name="id"   value="${loginUser }" ><br>
-					<label>*주의*<br>삭제 클릭시 로그인된 관리자 삭제 </label><br>
+					<label>*주의* 계정 삭제 클릭시 로그인된 관리자 삭제 </label><br>
 					<input type="submit" value="계정 삭제" >
 					
 				</form></div>

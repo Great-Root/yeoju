@@ -48,11 +48,11 @@ public class GoodsController extends URL implements MemberSessionName{
 	@Autowired
 	GoodsService gs;
 	@Autowired
-	CategoryService cs;
+	CategoryService cateS;
 	//1. 상품 전체 목록 
 	
 	@Autowired
-	CommentsService Cs;
+	CommentsService cs;
 	//1. 상품 전체 목록 - 메인페이지 쪽에서?
 	@ResponseBody
 	@RequestMapping("/list.do")
@@ -70,14 +70,27 @@ public class GoodsController extends URL implements MemberSessionName{
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
 	public String detail(@PathVariable("goodsId")int goodsId, Model model) {
+		GoodsDTO dto = gs.detailGoods(goodsId);
+		model.addAttribute("dto",dto);
+		model.addAttribute("regTime",dto.getRegDate().getTime());
+		
+		//조회수 증가
+		gs.viewCount(goodsId);
 		model.addAttribute("dto",gs.detailGoods(goodsId));
+		
 		return "goods/TgoodsDetail";
 	}
+	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
 	public String write(Model model) throws Exception{ 
-		List<CategoryDTO> category = cs.category();
-		model.addAttribute("category", category);
+		
+//	List<CategoryDTO> category = null;
+//	category = cateS.category();
+//	model.addAttribute("category", category);
+	
+	List<CategoryDTO> category = cateS.category();
+	model.addAttribute("category", category);
 	return "/goods/goodsWrite";	
 	}
 	//4.상품등록 처리 매핑
@@ -125,7 +138,7 @@ public class GoodsController extends URL implements MemberSessionName{
 		model.addAttribute("dto", gs.detailGoods(goodsId));
 		List<CategoryDTO> category;
 		try {
-			category = cs.category();
+			category = cateS.category();
 			model.addAttribute("category", category);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -271,6 +284,8 @@ public class GoodsController extends URL implements MemberSessionName{
 				throws java.security.cert.CertificateException {
 		} 
 	    } }; 
+	
+	
 	
 
 }

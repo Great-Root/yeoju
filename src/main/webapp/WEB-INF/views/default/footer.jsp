@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
 <style type="text/css">
 	.footer {
 	display: flex;
@@ -103,6 +104,9 @@
 				<a class="footer2-1" href ="#">자주하는 질문</a>
 			</div>
 		</div>
+		</c:otherwise>
+  		
+ 		 </c:choose>
 		<div class ="footer3">
 			<div class ="footer3-1">
 				<div class="nothing">
@@ -124,9 +128,7 @@
 				</div>
 			</div>
 		</div>
-			</c:otherwise>
-  		
- 		 </c:choose>
+			
 	</div>
 </body>
 </html>

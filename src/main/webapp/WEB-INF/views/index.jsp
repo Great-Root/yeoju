@@ -9,6 +9,7 @@
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <c:set var="userId" value=""/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://kit.fontawesome.com/bdec6dffe3.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script type="text/javascript">
    var pageNo = 1;
@@ -73,9 +74,32 @@
             html += '<div class ="div-f"></div>'
             html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+(item.soldOut == 1 ? '<b>&nbsp;(판매완료)</b>':'')+'</div>'
             html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
-            html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
+            html += '<div class ="div-k"><i class="far fa-eye"></i> '+item.viewCount+' &bull; '+timeForToday(item.regDate)+'</div></div></div></div></a></div>'
         return html;
    }
+ //시간
+	function timeForToday(value){
+		const today=new Date();
+		const timeValue=new Date(value);
+		console.log(timeValue);
+		const betweenTime = Math.floor((today.getTime() - timeValue.getTime())/1000/60);
+		if(betweenTime<1) return '방금전';
+		if(betweenTime<60){
+			return betweenTime+`분전`;
+		}
+		
+		const betweenTimeHour = Math.floor(betweenTime / 60);
+		if(betweenTimeHour < 24){
+			return betweenTimeHour+`시간전`;
+		}
+		
+		const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+		if(betweenTimeDay < 365){
+			return betweenTimeDay+`일전`;
+		}
+		
+		return `${Math.floor(betweenTimeDay / 365)}년전`;
+	}
 </script>
 <link rel="stylesheet" type="text/css" href="resources/css/list.css">
 
@@ -99,7 +123,7 @@
        <a href ="#3">
       <img src="https://media.bunjang.co.kr/images/nocrop/650140922.jpg" class="d-block w-100" alt="...">
        </a>
-    </div>
+    </div> 
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

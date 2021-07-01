@@ -22,6 +22,17 @@ public class CommentsServiceImpl implements CommentsService{
 		
 		return commentDTO.getCommentId();
 	}
+	 
+	//대댓글 추가
+	@Override
+	public int insertComments2(GoodsCommentsDTO dto) {
+		
+		GoodsCommentsDTO commentDTO = commentsDAO.selectCommentSeq2();
+		dto.setCommentId2(commentDTO.getCommentId2());
+		commentsDAO.insertComments2(dto);
+		
+		return commentDTO.getCommentId2();
+	}
 
 	//댓글 수정
 	@Override
@@ -36,6 +47,12 @@ public class CommentsServiceImpl implements CommentsService{
 		
 		return commentsDAO.deleteComments(commentId);
 		
+	}
+
+	@Override
+	public int deleteComments2(int commentId) {
+		// TODO Auto-generated method stub
+		return commentsDAO.deleteComments(commentId);
 	}
 
 }

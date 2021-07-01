@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="content" property="content"/>
 		<result column="reg_date" property="regDate"/>
 		<result column="comment_id" property="commentId"/>
+		<result column="comment_id2" property="commentId2"/>
 		<result column="num" property="num"/>
 		<result column="ref_group" property="refGroup"/>
 		<result column="comment_group" property="commentGroup"/>
@@ -18,10 +19,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 댓글 조회 -->
 	<select id="redaReply" resultMap ="GoodsCommentsMap">
 		select * from goods_comment where goods_id = #{goodsId}
+		order by comment_id desc, comment_id2 desc
 	</select>
 	
 	<select id="selectCommentSeq" resultMap ="GoodsCommentsMap">
 		select GOODS_COMMENT_SEQ.nextval AS comment_id from dual
+	</select>
+	
+	<select id="selectCommentSeq2" resultMap ="GoodsCommentsMap">
+		select GOODS_COMMENT_SEQ.nextval AS comment_id2 from dual
 	</select>
 	
 	
@@ -33,6 +39,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{goodsId},#{userId},#{content},sysdate, #{commentId}
 		)
 	</insert>
+	
+	<!-- 댓글 추가 -->
+	<insert id ="insertComments2">
+		insert into goods_comment(
+		goods_id,user_id,content,reg_date,comment_id,comment_id2)
+		values(
+		#{goodsId},#{userId},#{content},sysdate, #{commentId}, #{commentId2}
+		)
+	</insert>
 	<!-- 댓글 수정 -->
 	<update id="updateComments">
 		update goods_comment set 
@@ -42,6 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 댓글 삭제 -->
 	<delete id="deleteComments">
 		delete from goods_comment
-		where comment_id =#{commentId}
+		where comment_id =#{commentId} or comment_id2 = #{commentId}
+	</delete>
+	<!-- 대댓글 삭제 -->
+	<delete id="deleteComments2">
+		delete from goods_comment
+		where comment_id2 = #{commentId2}
 	</delete>
 </mapper>

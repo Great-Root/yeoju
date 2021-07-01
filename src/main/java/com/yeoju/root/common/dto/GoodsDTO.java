@@ -1,6 +1,7 @@
 package com.yeoju.root.common.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -14,12 +15,15 @@ public class GoodsDTO extends CategoryDTO{
 	private String goodsInfo;
 
 	private int goodsPrice;
+	
+	//조회수 카운트
+	private Integer viewCount;
 
 	// 등록한 사람
 	private String userId;
 
 	// sysdate
-	private Date regDate;
+	private Timestamp regDate;
 
 	// 0:판매중 1:매진
 	private Integer soldOut;
@@ -39,6 +43,14 @@ public class GoodsDTO extends CategoryDTO{
 	//댓글 리스트
 	private List<GoodsCommentsDTO> goodsCommentsList;
 	
+	public Integer getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
+	}
+
 	public List<GoodsCommentsDTO> getGoodsCommentsList() {
 		return goodsCommentsList;
 	}
@@ -87,11 +99,11 @@ public class GoodsDTO extends CategoryDTO{
 		this.userId = userId;
 	}
 
-	public Date getRegDate() {
+	public Timestamp getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
 

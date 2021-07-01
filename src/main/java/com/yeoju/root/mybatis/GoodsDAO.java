@@ -29,6 +29,9 @@ public interface GoodsDAO {
 	//06.상품이미지 삭제를 위한 이미지파일 정보
 	public String imgFileName(int goodsId);
 	
+	//07.조회수 카운트
+	public void viewCount(int goodsId);
+	
 	// 판매중인 상품 가져오기
 	public ArrayList<GoodsDTO> sellGoods(	@Param("userId") String userId, 
 											@Param("pageNo") int pageNo		);

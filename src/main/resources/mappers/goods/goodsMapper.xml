@@ -16,14 +16,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="how_many" property="howMany"/>
 		<result column="img" property="imgFileName"/>
 		<result column="category_code" property="categoryCode"/>
+		<result column="view_count" property="viewCount"/>
 	</resultMap>
 	<!-- 01.상품 리스트 -->
+	<!-- 07.게시물 조회수 카운트 -->
+	<update id="viewCount">
+		UPDATE goods 
+		SET VIEW_COUNT = VIEW_COUNT+1
+		WHERE goods_id =#{goodsId}
+	</update>
+
 	<select id="listGoods" resultMap="GoodsMap" >
 		SELECT B.* FROM(
 		SELECT rownum rn, A.* FROM (
 		SELECT * FROM goods
 		<include refid="search" />
 		ORDER BY goods_id DESC)A <include refid="soldOutChk"/>)B WHERE rn BETWEEN (#{pageNo}*5 - 4) AND #{pageNo}*5
+		
 	</select>
 	<sql id="soldOutChk">
 		<where> 
@@ -42,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 동적 SQL 구문 -->
 	<sql id="search">
 		<choose>
-			<!--상품이름 + 작성자?  -->
+			<!--상품이름 + 작성자  -->
 			<when test="searchOption == 'all'">
 				WHERE goods_name like '%'||#{keyword}||'%'
 				OR user_id like '%'||#{keyword}||'%'
@@ -65,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(
 			goods_seq.NEXTVAL, #{goodsName}, #{goodsInfo}, #{goodsPrice},
 			#{userId}, sysdate, <!-- #{RegDate} -->	0, <!-- #{soldOut} -->
-			1, #{imgFileName}, #{categoryCode}
+			1, #{imgFileName}, #{categoryCode}, 0
 		)
 	</insert>
 	
@@ -110,6 +119,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN goods b
 		ON a.goods_id = b.goods_id 
 	</select>
+	
+	
 	
 	<!-- 로그인 사용자의 해당상품 찜 여부확인 -->
 	<select id="heartCnt" resultType="Integer">
