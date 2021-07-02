@@ -7,15 +7,12 @@ import org.apache.ibatis.annotations.Param;
 
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
+import com.yeoju.root.common.dto.SearchDTO;
 
 public interface GoodsDAO {
 	
 	//01.상품목록
-	public List<GoodsDTO> listGoods(
-			@Param("pageNo") int pageNo, 
-			@Param("keyword") String keyword,
-			@Param("searchOption") String searchOption,
-			@Param("soldOutView") String soldOutView);
+	public List<GoodsDTO> listGoods(SearchDTO search);
 	
 	//02.상품상세
 	public GoodsDTO detailGoods(int goodsId);
@@ -25,6 +22,12 @@ public interface GoodsDAO {
 	
 	//04.상품삭제
 	public void deleteGoods(int goodsId);
+	
+	//04-1.상품 하트 전부 삭제
+	public void deleteHeartAll(int goodsId);
+	
+	//04-2.상품 댓글 전부 삭제
+	public void deleteCommentAll(int goodsId);
 	
 	//05.상품추가
 	public int insertGoods(GoodsDTO dto);

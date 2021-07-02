@@ -89,7 +89,7 @@
    <div class="login-page">
       <div class="form">
          <a href="${path}/">
-            <img src="../../resources/img/여주.png" width="110px" height="140px">
+            <img src="${contextPath}/resources/img/여주.png" width="110px" height="140px">
          </a>
             <h1 style="color: green; font-size: 30px;">Join</h1>
          <div>

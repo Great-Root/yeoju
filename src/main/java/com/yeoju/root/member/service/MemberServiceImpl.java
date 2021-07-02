@@ -63,7 +63,7 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 					Date limitDate = new Date(cal.getTimeInMillis());
 					keepLogin(session.getId(), limitDate, dto.getUserId());
 				}
-				comp.sendHref(response,"/");
+				comp.sendHref(response,request.getContextPath());
 			}else {//비밀번호가 일치하지 않는 경우
 				comp.sendAlertAndBack(response, "비밀번호가 다릅니다");
 			}
@@ -149,9 +149,9 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 			comp.sendAlertAndBack(response, "동일한 이메일이 있습니다.");
 		}else {
 			if(dao.join_member(dto) == 1) {
-				comp.sendAlertAndHref(response, "성공적으로 회원가입이 되었습니다.", "/member/login");
+				comp.sendAlertAndHref(response, "성공적으로 회원가입이 되었습니다.", "member/login");
 			}else {
-				comp.sendAlertAndHref(response, "회원가입에 실패했습니다.", "/member/memberJoinForm.do");
+				comp.sendAlertAndHref(response, "회원가입에 실패했습니다.", "member/memberJoinForm.do");
 			}
 		}
 	}
@@ -241,7 +241,19 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 		
 	}
 
-
+	
+	@Override
+	public void joinNaverLogin(MemberDTO dto, HttpSession session) throws Exception {
+		String email = dto.getEmail();
+		String[] e = email.split("@");
+		String naverId = "N-" + e[0];
+		dto.setUserId(naverId);
+		if(dao.check_id(naverId) == 0) {
+			dao.join_member(dto);
+		}
+		session.setAttribute("loginUser",naverId); //세션 생성
+	}
+	
 }
 	
 	

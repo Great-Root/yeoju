@@ -24,11 +24,11 @@
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 		<div align="center">
-		<form action="${contextPath }/member/user_check" method="post">
+		<form action="${contextPath}/member/user_check" method="post">
 			<div class="login-page">
 			<div class="form">
 			<a href="${contextPath}/">
-			<img src="../../resources/img/여주.png" width="110px" height="140px">
+			<img src="${contextPath}/resources/img/여주.png" width="110px" height="140px">
 			</a>
 			<h1 style="color: green; font-size: 30px;">login</h1>
 			<div>
@@ -45,7 +45,7 @@
 				</div>
 				
 				<div class="text-center">
-				<a href="${url}"><img width="50px" src="../../resources/img/Naver.png" alt="Naver login"></a> 
+				<a href="${url}"><img width="50px" src="${contextPath}/resources/img/Naver.png" alt="Naver login"></a> 
 				</div>
 			
 			<button type="submit" style="size: 120px" class="btn btn-primary">로그인</button><br>

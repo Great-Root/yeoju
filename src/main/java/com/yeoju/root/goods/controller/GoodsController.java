@@ -9,6 +9,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.security.cert.X509Certificate;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -36,6 +37,7 @@ import com.yeoju.root.common.dto.CategoryDTO;
 import com.yeoju.root.common.comments.service.CommentsService;
 import com.yeoju.root.common.dto.GoodsDTO;
 import com.yeoju.root.common.dto.HeartDTO;
+import com.yeoju.root.common.dto.SearchDTO;
 import com.yeoju.root.common.url.URL;
 import com.yeoju.root.goods.service.GoodsService;
 import com.yeoju.root.member.session_name.MemberSessionName;
@@ -56,17 +58,15 @@ public class GoodsController extends URL implements MemberSessionName{
 	@ResponseBody
 	@RequestMapping("/list.do")
 	public List<GoodsDTO> list(
-			@RequestParam int pageNo,
-			@RequestParam String keyword,
-			@RequestParam String searchOption,
-			@RequestParam String soldOutView
+			@ModelAttribute SearchDTO search
 			) throws Exception {
-		System.out.println("pageNo : "+pageNo);
-		System.out.println("keyword : "+keyword);
-		System.out.println("searchOption : "+searchOption);
-		System.out.println("soldOutView : "+soldOutView);
+		System.out.println("pageNo : "+search.getPageNo());
+		System.out.println("keyword : "+search.getKeyword());
+		System.out.println("searchOption : "+search.getSearchOption());
+		System.out.println("soldOutView : "+search.getSoldOutView());
+		System.out.println("categoryCode : "+search.getCategoryCode());
 		
-		return gs.listGoods(pageNo,keyword,searchOption,soldOutView);
+		return gs.listGoods(search);
 	}
 	//2. 상품 상세보기
 	@RequestMapping("detail/{goodsId}")
@@ -79,16 +79,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		gs.viewCount(goodsId);
 		model.addAttribute("dto",gs.detailGoods(goodsId));
 		
-		return "goods/TgoodsDetail";
+		return "goods/goodsDetail";
 	}
 	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
 	public String write(Model model) throws Exception{ 
-		
-//	List<CategoryDTO> category = null;
-//	category = cateS.category();
-//	model.addAttribute("category", category);
 	
 	List<CategoryDTO> category = cateS.category();
 	model.addAttribute("category", category);
@@ -97,7 +93,7 @@ public class GoodsController extends URL implements MemberSessionName{
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
 	@ResponseBody
-	public String insert(GoodsDTO dto, HttpSession session) {
+	public String insert(GoodsDTO dto, HttpSession session, HttpServletRequest request) {
 		System.out.println(dto.toString());
 		String url = "";
 		//상품 이미지 등록 : 이미지 서버로 POST 요청
@@ -124,7 +120,7 @@ public class GoodsController extends URL implements MemberSessionName{
 				if(!result.equals("Failed to save")) {
 					dto.setImgFileName(result); 
 					dto.setUserId((String) session.getAttribute(LOGIN));
-					url = gs.insertGoods(dto) ? "/" : "";
+					url = gs.insertGoods(dto) ? request.getContextPath() : "";
 				}
 				
 			} catch (Exception e) {
@@ -190,14 +186,13 @@ public class GoodsController extends URL implements MemberSessionName{
 			result = false;
 		}
 		System.out.println(result);
-		return result ? "/goods/detail/"+goodsId : "/goods/edit?goodsId="+goodsId;	
+		return result ? "goods/detail/"+goodsId : "goods/edit?goodsId="+goodsId;	
 	}
 	//7.상품 삭제 처리 매핑
 	@RequestMapping("delete.do")
-	public String delete(@RequestParam int goodsId) {
+	public String delete(@RequestParam int goodsId, HttpServletRequest request) {
 		//상품 이미지 정보
 		String delFileName = gs.imgFileName(goodsId);
-		String path="";
 		try {
 			// SSL인증서 오류 처리
 			SSLContext sc = SSLContext.getInstance("SSL");
@@ -222,7 +217,7 @@ public class GoodsController extends URL implements MemberSessionName{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/";
+		return "redirect:"+request.getContextPath();
 	}
 	//8.상품 이미지 출력
 	@GetMapping("img/{userId}")

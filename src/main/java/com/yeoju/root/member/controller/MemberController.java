@@ -2,6 +2,8 @@ package com.yeoju.root.member.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,16 +49,15 @@ public class MemberController implements MemberSessionName{
 	}
 	
 	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String login(Model model, HttpSession session) {
+	public String login(Model model, HttpSession session, HttpServletRequest request) {
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 		System.out.println("네이버:" + naverAuthUrl);
 		model.addAttribute("url", naverAuthUrl);
-		
-		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:/";
+		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:"+request.getContextPath();
 	}
 	 
 		@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
+		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletRequest request) throws Exception {
 			System.out.println("여기는 callback");
 			OAuth2AccessToken oauthToken;
 			oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -68,22 +69,27 @@ public class MemberController implements MemberSessionName{
 			
 			JSONObject response_obj = (JSONObject)jsonObj.get("response");
 			String nickname = (String)response_obj.get("nickname");
-			System.out.println(nickname);
-			session.setAttribute("loginUser",nickname); //세션 생성
+			String id = (String)response_obj.get("id");
+			String email = (String)response_obj.get("email");
+			System.out.println(nickname+id);
+			MemberDTO dto = new MemberDTO();
+			dto.setEmail(email);
+			dto.setPw(id);
+			ms.joinNaverLogin(dto, session);
 			model.addAttribute("result", apiResult);
-			
-			return "redirect:/";
+			System.out.println(apiResult);
+			return "redirect:"+request.getContextPath();
 		}
 		
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
-	public String memberJoinForm(HttpSession session) throws Exception{
-		return session.getAttribute(LOGIN) == null ? "member/memberJoinForm" : "redirect:/";
+	public String memberJoinForm(HttpSession session, HttpServletRequest request) throws Exception{
+		return session.getAttribute(LOGIN) == null ? "member/memberJoinForm" : "redirect:"+request.getContextPath();
 	}
 	
 	
 	@GetMapping("/logout")
-	public String logout(HttpSession session , HttpServletResponse response,
+	public String logout(HttpSession session , HttpServletResponse response, HttpServletRequest request,
 			@CookieValue(value="loginCookie", required = false) Cookie loginCookie) {
 		if(session.getAttribute(LOGIN) != null) {
 			if(loginCookie != null) {
@@ -94,7 +100,7 @@ public class MemberController implements MemberSessionName{
 			}
 			session.invalidate();
 		}
-		return "redirect:/";
+		return "redirect:"+request.getContextPath();
 	}	
 	
 	

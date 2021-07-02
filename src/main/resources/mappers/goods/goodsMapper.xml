@@ -35,9 +35,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</select>
 	<sql id="soldOutChk">
+		<where> 
 		<if test="!soldOutView">
-			WHERE sold_out = 0
+			AND sold_out = 0
 		</if>
+		<choose>
+			<when test="categoryCode == 'all'">
+			</when>
+			<otherwise>
+				AND category_code = #{categoryCode}			
+			</otherwise>
+		</choose>
+		</where>
 	</sql>
 	<!-- 동적 SQL 구문 -->
 	<sql id="search">
@@ -81,6 +90,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 05.상품 레코드 삭제처리 -->
 	<delete id="deleteGoods">
 		DELETE FROM goods
+		WHERE goods_id=#{goodsId}
+	</delete>
+	<!-- 상품 삭제를 위한 heart 삭제 -->
+	<delete id="deleteHeartAll">
+		DELETE FROM heart
+		WHERE goods_id=#{goodsId}
+	</delete>
+	<!-- 상품 삭제를 위한 댓글 삭제 -->
+	<delete id="deleteCommentAll">
+		DELETE FROM goods_comment
 		WHERE goods_id=#{goodsId}
 	</delete>
 	

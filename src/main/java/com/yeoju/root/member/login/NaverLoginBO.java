@@ -60,6 +60,7 @@ public class NaverLoginBO {
 	}
 	/* http session에 데이터 저장 */
 	private void setSession(HttpSession session,String state){
+		System.out.println(state);
 		session.setAttribute(SESSION_STATE, state);
 	}
 	/* http session에서 데이터 가져오기 */

@@ -35,4 +35,6 @@ public interface MemberService {
 	public void memberList(Model model, int num);
 	public void memberInfo(Model model,String userId);
 	public void detailList(Model model, String userId);
+	
+	public void joinNaverLogin(MemberDTO dto, HttpSession session) throws Exception;
 }

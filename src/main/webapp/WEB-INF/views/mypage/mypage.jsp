@@ -87,6 +87,7 @@
 			    return 'soldoutGoods';
 			}
 		}
+		
 		// 상품 이미지 세팅하는 코드
 		function setCard(item) {
 			html = '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
@@ -94,9 +95,9 @@
 					+ (item.soldOut == 1 ? 'style="opacity:0.5;"':'')+' >'
 			html += '<div class ="div-f"></div>'
 			html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+(item.soldOut == 1 ? '<b>&nbsp;(판매완료)</b>':'')+'</div>'
-			html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
-			html += '<div class ="div-k"><span>8분전</span></div></div></div></div></a></div>'
-			return html
+			html += '<div class ="div-i"><div class ="div-j">'+ item.goodsPrice.format() +'</div>'
+			html += '<div class ="div-k"><i class="far fa-eye"></i> '+item.viewCount+' &bull; '+timeForToday(item.regDate)+'</div></div></div></div></a></div>'
+			return html;
 		}
 		// 버튼 활성화 코드
 		function activeBtn(btn) {
@@ -113,7 +114,6 @@
 			inActiveBtn($mypageBtn);
 			activeBtn(btn);
 		}
-		
 		
 	});
 	
@@ -269,7 +269,41 @@
 		              }
 				});
 			});
+			// 숫자 타입에서 쓸 수 있도록 format() 함수 추가
+			   Number.prototype.format = function(){
+			       if(this==0) return 0;
+			    
+			       var reg = /(^[+-]?\d+)(\d{3})/;
+			       var n = (this + '');
+			    
+			       while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+			    
+			       return n;
+			   };
+			 //시간
 	    });
+			function timeForToday(value){
+				const today=new Date();
+				const timeValue=new Date(value);
+				console.log(timeValue);
+				const betweenTime = Math.floor((today.getTime() - timeValue.getTime())/1000/60);
+				if(betweenTime<1) return '방금전';
+				if(betweenTime<60){
+					return betweenTime+`분전`;
+				}
+				
+				const betweenTimeHour = Math.floor(betweenTime / 60);
+				if(betweenTimeHour < 24){
+					return betweenTimeHour+`시간전`;
+				}
+				
+				const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+				if(betweenTimeDay < 365){
+					return betweenTimeDay+`일전`;
+				}
+				
+				return `${Math.floor(betweenTimeDay / 365)}년전`;
+			}
 	
 </script>
 </head>

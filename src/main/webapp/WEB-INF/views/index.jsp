@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,9 +32,9 @@
       }
       $soldOutView.click(function () {
     	  if(${soldOutView}){
-		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=false'
+		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=false&categoryCode=${categoryCode}'
     	  }else{
-		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=true'
+		   location.href='${path}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=true&categoryCode=${categoryCode}'
     	  }
 	  });
    });
@@ -42,8 +43,10 @@
          "pageNo" : pageNo,
          "keyword" : '${keyword}',
          "searchOption" : '${searchOption}',
-         "soldOutView" : '${soldOutView}'
+         "soldOutView" : '${soldOutView}',
+         "categoryCode" : '${categoryCode}'
       };
+      console.log(param);
       // 데이터를 불러온다.
       $.ajax({
           url : "goods/list.do",
@@ -65,13 +68,25 @@
           }
        })
    }
+// 숫자 타입에서 쓸 수 있도록 format() 함수 추가
+   Number.prototype.format = function(){
+       if(this==0) return 0;
+    
+       var reg = /(^[+-]?\d+)(\d{3})/;
+       var n = (this + '');
+    
+       while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+    
+       return n;
+   };
+
 
    function lodingList(item) {
             html = '<div class ="div-d" ><a class ="a-a" href ="${path}/goods/detail/'+item.goodsId+'">'
             html += '<div class ="div-e"><img alt="상품 이미지" src="https://www.greatroot.net/img/download?fileName='+item.imgFileName+'" '+(item.soldOut == 1 ? 'style="opacity:0.5;"':'')+'>'
             html += '<div class ="div-f"></div>'
             html += '<div class ="div-g"><div class ="div-h">'+item.goodsName+(item.soldOut == 1 ? '<b>&nbsp;(판매완료)</b>':'')+'</div>'
-            html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice+'</div>'
+            html += '<div class ="div-i"><div class ="div-j">'+item.goodsPrice.format()+'</div>'
             html += '<div class ="div-k"><i class="far fa-eye"></i> '+item.viewCount+' &bull; '+timeForToday(item.regDate)+'</div></div></div></div></a></div>'
         return html;
    }
