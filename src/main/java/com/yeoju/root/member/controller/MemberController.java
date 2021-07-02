@@ -49,16 +49,15 @@ public class MemberController implements MemberSessionName{
 	}
 	
 	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String login(Model model, HttpSession session) {
+	public String login(Model model, HttpSession session, HttpServletRequest request) {
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 		System.out.println("네이버:" + naverAuthUrl);
 		model.addAttribute("url", naverAuthUrl);
-		
-		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:/";
+		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:"+request.getContextPath();
 	}
 	 
 		@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
+		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletRequest request) throws Exception {
 			System.out.println("여기는 callback");
 			OAuth2AccessToken oauthToken;
 			oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -79,18 +78,18 @@ public class MemberController implements MemberSessionName{
 			ms.joinNaverLogin(dto, session);
 			model.addAttribute("result", apiResult);
 			System.out.println(apiResult);
-			return "redirect:/";
+			return "redirect:"+request.getContextPath();
 		}
 		
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
-	public String memberJoinForm(HttpSession session) throws Exception{
-		return session.getAttribute(LOGIN) == null ? "member/memberJoinForm" : "redirect:/";
+	public String memberJoinForm(HttpSession session, HttpServletRequest request) throws Exception{
+		return session.getAttribute(LOGIN) == null ? "member/memberJoinForm" : "redirect:"+request.getContextPath();
 	}
 	
 	
 	@GetMapping("/logout")
-	public String logout(HttpSession session , HttpServletResponse response,
+	public String logout(HttpSession session , HttpServletResponse response, HttpServletRequest request,
 			@CookieValue(value="loginCookie", required = false) Cookie loginCookie) {
 		if(session.getAttribute(LOGIN) != null) {
 			if(loginCookie != null) {
@@ -101,7 +100,7 @@ public class MemberController implements MemberSessionName{
 			}
 			session.invalidate();
 		}
-		return "redirect:/";
+		return "redirect:"+request.getContextPath();
 	}	
 	
 	

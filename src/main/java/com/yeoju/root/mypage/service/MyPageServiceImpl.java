@@ -59,7 +59,7 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 	}
 
 	@Override
-	public void modify(MemberDTO dto, HttpServletResponse response) throws Exception {
+	public void modify(MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws Exception {
 		dto.setPw(new BCryptPasswordEncoder().encode(dto.getPw()));
 		if(mdDAO.modify(dto) == 1) {
 			if(mdDAO.cnt(dto.getUserId()) == 0) {
@@ -67,7 +67,7 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 			}else {
 				mdDAO.modifyDetail(dto);
 			}
-			comp.sendAlertAndHref(response, "회원정보를 성공적으로 수정하였습니다","/");
+			comp.sendAlertAndHref(response, "회원정보를 성공적으로 수정하였습니다",request.getContextPath());
 		}else {
 			comp.sendAlertAndBack(response, "회원정보 수정에 실패했습니다");
 		}
@@ -82,7 +82,7 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 			ArrayList<Integer> list = gdao.getUserTotalGoods(loginUser);
 			for (Integer goodsId : list) {
 				gdao.deleteAllHeartGoodsId(goodsId);
-				gc.delete(goodsId);
+				gc.delete(goodsId,request);
 			}
 			MemberDTO dto = mdao.getUserInfo(loginUser);
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -93,7 +93,7 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 					mdDAO.deleteDetail(loginUser);
 				}
 				mdDAO.delete(loginUser);
-				comp.sendAlertAndReplace(response, "회원탈퇴 완료", request.getContextPath()+"/member/logout");
+				comp.sendAlertAndReplace(response, "회원탈퇴 완료", request.getContextPath()+"member/logout");
 			}else {
 				comp.sendAlertAndBack(response, "회원탈퇴 실패 : 비밀번호가 일치하지 않습니다");
 			}

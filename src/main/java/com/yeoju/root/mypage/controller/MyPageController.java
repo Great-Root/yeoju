@@ -58,8 +58,8 @@ public class MyPageController implements MemberSessionName{
 		return "mypage/memberModifyForm";
 	}
 	@PostMapping("/modify")
-	public void modifyMember(MemberDTO dto, HttpServletResponse response) throws Exception{
-		mps.modify(dto, response);
+	public void modifyMember(MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws Exception{
+		mps.modify(dto, response, request);
 	}
 	@GetMapping("/delete/{userId}")
 	public String delete(@PathVariable String userId, Model model) {

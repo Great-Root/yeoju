@@ -7,7 +7,7 @@
 <title>상품 등록</title>
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="/resources/js/cropper.js"></script>
+  <script src="${path}/resources/js/cropper.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="/resources/css/cropper.css">
 <script>

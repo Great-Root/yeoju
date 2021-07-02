@@ -153,7 +153,7 @@ input:focus {
 			<div class="header02">
 				<a class="logoA" href="${contextPath}/"> <img alt="여주마켓 로고"
 					style="width: 200px; height: 70px;"
-					src="../../resources/img/yeojuLogo.png" class="logoImg">
+					src="${contextPath}/resources/img/yeojuLogo.png" class="logoImg">
 				</a>
 				<div class="search">
 					<div class="search01">
