@@ -39,7 +39,7 @@
 			</thead>
 		</table>
 		</div>
-		<h1>===${userId }회원님의 정보===</h1>
+		<h3>=${userId }회원님의 정보=</h3>
 		<table class="table table-striped col" style="width: 80%;">
 					<tbody>
 							<c:forEach var="detaildto" items="${detailList }">

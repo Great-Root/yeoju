@@ -63,8 +63,8 @@
 				<h3>계정 삭제</h3>
 					
 					아이디<input type="text" name="id"   value="${loginUser }" ><br>
-					<label>*주의* 계정 삭제 클릭시 로그인된 관리자 삭제 </label><br>
-					<input type="submit" value="계정 삭제" >
+					<label>*주의* 계정 삭제 클릭시 로그인된<br> 관리자 삭제 </label><br>
+					<input type="submit" value="계정 삭제" style="background-color: red">
 					
 				</form></div>
 				 

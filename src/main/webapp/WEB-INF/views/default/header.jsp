@@ -184,10 +184,8 @@ input:focus {
 				<c:choose>
 					<c:when test="${grade ==1}">
 					<div class="search04">
-						<button type="button"
-							onclick="javascript:window.location='${contextPath}/member/memberJoinForm.do'">Sign-up</button>
-						<button type="button"
-							onclick="javascript:window.location='${contextPath}/member/login'">Login</button>
+						<button type="button">Sign-up</button>
+						<button type="button">Login</button>
 					</div>
 					</c:when>
 					<c:otherwise>

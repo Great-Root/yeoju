@@ -64,7 +64,7 @@
 #first{
 	display:none;
 	position: fixed; z-index: 10; margin: 0 auto;
-	top:30px; left: 0; right: 0; width: 350px; height: 450px;
+	top:120px; left: 0; right: 0; width: 350px; height: 450px;
 	background-color: rgba(212, 244, 250, 0.9);
 }
 </style>
