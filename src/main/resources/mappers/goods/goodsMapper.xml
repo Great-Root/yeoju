@@ -92,6 +92,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM goods
 		WHERE goods_id=#{goodsId}
 	</delete>
+	<!-- 상품 삭제를 위한 heart 삭제 -->
+	<delete id="deleteHeartAll">
+		DELETE FROM heart
+		WHERE goods_id=#{goodsId}
+	</delete>
+	<!-- 상품 삭제를 위한 댓글 삭제 -->
+	<delete id="deleteCommentAll">
+		DELETE FROM goods_comment
+		WHERE goods_id=#{goodsId}
+	</delete>
 	
 	<!-- 06.삭제를 위한 상품 이미지 파일이름 select -->
 	<select id="imgFileName" resultType="String">

@@ -121,6 +121,7 @@
 		}
 	});
 	    });
+	
 	</script>
 <link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -165,14 +166,10 @@
             </div>
           </div>
           <div class="modal-footer">
-            <!--<button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-primary" id="crop">등록하기</button>-->
-			<td colspan="2">
 				<div align="right">
 					<input type="submit" class="btn btn-secondary" id="close" data-dismis="modal" value="취소" style="margin-right: 0.7em;"> 
 					<input type="button" class="btn btn-primary" id="crop" value="등록하기" >
 				</div>
-			</td>
           </div>
         </div>
       </div>
@@ -180,7 +177,7 @@
 		</div>
 		<div class="col">
 				<input class="form-control mb-2" type="text" placeholder="상품명"  name="goodsName" id="goodsName" aria-label="상품명 입력칸">
-				<input class="form-control mb-2" type="text" placeholder="상품가격"  name="goodsPrice" id="goodsPrice" aria-label="상품가격">
+				<input class="form-control mb-2" type="number" step="1000" placeholder="상품가격" autocomplete="off" name="goodsPrice" id="goodsPrice" aria-label="상품가격">
 				<div class="mb-3">
 				
 				  <textarea class="form-control" rows="3" placeholder="상품 설명을 입력해주세요"  name="goodsInfo" id="goodsInfo"></textarea>

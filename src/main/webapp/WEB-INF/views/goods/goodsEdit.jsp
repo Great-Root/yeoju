@@ -182,7 +182,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		</div>
 		<div class="col">
 				<input class="form-control mb-2" type="text" placeholder="상품명"  name="goodsName" id="goodsName" value="${dto.goodsName}" aria-label="상품명 입력칸">
-				<input class="form-control mb-2" type="text" placeholder="상품가격"  name="goodsPrice" id="goodsPrice" value="${dto.goodsPrice}" aria-label="상품가격">
+				<input class="form-control mb-2" type="number" step="1000" placeholder="상품가격"  name="goodsPrice" id="goodsPrice" value="${dto.goodsPrice}" aria-label="상품가격">
 				<div class="mb-3">
 				  <textarea class="form-control" rows="3" placeholder="상품 설명을 입력해주세요" name="goodsInfo" id="goodsInfo">${dto.goodsInfo}</textarea>
 				</div>

@@ -78,16 +78,12 @@ public class GoodsController extends URL implements MemberSessionName{
 		gs.viewCount(goodsId);
 		model.addAttribute("dto",gs.detailGoods(goodsId));
 		
-		return "goods/TgoodsDetail";
+		return "goods/goodsDetail";
 	}
 	
 	//3.상품등록 페이지 매핑
 	@RequestMapping("write.do")
 	public String write(Model model) throws Exception{ 
-		
-//	List<CategoryDTO> category = null;
-//	category = cateS.category();
-//	model.addAttribute("category", category);
 	
 	List<CategoryDTO> category = cateS.category();
 	model.addAttribute("category", category);
@@ -196,7 +192,6 @@ public class GoodsController extends URL implements MemberSessionName{
 	public String delete(@RequestParam int goodsId) {
 		//상품 이미지 정보
 		String delFileName = gs.imgFileName(goodsId);
-		String path="";
 		try {
 			// SSL인증서 오류 처리
 			SSLContext sc = SSLContext.getInstance("SSL");

@@ -23,6 +23,12 @@ public interface GoodsDAO {
 	//04.상품삭제
 	public void deleteGoods(int goodsId);
 	
+	//04-1.상품 하트 전부 삭제
+	public void deleteHeartAll(int goodsId);
+	
+	//04-2.상품 댓글 전부 삭제
+	public void deleteCommentAll(int goodsId);
+	
 	//05.상품추가
 	public int insertGoods(GoodsDTO dto);
 

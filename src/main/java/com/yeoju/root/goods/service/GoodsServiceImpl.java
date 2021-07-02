@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yeoju.root.common.dto.GoodsCommentsDTO;
 import com.yeoju.root.common.dto.GoodsDTO;
@@ -29,7 +30,6 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	public List<GoodsDTO> listGoods(SearchDTO search){
 		return goodsDao.listGoods(search);
 	}
-	// String searchOption,searchOption
 	//02.상품상세
 	//제품 상세 페이지에 댓글 기능이 들어가기 때문에 retrunDTO라는 변수에 GoodsDTO,CommentDTO를 넣어버림
 		@Override
@@ -41,8 +41,6 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 		commentsDTO = commentsDAO.redaReply(goodsId);
 		
 		returnDTO.setGoodsCommentsList(commentsDTO);
-//		System.out.println(commentsDTO.toString());
-//		System.out.println(returnDTO.toString());
 		return returnDTO;
 	}
 	//03.상품추가
@@ -57,7 +55,10 @@ public class GoodsServiceImpl extends URL implements GoodsService {
 	}
 	//05.상품삭제	
 	@Override
+	@Transactional
 	public void deleteGoods(int goodsId) {
+		goodsDao.deleteHeartAll(goodsId);
+		goodsDao.deleteCommentAll(goodsId);
 		goodsDao.deleteGoods(goodsId);
 	}
 	//06.상품이미지 삭제를 위한 이미지파일 정보
