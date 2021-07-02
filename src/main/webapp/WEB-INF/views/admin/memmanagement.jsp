@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
 <style type="text/css">
+
 </style>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -47,8 +48,9 @@
 			</thead>
 		</table>
 		</div>
+		<div  style="width: 500px">
 		<table class="table table-striped col" style="width: 80%;">
-					<thead>
+					<thead style="background-color: #4CAF50;">
 						<tr>
 							<th>아이디</th>
 							<th>가입일</th>
@@ -74,6 +76,7 @@
 						
 					</tbody>
 				</table>
+				</div>
 	</div>
 	</c:otherwise></c:choose>
 	<c:import url="../default/footer.jsp" />

@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+.container
+width: 50%;
+height: 50%;
 </style>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -19,16 +22,19 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<table class="table table-striped col" >
+<div  class="container">
+	<c:if test="${grade !=1 }">
+	<h3>QNA 게시판</h3></c:if>
+		<table class="table table-striped col" >
 					<thead>
-						<tr>
+						<tr style="background-color: #4CAF50;">
 							<th>No.</th>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody  style="background-color: white;">
 				<c:if test="${QnABoardList.size() == 0 }">
 						<tr> <th colspan="6">저장 데이터 없음</th> </tr>
 					</c:if>
@@ -62,5 +68,6 @@
 				
 					</tbody>
 				</table>
+				</div>
 </body>
 </html>

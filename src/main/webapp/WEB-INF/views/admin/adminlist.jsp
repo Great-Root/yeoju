@@ -44,6 +44,7 @@
 			</thead>
 		</table>
 		</div>
+		
 		<table class="table table-striped col" style="margin-right: 50px; padding:5 5 5 5px; width:500px;" >
 			<tbody>
 					<tr>
@@ -54,9 +55,9 @@
 			</tbody>
 		</table>
 		<div class="row" >
-
+				<div style="width: 650px">
 				<table class="table table-striped col" >
-					<thead>
+					<thead style="background-color: #4CAF50;">
 						<tr>
 							<th>아이디</th>
 							<th style="min-width: 100px;">등록일</th>
@@ -77,6 +78,7 @@
 			</c:forEach> 
 					</tbody>
 				</table>
+				</div>
 			</div>
 	</div>
 	</c:otherwise></c:choose>
