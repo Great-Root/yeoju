@@ -16,7 +16,8 @@
 	</select>
 	<select id="AnnBoardList" resultMap="board">
 		select B.* from(select rownum rn, A.* from
-		(select * from ann_board order by write_no desc)A)B where rn between #{s} and #{e}
+		(select * from ann_board order by write_no desc)A
+		)B where rn between #{s} and #{e}
 	</select>
 	<select id="annBoardView" resultMap="board">
 		select * from ann_board where write_no=#{writeNo}
@@ -29,7 +30,8 @@
 		delete from ann_board where write_no=#{writeNo}
 	</delete>
 	<update id="modify">
-		update ann_board set title=#{title}, content=#{content} where write_no = #{writeNo}
+		update ann_board set title=#{title}, 
+		content=#{content} where write_no = #{writeNo}
 	</update>
 
 </mapper> 

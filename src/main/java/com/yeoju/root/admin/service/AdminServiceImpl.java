@@ -55,17 +55,6 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 	@Override
-	public int adminDelete(AdminDTO dto) {
-		String id=dto.getId();
-		dto.setId(id);
-		try {
-			return mapper.adminDelete(dto);
-		}catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-		}
-	}
-	@Override
 	public int admin_check(HttpServletRequest request) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		AdminDTO dto = mapper.admin_check(request.getParameter("id"));
@@ -92,6 +81,21 @@ public class AdminServiceImpl implements AdminService {
 			return 0;
 		}
 	} 
+	public int adminDelete(AdminDTO dto) {
+		String id=dto.getId();
+		dto.setId(id);
+		try {
+			return mapper.adminDelete(dto);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	
+	
+	
+	
 	@Override
 	public void recentAct(String recentAct,String adminId) {
 		Map<String, Object> map = new HashMap<String, Object>();

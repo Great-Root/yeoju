@@ -115,7 +115,7 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 	@Override
 	public void memberList(Model model,int num) {
 		int allConunt=dao.selectBoardCount();
-		int pageLetter= 10;
+		int pageLetter= 7;
 		int repeat= allConunt/pageLetter;
 		if(allConunt%pageLetter!=0) {
 			repeat+=1;

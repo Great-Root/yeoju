@@ -49,7 +49,6 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 	}
 	public void QnABoardView(int writeNo,Model model) {
 		QnaBoardDTO list = dao.QnABoardView(writeNo);
-
 		model.addAttribute("personalData", list);
 	}
 	@Override
@@ -61,7 +60,6 @@ public class BoardServiceImpl implements BoardService,MemberSessionName{
 	@Override
 	public void addReply(QnaBoardRepDTO dto) {
 		dao.addReply(dto);
-		
 	}
 	@Override
 	public List<QnaBoardRepDTO> getRepList(int write_group) {
