@@ -67,7 +67,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	@Override
 	public int admin_check(HttpServletRequest request) {
-BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		AdminDTO dto = mapper.admin_check(request.getParameter("id"));
 		if(dto != null) {
 			if(encoder.matches(request.getParameter("pw"), dto.getPw()) ||

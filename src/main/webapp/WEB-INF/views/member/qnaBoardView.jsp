@@ -11,7 +11,7 @@
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
-		<h3>QNA 게시판</h3>
+		
 	<c:import url="../board/qnaboard.jsp" />	
 	
 	<c:import url="../default/footer.jsp" />

@@ -66,6 +66,7 @@
 		<tr>
 		<td colspan="4" align="center">
 			<div id="reply"></div>
+			<div style="display: flex;">
 			<c:choose>
 			<c:when test="${personalData.userid==loginUser}">
 			<form action="${contextPath }/member/QnABoardDelete" method="post">
@@ -77,6 +78,7 @@
 			</form>
 			</c:when></c:choose>
 			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath }/member/qnaBoardView'" value="리스트로 돌아가기">
+			</div>
 		</td>
 	</tr>
 		</table>

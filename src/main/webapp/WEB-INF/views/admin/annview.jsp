@@ -37,6 +37,7 @@
 
 		<tr>
 		<td colspan="4" align="center">
+			<div style="display: flex;">
 			<c:choose>
 			<c:when test="${personalData.userid==loginUser}">
 			<form action="${contextPath }/admin/AnnBoardDelete" method="post">
@@ -47,7 +48,8 @@
 			<input type="submit" value="수정하기" class="b btn btn-outline-secondary">
 			</form>
 			</c:when></c:choose>
-			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath}/admin/commanagementann'" value="리스트로 돌아가기">
+			
+			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath }/admin/commanagementann'" value="리스트로 돌아가기"></div>
 		</td>
 	</tr>
 		</table>
