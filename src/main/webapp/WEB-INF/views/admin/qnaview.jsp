@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	function slideClick(){

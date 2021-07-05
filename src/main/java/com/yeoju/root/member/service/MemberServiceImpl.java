@@ -1,13 +1,11 @@
 package com.yeoju.root.member.service;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,18 +16,13 @@ import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
 import com.yeoju.root.common.components.Components;
-import com.yeoju.root.common.dto.AdminDTO;
 import com.yeoju.root.common.dto.MemberDTO;
-import com.yeoju.root.common.dto.ProfileDTO;
 import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mybatis.MemberDAO;
-import com.yeoju.root.mybatis.ProfileDAO;
 import com.yeoju.root.common.dto.MemberDetailDTO;
-import com.yeoju.root.mybatis.MemberDAO;
 import com.yeoju.root.mybatis.MemberDetailDAO;
 
 @Service
@@ -63,7 +56,7 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 					Date limitDate = new Date(cal.getTimeInMillis());
 					keepLogin(session.getId(), limitDate, dto.getUserId());
 				}
-				comp.sendHref(response,request.getContextPath());
+				comp.sendHref(response,request.getContextPath()+"/");
 			}else {//비밀번호가 일치하지 않는 경우
 				comp.sendAlertAndBack(response, "비밀번호가 다릅니다");
 			}
@@ -141,7 +134,7 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 	
 	
 	@Override
-	public void join_member(MemberDTO dto, HttpServletResponse response) throws Exception {
+	public void join_member(MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws Exception {
 		dto.setPw(new BCryptPasswordEncoder().encode(dto.getPw()));
 		if(dao.check_id(dto.getUserId())==1) {
 			comp.sendAlertAndBack(response, "동일한 아이디가 있습니다.");
@@ -149,9 +142,9 @@ public class MemberServiceImpl implements MemberService, MemberSessionName {
 			comp.sendAlertAndBack(response, "동일한 이메일이 있습니다.");
 		}else {
 			if(dao.join_member(dto) == 1) {
-				comp.sendAlertAndHref(response, "성공적으로 회원가입이 되었습니다.", "member/login");
+				comp.sendAlertAndHref(response, "성공적으로 회원가입이 되었습니다.", request.getContextPath()+"/member/login");
 			}else {
-				comp.sendAlertAndHref(response, "회원가입에 실패했습니다.", "member/memberJoinForm.do");
+				comp.sendAlertAndHref(response, "회원가입에 실패했습니다.", request.getContextPath()+"/member/memberJoinForm.do");
 			}
 		}
 	}

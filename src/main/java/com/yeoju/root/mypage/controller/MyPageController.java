@@ -95,7 +95,9 @@ public class MyPageController implements MemberSessionName{
 		File file = new File(session.getServletContext().getRealPath("/")+"resources/img/default.jpg");
 		MultipartFile multipartFile = null;
 		try {
-			DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length() , file.getParentFile());
+			DiskFileItem fileItem = 
+					new DiskFileItem("file", Files.probeContentType(file.toPath()), false, 
+										file.getName(), (int) file.length() , file.getParentFile());
 			InputStream input = new FileInputStream(file);
 			OutputStream os = fileItem.getOutputStream();
 			IOUtils.copy(input, os);

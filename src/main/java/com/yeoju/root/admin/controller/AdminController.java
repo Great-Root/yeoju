@@ -70,7 +70,7 @@ public class AdminController implements MemberSessionName{
 		return "admin/successlogin";
 	}
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,HttpServletRequest request) {
 			session.invalidate();
 		return "redirect:/";
 	}	

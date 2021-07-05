@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<c:set var="path" value="<%= request.getContextPath() %>"/>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
@@ -111,8 +112,8 @@
 			<c:otherwise>
 				<div class="footer1">
 					<div class="footer2">
-						<a class="footer2-1" href="../member/annBoardView">공지사항</a> <a
-							class="footer2-1" href="../member/qnaBoardView">Q&A</a> <a
+						<a class="footer2-1" href="${path}/member/annBoardView">공지사항</a> <a
+							class="footer2-1" href="${path}/member/qnaBoardView">Q&A</a> <a
 							class="footer2-1" href="#">이용약관</a> <a class="footer2-1" href="#">자주하는
 							질문</a>
 					</div>
@@ -125,7 +126,7 @@
 				<div class="nothing">
 					<div class="logoLocation">
 						<img alt="" style="width: 200px; height: 70px;"
-							src="../../resources/img/yeojuLogo.png">
+							src="${path}/resources/img/yeojuLogo.png">
 					</div>
 					<div class="intro">
 						<b>누구나, 무엇이든 쉽고 편하고 안전하게 거래하는 세상을 꿈꾸고 있습니다.</b>

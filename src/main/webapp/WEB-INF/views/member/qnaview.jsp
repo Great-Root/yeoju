@@ -5,7 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 페이지</title>
+<link rel="shortcut icon" href="resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="resources/img/여주favicon.png" type="image/png">
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	function replyData(){

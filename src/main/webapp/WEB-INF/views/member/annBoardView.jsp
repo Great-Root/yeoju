@@ -5,7 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항 게시판</title>
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
+<link rel="shortcut icon" href="${contextPath}/resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="${contextPath}/resources/img/여주favicon.png" type="image/png">
 </head>
 <body>
 	<c:import url="../default/header.jsp" />

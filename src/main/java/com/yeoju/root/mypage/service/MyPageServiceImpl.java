@@ -93,7 +93,7 @@ public class MyPageServiceImpl implements MyPageService, MemberSessionName{
 					mdDAO.deleteDetail(loginUser);
 				}
 				mdDAO.delete(loginUser);
-				comp.sendAlertAndReplace(response, "회원탈퇴 완료", request.getContextPath()+"member/logout");
+				comp.sendAlertAndReplace(response, "회원탈퇴 완료", request.getContextPath()+"/member/logout");
 			}else {
 				comp.sendAlertAndBack(response, "회원탈퇴 실패 : 비밀번호가 일치하지 않습니다");
 			}

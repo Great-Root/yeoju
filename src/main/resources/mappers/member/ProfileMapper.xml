@@ -10,8 +10,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="imgData" column="img_data" jdbcType="BLOB" javaType="_byte[]"/>
 		<result property="userId" column="user_id"/>
 	</resultMap>
-	
-	
 	<insert id="insertProfileImg">
 		INSERT INTO profile_img(img_name, img_size, img_type, img_data, user_id) 
 		VALUES(#{imgName}, #{imgSize}, #{imgType}, #{imgData}, #{userId})

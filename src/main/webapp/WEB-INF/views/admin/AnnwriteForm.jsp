@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
 </head>
 <body>
 	<c:import url="../default/header.jsp" />
