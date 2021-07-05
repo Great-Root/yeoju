@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.yeoju.root.common.components.Components;
 import com.yeoju.root.member.session_name.MemberSessionName;
 import com.yeoju.root.mybatis.GoodsDAO;
 
 public class UserChkInterceptor extends HandlerInterceptorAdapter implements MemberSessionName {
 
 	@Autowired GoodsDAO dao;
+	@Autowired Components comp;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -25,13 +27,11 @@ public class UserChkInterceptor extends HandlerInterceptorAdapter implements Mem
 		HttpSession session = request.getSession();
 		String loginUser = (String)session.getAttribute(LOGIN);
 		String chkUser = dao.getUserId(Integer.parseInt(request.getParameter("goodsId")));
-		response.setContentType("text/html; charset=utf-8");// 클라이언트로 전달할 타입
-		PrintWriter out = response.getWriter();
 		if (loginUser == null) {
-			out.print("<script>alert('로그인 해라'); location.href='/member/login';</script>");
+			comp.sendAlertAndHref(response, "로그인 하세요~", request.getContextPath()+"/member/login");
 			result = false;
 		}else if(!loginUser.equals(chkUser)){
-			out.print("<script>alert('잘못된 접근 입니다.'); location.href='/';</script>");
+			comp.sendAlertAndHref(response, "잘못된 접근 입니다.", request.getContextPath()+"/");
 			result = false;
 		}else {
 			result = true;

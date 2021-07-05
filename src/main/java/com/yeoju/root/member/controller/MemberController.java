@@ -1,8 +1,6 @@
 package com.yeoju.root.member.controller;
-import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +50,7 @@ public class MemberController implements MemberSessionName{
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 		System.out.println("네이버:" + naverAuthUrl);
 		model.addAttribute("url", naverAuthUrl);
-		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:"+request.getContextPath();
+		return session.getAttribute(LOGIN) == null ? "member/login" : "redirect:/";
 	}
 	 
 		@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
@@ -78,13 +75,13 @@ public class MemberController implements MemberSessionName{
 			ms.joinNaverLogin(dto, session);
 			model.addAttribute("result", apiResult);
 			System.out.println(apiResult);
-			return "redirect:"+request.getContextPath();
+			return "redirect:/";
 		}
 		
 	// 회원 가입 폼 이동
 	@RequestMapping(value = "/memberJoinForm.do")
 	public String memberJoinForm(HttpSession session, HttpServletRequest request) throws Exception{
-		return session.getAttribute(LOGIN) == null ? "member/memberJoinForm" : "redirect:"+request.getContextPath();
+		return session.getAttribute(LOGIN) == null ? "member/memberJoinForm" : "redirect:/";
 	}
 	
 	
@@ -100,7 +97,7 @@ public class MemberController implements MemberSessionName{
 			}
 			session.invalidate();
 		}
-		return "redirect:"+request.getContextPath();
+		return "redirect:/";
 	}	
 	
 	
@@ -113,7 +110,7 @@ public class MemberController implements MemberSessionName{
 		@RequestMapping(value = "/find_id.do", method = RequestMethod.POST)
 		public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model model) throws Exception{
 			model.addAttribute("userId", ms.find_id(response, email));
-			return "/member/find_id";
+			return "member/find_id";
 		}
 		/* 비밀번호 찾기 */
 		@RequestMapping(value = "/findpw", method = RequestMethod.GET)
@@ -144,9 +141,8 @@ public class MemberController implements MemberSessionName{
 		
 		// 회원 가입
 		@RequestMapping(value = "/join_member.do", method = RequestMethod.POST)
-		public String join_member(MemberDTO dto, HttpServletResponse response) throws Exception{
-			ms.join_member(dto, response);
-			return "/member/login";
+		public void join_member(MemberDTO dto, HttpServletResponse response,HttpServletRequest request) throws Exception{
+			ms.join_member(dto, response,request);
 		}
 	
 		@GetMapping("/qnaBoardView")

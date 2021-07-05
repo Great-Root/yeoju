@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
 	integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -46,7 +47,7 @@
 			<input type="submit" value="수정하기" class="b btn btn-outline-secondary">
 			</form>
 			</c:when></c:choose>
-			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath }/admin/commanagementann'" value="리스트로 돌아가기">
+			<input type="button" class="b btn btn-outline-success col" onclick="location.href='${contextPath}/admin/commanagementann'" value="리스트로 돌아가기">
 		</td>
 	</tr>
 		</table>

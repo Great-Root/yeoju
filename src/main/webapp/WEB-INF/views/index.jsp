@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>여주마켓</title>
+<link rel="shortcut icon" href="resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="resources/img/여주favicon.png" type="image/png">
 <c:set var="path" value="<%=request.getContextPath()%>"/>
 <c:set var="userId" value=""/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

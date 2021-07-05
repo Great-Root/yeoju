@@ -3,6 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
+<link rel="shortcut icon" href="${contextPath}/resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="${contextPath}/resources/img/여주favicon.png" type="image/png">
+
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,7 +93,7 @@
    <div class="login-page">
       <div class="form">
          <a href="${path}/">
-            <img src="${contextPath}/resources/img/여주.png" width="110px" height="140px">
+            <img src="${path}/resources/img/여주.png" width="110px" height="140px">
          </a>
             <h1 style="color: green; font-size: 30px;">Join</h1>
          <div>

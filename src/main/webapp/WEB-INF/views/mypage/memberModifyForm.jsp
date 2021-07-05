@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보수정</title>
+<link rel="shortcut icon" href="resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="resources/img/여주favicon.png" type="image/png">
 <link
 	href="${pageContext.request.contextPath}/resources/css/member/modify.css"
 	rel="stylesheet" />
@@ -201,7 +203,7 @@
 					<td colspan="2">
 						<div align="right">
 							<input type="submit" class="btn btn-outline-success" value="정보수정완료" style="margin-right: 0.7em;"> 
-							<input type="button" class="btn btn-outline-danger" value="회원 탈퇴" onclick="location.href='${path}/mypage/delete/${modifyInfo.userId}'">
+							<input type="button" class="btn btn-outline-danger" value="회원 탈퇴" onclick="location.href='${contextPath}/mypage/delete/${modifyInfo.userId}'">
 						</div>
 					</td>
 				</tr>

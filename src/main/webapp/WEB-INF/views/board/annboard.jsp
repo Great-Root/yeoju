@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
 <style type="text/css">
 </style>
 <script

@@ -7,6 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="shortcut icon" href="resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="resources/img/여주favicon.png" type="image/png">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style type="text/css">
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
@@ -206,8 +209,6 @@ input:focus {
 									</button>
 									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 										<li><a class="dropdown-item" href="${contextPath}/mypage">내상점</a></li>
-										<li><a class="dropdown-item" href="#">거래현황</a></li>
-										<li><a class="dropdown-item" href="#">결제현황</a></li>
 										<li><a class="dropdown-item"
 											href="${contextPath}/member/logout">로그아웃</a></li>
 									</ul>
@@ -218,19 +219,8 @@ input:focus {
 				</c:choose>
 			</div>
 			<div class="search05">
-				<button class="btn btn-secondary dropdown-toggle " type="button"
-					id="dropdownMenuButton1" data-bs-toggle="dropdown"
-					aria-expanded="false"
-					style="color: #fff; background-color: #4CAF50; border-color: #43A047;">카테고리</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<c:forEach var="cate" items="${category_list}">
-						<li><a class="dropdown-item"
-							href="${contextPath}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=${soldOutView}&categoryCode=${cate.code}">
-								${cate.name}</a></li>
-					</c:forEach>
-				</ul>
-
-				<div class="text-end p-3" style="margin-left: 48rem;">
+					<div id="catelist"></div>
+				<div class="text-end p-3" style="margin-left: 46rem;">
 					<c:if test="${loginUser != null}">
 						<button type="button" id="sellBtn"
 							style="width: 131px; height: 58px;"
@@ -254,26 +244,48 @@ input:focus {
 <script>
 	var keyword = '';
 
-	$(document).ready(
-			function() {
-				$("#sellBtn").click(function() {
-					location.href = "${contextPath}/goods/write.do";
-				})
-				$("#searchBtn").on(
-						"click",
-						function() {
-							if ($(".search02").val().length == 0) {
-								alert("검색어를 입력해주세여!");
-								$("#keyword").focus();
-							} else {
-								location.href = "${contextPath}?keyword="
-										+ $("#keyword").val()
-										+ "&searchOption="
-										+ $("#searchOption").val()
-										+ "&soldOutView=${soldOutView}";
-							}
-						});
-			});
+	$(document).ready(function() {
+		$("#sellBtn").click(function() {
+			location.href = "${contextPath}/goods/write.do";
+		})
+		$("#searchBtn").on("click",function() {
+			if ($(".search02").val().length == 0) {
+				alert("검색어를 입력해주세여!");
+				$("#keyword").focus();
+			} else {
+				location.href = "${contextPath}/?keyword="
+						+ $("#keyword").val()
+						+ "&searchOption="
+						+ $("#searchOption").val()
+						+ "&soldOutView=${soldOutView}"
+						+ "&categoryCode=${categoryCode}";
+			}
+		});
+		setCateList();
+	});
+	
+		function setCateList() {
+	      	$.ajax({
+	          url : "${contextPath}/goods/getCateList.do",
+	          type : "GET",
+	          dataType : "json",
+	          success : function(list) {
+	        	  var url = '${contextPath}?keyword=${keyword}&searchOption=${searchOption}&soldOutView=${soldOutView}&categoryCode=';
+	        	  var html = '';
+	        		  html += '<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="color: #fff; background-color: #4CAF50; border-color: #43A047; width: 7em;" '
+	        		  html += 'onchange="if(this.value) location.href=(this.value)">'
+	        		  html += ' <option hidden="hidden" selected>카테고리</option>'
+	        	  $.each(list,function(index, item) {
+	        		  html += '<option value="'+url+item.code+'" style="background-color: white; color: green;" '+(item.code == '${categoryCode}' ?"selected" : "")+'>'+item.name+'</option>'
+	        	  })
+	        		  html += '</select>'
+	        		  $("#catelist").html(html);
+	          },	
+	          error : function() {
+	             alert("문제 발생!!!");
+	          }
+	       })
+		}
 	function enterkey() {
 		if (window.event.keyCode == 13) {
 			$("#searchBtn").click();

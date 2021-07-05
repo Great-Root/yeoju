@@ -26,7 +26,7 @@ public class LoginChkInterceptor extends HandlerInterceptorAdapter
 		System.out.println("로그인 정보와 파라미터 일치 확인 인터셉터");
 		HttpSession session = request.getSession();
 		if(!session.getAttribute(LOGIN).equals(request.getParameter("userId"))) {
-			comp.sendAlertAndHref(response, "로그인 정보가 다릅니다", "/");
+			comp.sendAlertAndHref(response, "로그인 정보가 다릅니다", request.getContextPath()+"/");
 			return false;
 		}
 		return true;

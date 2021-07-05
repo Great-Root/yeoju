@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QNA 게시판</title>
+<link rel="shortcut icon" href="resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="resources/img/여주favicon.png" type="image/png">
 </head>
 <body>
 	<c:import url="../default/header.jsp" />

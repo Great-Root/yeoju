@@ -9,11 +9,14 @@
 <meta charset="UTF-8">
 <title>상품 상세 페이지</title>
 <c:set var="path" value="<%=request.getContextPath()%>" />
+<link rel="shortcut icon" href="${path}/resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="${path}/resources/img/여주favicon.png" type="image/png">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script>
 
 	$(document).ready(function(){
+		initHeart();
 		$("#regTime").html(timeForToday(${regTime}));
 		$("#modiBtn").click(function(){
 			location.href = "${path}/goods/edit?goodsId=${dto.goodsId}";	
@@ -754,7 +757,6 @@ color: rgb(136, 136, 136);
 									<div class="goods6-6">${comments.regDate}</div>
 								</div>
 								<div class="goods6-7">${comments.content}</div>
-								<%-- <c:if test="${loginUser != null }"> --%>
 								<div class="goods7">
 									<div class="goods6-8">
 										<img alt="댓글달기 버튼" width="17" height="14"

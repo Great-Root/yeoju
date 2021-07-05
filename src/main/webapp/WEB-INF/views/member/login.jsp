@@ -7,6 +7,9 @@
 <link href="${pageContext.request.contextPath}/resources/css/member/login.css" rel="stylesheet" />
 <meta charset="UTF-8">
 <title>로그인</title>
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
+<link rel="shortcut icon" href="${contextPath}/resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="${contextPath}/resources/img/여주favicon.png" type="image/png">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -41,7 +44,6 @@
 			
 				<div>
 				<label style="white-space:nowrap;"><input type="checkbox" style="width: 15px; height: 15px;" name="autoLogin">로그인 유지</label>
-				<!--  <label name="autoLogin" class="form-check-label" for="exampleCheck1">로그인 유지</label> -->
 				</div>
 				
 				<div class="text-center">

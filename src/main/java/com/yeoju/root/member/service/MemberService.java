@@ -18,7 +18,7 @@ public interface MemberService {
 	public void check_id(String userId, HttpServletResponse response) throws Exception;
 	public void check_email(String email, HttpServletResponse response) throws Exception;
 	//public int register(MemberDTO dto, HttpServletResponse response) throws Exception;
-	public void join_member(MemberDTO dto, HttpServletResponse response) throws Exception;
+	public void join_member(MemberDTO dto, HttpServletResponse response,HttpServletRequest request) throws Exception;
 	public void keepLogin(String sessionId, Date limitDate, String id);
 	public MemberDTO getUserSessionId(String sessionId);
 	public String find_id(HttpServletResponse response, String email) throws Exception;

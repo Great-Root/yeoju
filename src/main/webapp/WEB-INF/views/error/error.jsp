@@ -11,6 +11,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <head>
   <title>Error 페이지</title>
+<link rel="shortcut icon" href="resources/img/여주favicon.png" type="image/png">
+<link rel="icon" href="resources/img/여주favicon.png" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <script type="application/x-javascript">
@@ -801,7 +803,7 @@ input.checkbox:checked:after {
     <div class="main-agileinfo">
       <div class="agileits-top">
 
-        <p>요청하신 페이지를 찾을 수 없습니다 <br><a href="/"> - 홈페이지로 돌아가기 -</a></p>
+        <p>요청하신 페이지를 찾을 수 없습니다 <br><a href="<%=request.getContextPath() %>/"> - 홈페이지로 돌아가기 -</a></p>
       </div>
     </div>
     <!-- copyright -->

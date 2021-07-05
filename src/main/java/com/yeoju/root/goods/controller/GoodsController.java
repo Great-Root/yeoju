@@ -88,7 +88,7 @@ public class GoodsController extends URL implements MemberSessionName{
 	
 	List<CategoryDTO> category = cateS.category();
 	model.addAttribute("category", category);
-	return "/goods/goodsWrite";	
+	return "goods/goodsWrite";	
 	}
 	//4.상품등록 처리 매핑
 	@RequestMapping("insert.do")
@@ -120,7 +120,7 @@ public class GoodsController extends URL implements MemberSessionName{
 				if(!result.equals("Failed to save")) {
 					dto.setImgFileName(result); 
 					dto.setUserId((String) session.getAttribute(LOGIN));
-					url = gs.insertGoods(dto) ? request.getContextPath() : "";
+					url = gs.insertGoods(dto) ? request.getContextPath()+"/" : "";
 				}
 				
 			} catch (Exception e) {
@@ -186,7 +186,7 @@ public class GoodsController extends URL implements MemberSessionName{
 			result = false;
 		}
 		System.out.println(result);
-		return result ? "goods/detail/"+goodsId : "goods/edit?goodsId="+goodsId;	
+		return result ? "detail/"+goodsId : "edit?goodsId="+goodsId;	
 	}
 	//7.상품 삭제 처리 매핑
 	@RequestMapping("delete.do")
@@ -217,7 +217,7 @@ public class GoodsController extends URL implements MemberSessionName{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:"+request.getContextPath();
+		return "redirect:/";
 	}
 	//8.상품 이미지 출력
 	@GetMapping("img/{userId}")
@@ -260,6 +260,12 @@ public class GoodsController extends URL implements MemberSessionName{
 	@ResponseBody
 	public boolean isSoldOut(@PathVariable int goodsId) {
 		return gs.isSoldOut(goodsId);
+	}
+	
+	@GetMapping("getCateList.do")
+	@ResponseBody
+	public List<CategoryDTO> getCateList() throws Exception{
+		return cateS.category();
 	}
 	
 	
